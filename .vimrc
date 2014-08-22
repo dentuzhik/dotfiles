@@ -1,6 +1,7 @@
 " General settings
 set nocompatible
 set noswapfile
+set noerrorbells
 set t_Co=256
 
 filetype plugin indent on
@@ -17,7 +18,14 @@ set shiftwidth=4
 set incsearch
 
 " A bit of UI
+set title
+set showcmd
+set showmode
 set number
-set ruler
+set cursorline
+set laststatus=2
 set colorcolumn=120
+set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
+set list
+set ruler
 
