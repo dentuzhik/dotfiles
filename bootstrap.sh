@@ -1,5 +1,6 @@
 # Basic symlinking
 base_dir=$HOME/dotfiles
 
-ln -s $base_dir/.vimrc $HOME/.vimrc
-ln -s $base_dir/.gitconfig $HOME/.gitconfig
+ln -fs $base_dir/.vimrc $HOME/.vimrc
+ln -fs $base_dir/.gitconfig $HOME/.gitconfig
+ln -fs $base_dir/.bash_aliases $HOME/.bash_aliases
