@@ -21,5 +21,5 @@ alias ls="ls ${colorflag}"
 alias h="history"
 alias j="jobs"
 
-alias vimod="vim -O `git ls-files -m`"
+alias vimod='vim -O `git diff --name-only --diff-filter=M`'
 
