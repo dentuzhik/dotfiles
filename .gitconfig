@@ -4,7 +4,7 @@
 [push]
 	default = simple
 [credential]
-	helper = osxkeychain
+	helper = cache --timeout=28800
 [help]
 	autocorrect = 1
 [core]
