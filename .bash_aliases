@@ -21,3 +21,5 @@ alias ls="ls ${colorflag}"
 alias h="history"
 alias j="jobs"
 
+alias vimod="vim -O `git ls-files -m`"
+
