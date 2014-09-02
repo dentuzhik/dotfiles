@@ -17,4 +17,7 @@
 	ci = commit
 	st = status
 	br = branch
+	# Add all, Rebase continue
 	arc = !git add -A && git rebase --continue
+	# Move HEAD (rename current branch)
+	mvh = !sh -c 'git branch -m `git rev-parse --abbrev-ref HEAD` $1' --
