@@ -4,6 +4,9 @@ set noswapfile
 set noerrorbells
 set t_Co=256
 
+set ignorecase
+set smartcase
+
 filetype plugin indent on
 filetype indent on
 syntax enable
