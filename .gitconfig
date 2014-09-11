@@ -13,10 +13,15 @@
 [color]
 	ui = true
 [alias]
+	a = add
+	aa = add -A
 	co = checkout
+	cb = checkout -b
 	ci = commit
+	ca = commit --amend
 	st = status
 	br = branch
+	lp = log -p
 	# Add all, Rebase continue
 	arc = !git add -A && git rebase --continue
 	# Move HEAD (rename current branch)
