@@ -50,17 +50,45 @@ command Wq wq
 " Required for Vundle initialization
 filetype off
 
+" Automatically setting up Vundle, if not installed
+let has_vundle=1
+if !filereadable(expand('~/.vim/bundle/vundle/README.md'))
+    let has_vundle=0
+    silent !mkdir -p ~/.vim/bundle
+    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+endif
+
 " Runtime path should include Vundle
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.vim/bundle/vundle
 " Intialize Vundle plugins
 call vundle#begin()
 
 " Vundle manages Vundle
-Plugin 'gmarik/Vundle.vim'
+Plugin 'gmarik/vundle'
+
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
 
 call vundle#end() 
+
+" Installing Vundle plugins the first time, quits when done
+if has_vundle == 0
+    :silent! PluginInstall
+    :q
+endif
 
 filetype plugin indent on
 filetype indent on
 syntax enable
+
+let g:solarized_termcolors=256
+set background=dark
+colorscheme solarized
+
+" NERDTree settings
+let NERDTreeMinimalUI=1
+let NERDTreeShowHidden=1
+let NERDTreeKeepTreeInNewTab=1
 
