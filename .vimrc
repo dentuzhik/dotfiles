@@ -5,10 +5,6 @@ set nobackup
 set noerrorbells
 set t_Co=256
 
-filetype plugin indent on
-filetype indent on
-syntax enable
-
 " Content settings
 set encoding=utf-8
 set fileformat=unix
@@ -50,4 +46,21 @@ command W w
 command Q q
 command WQ wq
 command Wq wq
+
+" Required for Vundle initialization
+filetype off
+
+" Runtime path should include Vundle
+set rtp+=~/.vim/bundle/Vundle.vim
+" Intialize Vundle plugins
+call vundle#begin()
+
+" Vundle manages Vundle
+Plugin 'gmarik/Vundle.vim'
+
+call vundle#end() 
+
+filetype plugin indent on
+filetype indent on
+syntax enable
 

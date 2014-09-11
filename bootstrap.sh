@@ -1,10 +1,11 @@
 # Basic symlinking
 function link {
     base_dir=$HOME/dotfiles
-    files='.vimrc .tmux.conf .gitconfig .bash_aliases'
+    entries='.vim .vimrc .tmux.conf .gitconfig .bash_aliases'
 
-    for file_name in $files; do
-        ln -fs $base_dir/$file_name $HOME/$file_name
+    for entry_name in $entries; do
+        ln -fs $base_dir/$entry_name $HOME/$entry_name
+        echo 'Linked '$entry_name'.'
     done
 
     echo 'Done.'
