@@ -69,6 +69,7 @@ Plugin 'gmarik/vundle'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 
@@ -92,3 +93,6 @@ colorscheme solarized
 let NERDTreeMinimalUI=1
 let NERDTreeShowHidden=1
 let NERDTreeKeepTreeInNewTab=1
+
+" NERDCommenter settings
+let NERDSpaceDelims=1
