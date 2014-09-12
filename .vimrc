@@ -67,11 +67,12 @@ call vundle#begin()
 Plugin 'gmarik/vundle'
 
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'editorconfig/editorconfig-vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 
-call vundle#end() 
+call vundle#end()
 
 " Installing Vundle plugins the first time, quits when done
 if has_vundle == 0
@@ -91,4 +92,3 @@ colorscheme solarized
 let NERDTreeMinimalUI=1
 let NERDTreeShowHidden=1
 let NERDTreeKeepTreeInNewTab=1
-

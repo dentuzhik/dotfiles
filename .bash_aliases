@@ -22,4 +22,3 @@ alias h="history"
 alias j="jobs"
 
 alias vimod='vim -O `git diff --name-only --diff-filter=M`'
-
