@@ -19,6 +19,7 @@
 	cb = checkout -b
 	ci = commit
 	ca = commit --amend
+	caa = commit -a --amend
 	st = status
 	br = branch
 	lp = log -p
