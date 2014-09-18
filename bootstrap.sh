@@ -1,7 +1,7 @@
 # Basic symlinking
 function link {
-    base_dir=$HOME/dotfiles
-    entries='.vim .vimrc .tmux.conf .gitconfig .bash_aliases .editorconfig'
+    : ${base_dir:=$HOME/dotfiles}
+    : ${entries:='.vim .vimrc .tmux.conf .gitconfig .bash_aliases .editorconfig'}
 
     for entry_name in $entries; do
         ln -fs $base_dir/$entry_name $HOME/$entry_name
