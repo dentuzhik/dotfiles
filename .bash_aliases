@@ -10,13 +10,15 @@ alias -- -="cd -"
 # Detect which `ls` flavor is in use
 # GNU `ls`
 if ls --color &> /dev/null; then
-    colorflag="--color"
+    colorflag="--color=auto"
 # OS X `ls`
 else
     colorflag="-G"
 fi
 
 alias ls="ls ${colorflag}"
+alias l="ls -AlhFG"
+alias la="ls -A"
 
 alias h="history"
 alias j="jobs"
