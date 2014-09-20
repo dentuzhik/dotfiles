@@ -30,7 +30,7 @@ shopt -s globstar
 EDITOR='vim'
 
 # A bit fancier PS1
-PS1="[\[\033[1;31m\]!\!\[\033[0;37m\]] \W\$ "
+PS1="[\[\033[1;31m\]!\!\[\033[0;39m\]] \W\$ "
 
 # RVM
 PATH=$PATH:$HOME/.rvm/bin
