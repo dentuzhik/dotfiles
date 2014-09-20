@@ -1,17 +1,23 @@
 [user]
 	name = Denis Tuzhik
 	email = dentuzhik@gmail.com
+
 [push]
 	default = simple
+
 [credential]
 	helper = cache --timeout=28800
+
 [help]
 	autocorrect = 1
+
 [core]
 	editor = vim
 	whitespace = -l
+
 [color]
 	ui = true
+
 [alias]
 	a = add
 	aa = add -A
@@ -28,3 +34,22 @@
 	arc = !git add -A && git rebase --continue
 	# Move HEAD (rename current branch)
 	mvh = !sh -c 'git branch -m `git rev-parse --abbrev-ref HEAD` $1' --
+
+# URL shorthands
+[url "git@github.com:"]
+	insteadOf = "gh:"
+	pushInsteadOf = "github:"
+	pushInsteadOf = "git://github.com/"
+	pushInsteadOf = "https://github.com/"
+
+[url "git://github.com/"]
+	insteadOf = "github:"
+
+[url "git@gist.github.com:"]
+	insteadOf = "gst:"
+	pushInsteadOf = "gist:"
+	pushInsteadOf = "git://gist.github.com/"
+	pushInsteadOf = "https://gist.github.com/"
+
+[url "git://gist.github.com/"]
+	insteadOf = "gist:"
