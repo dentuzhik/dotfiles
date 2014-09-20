@@ -18,6 +18,7 @@
 	co = checkout
 	cb = checkout -b
 	ci = commit
+	cia = commit -a
 	ca = commit --amend
 	caa = commit -a --amend
 	st = status
