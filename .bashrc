@@ -38,3 +38,5 @@ PATH=$PATH:$HOME/.rvm/bin
 # Heroku Toolbelt
 PATH=$PATH:/usr/local/heroku/bin
 
+LC_ALL='en_US.UTF-8'
+
