@@ -16,6 +16,10 @@ else
     colorflag="-G"
 fi
 
+alias grep="grep --color=auto"
+alias egrep="egrep --color=auto"
+alias rgrep="rgrep --color=auto"
+
 alias ls="ls ${colorflag}"
 alias l="ls -AlhFG"
 alias la="ls -A"
