@@ -9,6 +9,8 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+LC_ALL='en_US.UTF-8'
+
 # Don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 HISTSIZE=10000
@@ -38,5 +40,6 @@ PATH=$PATH:$HOME/.rvm/bin
 # Heroku Toolbelt
 PATH=$PATH:/usr/local/heroku/bin
 
-LC_ALL='en_US.UTF-8'
-
+# Set up NVM
+export NVM_DIR="/home/dentuzhik/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
