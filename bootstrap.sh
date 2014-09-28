@@ -16,13 +16,12 @@ function link {
     echo 'Done.'
 }
 
-echo 'This script may overwrite some files in your $HOME';
-echo 'Do you want to continue [y/n]?'
-
 : ${base_dir:=$HOME/dotfiles}
-: ${entries:='.bashrc .bash_aliases .vim .vimrc .tmux.conf .gitconfig .editorconfig'}
+: ${entries:='.bashrc .bash_aliases .vim .vimrc .ssh/config .tmux.conf .gitconfig .editorconfig'}
 
-read yn;
+echo 'This script may overwrite some files in your $HOME'
+
+read -p 'Do you want to continue (y/n)? ' yn;
 case $yn in
     'y')
         link $base_dir "$entries"
