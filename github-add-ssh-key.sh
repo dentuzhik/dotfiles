@@ -45,8 +45,8 @@ api_path='/user/keys'
 api_url='https://api.'$gh_host$api_path
 machine_name=`whoami`'@'`uname -n`
 
-read -p 'Enter your github username: ' gh_username;
-read -s -p 'Enter your github password: ' gh_password;
+read -p 'Enter your Github username: ' gh_username
+read -s -p 'Enter your Github password: ' gh_password
 echo
 
 key_file=~/.ssh/"$key_file_name"_rsa
@@ -61,7 +61,7 @@ echo
 echo -e 'The following key will be added to your Github account ('`make_red $gh_host'/'$gh_username`') for '`make_red $machine_name`':'
 echo "$public_key"
 
-read -p 'Do you want to continue (y/n)? ' yn;
+read -p 'Do you want to continue (y/n)? ' yn
 case $yn in
     'y')
         curl -su $gh_username:$gh_password -X POST -d "$data" $api_url

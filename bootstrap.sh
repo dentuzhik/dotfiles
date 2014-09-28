@@ -21,7 +21,7 @@ function link {
 
 echo 'This script may overwrite some files in your $HOME'
 
-read -p 'Do you want to continue (y/n)? ' yn;
+read -p 'Do you want to continue (y/n)? ' yn
 case $yn in
     'y')
         link $base_dir "$entries"
