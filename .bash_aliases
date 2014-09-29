@@ -1,4 +1,6 @@
-# Enable aliases to be sudo’ed
+source $DOTFILES_HOME/helper_functions.sh
+
+# Enable aliases to be sudo'ed
 alias sudo='sudo '
 
 # Navigation shortcuts
@@ -28,3 +30,5 @@ alias h="history"
 alias j="jobs"
 
 alias vimod='vim -O `git diff --name-only --diff-filter=M`'
+
+alias ghcl=github_clone_organization

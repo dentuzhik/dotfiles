@@ -4,6 +4,9 @@ case $- in
       *) return;;
 esac
 
+# Export path to reference in other scripts
+export DOTFILES_HOME=$HOME/dotfiles
+
 # Loading aliases
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases

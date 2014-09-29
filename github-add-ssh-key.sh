@@ -1,6 +1,4 @@
-function make_red() {
-    echo "\033[1;31m$1\033[0;39m"
-}
+source $DOTFILES_HOME/helper_functions.sh
 
 function ssh_generate_add() {
     local key_file=$1
