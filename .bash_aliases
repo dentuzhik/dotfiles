@@ -1,14 +1,14 @@
 source $DOTFILES_HOME/helper_functions.sh
 
 # Enable aliases to be sudo'ed
-alias sudo='sudo '
+alias sudo="sudo "
 
 # Navigation shortcuts
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias -- -="cd -"
-alias dot="cd $DOTFILES_HOME"
+alias dots="cd $DOTFILES_HOME"
 
 # Detect which `ls` flavor is in use
 # GNU `ls`
