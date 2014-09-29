@@ -8,7 +8,7 @@ function ssh_generate_add() {
     local key_file=$1
     local key_title=$2
     local key_pass=$3
-    local temp_pass_file=`mktemp`
+    local temp_pass_file=`mktemp -t ${tmp}.XXXXXX`
 
     function clean_temp_pass() {
         rm -f $temp_pass_file
