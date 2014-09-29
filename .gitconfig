@@ -2,38 +2,72 @@
 	name = Denis Tuzhik
 	email = dentuzhik@gmail.com
 
-[push]
-	default = simple
+[core]
+	editor = vim
+	whitespace = -l
+	autocrlf = input
+	excludesfile = ~/.gitignore
+        # Make `git rebase` safer on OS X
+        # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+	trustctime = false
 
 [credential]
 	helper = cache --timeout=28800
 
+[color]
+	ui = true
+	interactive = true
+
+[interactive]
+	singlekey = true
+
 [help]
 	autocorrect = 1
 
-[core]
-	editor = vim
-	whitespace = -l
+[apply]
+        whitespace = fix
 
-[color]
-	ui = true
+[diff]
+	tool = vimdiff
+	noprefix = true
+
+[merge]
+	log = true
+	tool = vimdiff
+
+[push]
+	default = simple
 
 [alias]
+	cf = config
+	l = log --oneline --graph --decorate
+	lp = log -p --relative-date
 	a = add
 	aa = add -A
+        # Short format with branch info
+	s = status -sb
+	st = status
+	di = diff
 	co = checkout
 	cb = checkout -b
 	ci = commit
-	cia = commit -a
+        # Add everything, then commit
+	cia = "!f() { git aa; if [ -z \"$1\" ]; then git ci; else git ci -m $1; fi }; f"
 	ca = commit --amend
 	caa = commit -a --amend
-	st = status
+        # Ammend commit author, with useful defaults
+	cau = "!f() { git commit --amend --author \"${1-`git cf user.name`} <${2-`git cf user.email`}>\" -C HEAD; }; f"
 	br = branch
-	lp = log -p
-	# Add all, Rebase continue
+	brs = branch -a
+	tgs = tag -l
+	rts = remote -v
+	rb = rebase
+	rbi = "!r() { git rebase -i HEAD~${1-5}; }; r"
+	# Add all, then rebase continue
 	arc = !git add -A && git rebase --continue
 	# Move HEAD (rename current branch)
 	mvh = !sh -c 'git branch -m `git rev-parse --abbrev-ref HEAD` $1' --
+	team = shortlog --summary --numbered
 
 # URL shorthands
 [url "git@github.com:"]
