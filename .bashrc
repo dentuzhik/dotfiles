@@ -7,6 +7,11 @@ esac
 # Export path to reference in other scripts
 export DOTFILES_HOME=$HOME/dotfiles
 
+# Load bash_completion script
+if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
+
 # Loading aliases
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
