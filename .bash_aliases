@@ -8,6 +8,7 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias -- -="cd -"
+alias dot="cd $DOTFILES_HOME"
 
 # Detect which `ls` flavor is in use
 # GNU `ls`
