@@ -1,5 +1,9 @@
 source $DOTFILES_HOME/helper_functions.sh
 
+function setup_trap() {
+    trap $1 SIGHUP SIGINT SIGQUIT SIGABRT SIGKILL SIGALRM SIGTERM
+}
+
 function ssh_generate_add() {
     local key_file=$1
     local key_title=$2
@@ -11,7 +15,7 @@ function ssh_generate_add() {
     }
 
     # Prevent anything from keeping temp password file on file system
-    trap 'clean_temp_pass' SIGHUP SIGINT SIGQUIT SIGABRT SIGKILL SIGALRM SIGTERM
+    setup_trap 'clean_temp_pass'
 
     # Delete any other entry with the same name
     if [ -e "$key_file" ]; then
@@ -52,6 +56,14 @@ key_file=~/.ssh/"$key_file_name"_rsa
 # Generates new private/public pair of keys and adds it to ssh-agent
 ssh_generate_add $key_file $machine_name $gh_password
 
+function clean_keys() {
+    ssh-add -d $key_file
+    rm -f $key_file $key_file".pub"
+}
+
+# Prevent anything from keeping unsubmitted key on file system
+setup_trap 'clean_keys'
+
 public_key=`cat $key_file".pub"`
 data='{"title": "'$machine_name'", "key": "'$public_key'"}'
 
@@ -66,6 +78,7 @@ case $yn in
         echo 'Github key was successfully created.'
     ;;
     'n')
+        clean_keys
         echo 'Aborted.'
     ;;
 esac
