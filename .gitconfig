@@ -52,7 +52,7 @@
 	cb = checkout -b
 	ci = commit
         # Add everything, then commit
-	cia = "!f() { git aa; if [ -z \"$1\" ]; then git ci; else git ci -m $1; fi }; f"
+	cia = "!f() { git aa; if [ -z \"$1\" ]; then git ci; else git ci -m \"$1\"; fi }; f"
 	ca = commit --amend
 	caa = commit -a --amend
         # Ammend commit author, with useful defaults
