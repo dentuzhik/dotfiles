@@ -12,6 +12,28 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
+# These files are curl'ed when bootstrapping
+GIT_COMPLETION_FILE=~/.git-completion.bash
+GIT_PROMPT_FILE=~/.git-prompt.sh
+
+# Load git-completion script
+if [ -f $GIT_COMPLETION_FILE ]; then
+    . $GIT_COMPLETION_FILE
+fi
+
+# A bit fancier PS1
+BASE_PS1="[\[\033[1;31m\]!\!\[\033[0;39m\]]"
+PS1="$BASE_PS1 \W\$ "
+
+if [ -f $GIT_PROMPT_FILE ]; then
+    . $GIT_PROMPT_FILE
+    GIT_PS1_SHOWDIRTYSTATE=1
+    GIT_PS1_SHOWCOLORHINTS=1
+    # GIT_PS1_SHOWUNTRACKEDFILES=1
+    GIT_PS1_SHOWUPSTREAM='verbose'
+    PROMPT_COMMAND='__git_ps1 "'$BASE_PS1' \W" "\\\$ "'
+fi
+
 # Loading aliases
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
@@ -38,9 +60,6 @@ shopt -s globstar 2> /dev/null
 
 # The one and the only
 EDITOR='vim'
-
-# A bit fancier PS1
-PS1="[\[\033[1;31m\]!\!\[\033[0;39m\]] \W\$ "
 
 # RVM
 PATH=$PATH:$HOME/.rvm/bin
