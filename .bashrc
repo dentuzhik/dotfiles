@@ -12,9 +12,17 @@ export DOTFILES_HOME=~/dotfiles
 
 source $DOTFILES_HOME/helper_functions.sh
 
-# Load bash_completion script
-if [ -f /etc/bash_completion ]; then
-    source /etc/bash_completion
+# Default bash-completion script
+BASH_COMPLETION_FILE=/etc/bash_completion
+
+# If default script is not found, try to replace it with Brew version
+if [ ! -f $BASH_COMPLETION_FILE ]; then
+    BASH_COMPLETION_FILE=$(brew --prefix)$BASH_COMPLETION_FILE
+fi
+
+# Load bash-completion script
+if [ -f $BASH_COMPLETION_FILE ]; then
+    source $BASH_COMPLETION_FILE
 fi
 
 # These files are curl'ed when bootstrapping
