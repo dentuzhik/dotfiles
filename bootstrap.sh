@@ -23,7 +23,7 @@ function link {
     local is_overwritten=$3
 
     for entry_name in $entries; do
-        ln -fFhs $base_dir/$entry_name $HOME/$entry_name
+        ln -fFhs $base_dir/$entry_name ~/$entry_name
         if [ ! $is_overwritten ]; then
             echo 'Linked '$entry_name'.'
         else
@@ -34,15 +34,15 @@ function link {
     echo 'Done.'
 }
 
-: ${dotfiles_dir:=$HOME/dotfiles}
-: ${base_dir:=$HOME/dotfiles}
+: ${dotfiles_dir:=~/dotfiles}
+: ${base_dir:=~/dotfiles}
 : ${entries:='.bashrc .bash_aliases .vimrc .ssh/config .tmux.conf .gitconfig .editorconfig'}
 
 echo 'This script may overwrite some files in your $HOME'
 read -p 'Do you want to continue (y/n)? ' yn
 case $yn in
     'y')
-        curl_git_scripts $HOME
+        curl_git_scripts ~
         link $base_dir "$entries"
         echo 'You should start a new shell session for changes to take effect'
     ;;

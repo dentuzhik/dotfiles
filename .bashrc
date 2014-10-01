@@ -8,13 +8,13 @@ LC_CTYPE='en_US.UTF-8'
 LC_ALL='en_US.UTF-8'
 
 # Export path to reference in other scripts
-export DOTFILES_HOME=$HOME/dotfiles
+export DOTFILES_HOME=~/dotfiles
 
-. $DOTFILES_HOME/helper_functions.sh
+source $DOTFILES_HOME/helper_functions.sh
 
 # Load bash_completion script
 if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
+    source /etc/bash_completion
 fi
 
 # These files are curl'ed when bootstrapping
@@ -23,7 +23,7 @@ GIT_PROMPT_FILE=~/.git-prompt.sh
 
 # Load git-completion script
 if [ -f $GIT_COMPLETION_FILE ]; then
-    . $GIT_COMPLETION_FILE
+    source $GIT_COMPLETION_FILE
 fi
 
 # A bit fancier PS1
@@ -31,7 +31,8 @@ BASE_PS1='['`blue '\t'`' '`yellow '#\#'`']'
 PS1=$BASE_PS1' \W '`yellow $'\u2192'`' '
 
 if [ -f $GIT_PROMPT_FILE ]; then
-    . $GIT_PROMPT_FILE
+    source $GIT_PROMPT_FILE
+
     GIT_PS1_SHOWDIRTYSTATE=1
     GIT_PS1_SHOWCOLORHINTS=1
     # GIT_PS1_SHOWUNTRACKEDFILES=1
@@ -41,7 +42,7 @@ fi
 
 # Loading aliases
 if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+    source ~/.bash_aliases
 fi
 
 # Don't put duplicate lines or lines starting with space in the history.
@@ -65,11 +66,11 @@ shopt -s globstar 2> /dev/null
 EDITOR='vim'
 
 # RVM
-PATH=$PATH:$HOME/.rvm/bin
+PATH=$PATH:~/.rvm/bin
 
 # Heroku Toolbelt
 PATH=$PATH:/usr/local/heroku/bin
 
 # Set up NVM
-export NVM_DIR="/home/dentuzhik/.nvm"
+export NVM_DIR=~/.nvm
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
