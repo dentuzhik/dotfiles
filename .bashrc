@@ -4,8 +4,13 @@ case $- in
       *) return;;
 esac
 
+LC_CTYPE='en_US.UTF-8'
+LC_ALL='en_US.UTF-8'
+
 # Export path to reference in other scripts
 export DOTFILES_HOME=$HOME/dotfiles
+
+. $DOTFILES_HOME/helper_functions.sh
 
 # Load bash_completion script
 if [ -f /etc/bash_completion ]; then
@@ -22,8 +27,8 @@ if [ -f $GIT_COMPLETION_FILE ]; then
 fi
 
 # A bit fancier PS1
-BASE_PS1="[\[\033[1;31m\]!\!\[\033[0;39m\]]"
-PS1="$BASE_PS1 \W\$ "
+BASE_PS1='['`blue '\t'`' '`yellow '#\#'`']'
+PS1=$BASE_PS1' \W '`yellow $'\u2192'`' '
 
 if [ -f $GIT_PROMPT_FILE ]; then
     . $GIT_PROMPT_FILE
@@ -31,15 +36,13 @@ if [ -f $GIT_PROMPT_FILE ]; then
     GIT_PS1_SHOWCOLORHINTS=1
     # GIT_PS1_SHOWUNTRACKEDFILES=1
     GIT_PS1_SHOWUPSTREAM='verbose'
-    PROMPT_COMMAND='__git_ps1 "'$BASE_PS1' \W" "\\\$ "'
+    PROMPT_COMMAND='__git_ps1 "'$BASE_PS1' \W" " '`red $'\u2192'`' "'
 fi
 
 # Loading aliases
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
-
-LC_ALL='en_US.UTF-8'
 
 # Don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth

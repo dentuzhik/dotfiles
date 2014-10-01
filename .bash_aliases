@@ -1,5 +1,3 @@
-source $DOTFILES_HOME/helper_functions.sh
-
 # Enable aliases to be sudo'ed
 alias sudo="sudo "
 
