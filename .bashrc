@@ -36,7 +36,7 @@ fi
 
 # A bit fancier PS1
 BASE_PS1='['`blue '\t'`' '`yellow '#\#'`']'
-PS1=$BASE_PS1' \W '`yellow $'\u2192'`' '
+PS1=$BASE_PS1' \W '`red $'\u2192'`' '
 
 if [ -f $GIT_PROMPT_FILE ]; then
     source $GIT_PROMPT_FILE
