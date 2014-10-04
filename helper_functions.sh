@@ -1,21 +1,21 @@
 function red() {
-    echo "\e[1;31m$1\e[0;39m"
+    echo "\[\e[1;31m\]$1\[\e[0;39m\]"
 }
 
 function yellow() {
-    echo "\e[1;33m$1\e[0;39m"
+    echo "\[\e[1;33m\]$1\[\e[0;39m\]"
 }
 
 function blue() {
-    echo "\e[1;34m$1\e[0;39m"
+    echo "\[\e[1;34m\]$1\[\e[0;39m\]"
 }
 
 function cyan() {
-    echo "\e[1;36m$1\e[0;39m"
+    echo "\[\e[1;36m\]$1\[\e[0;39m\]"
 }
 
 function magenta() {
-    echo "\e[1;35m$1\e[0;39m"
+    echo "\[\e[1;35m\]$1\[\e[0;39m\]"
 }
 
 function github_clone_organization() {
