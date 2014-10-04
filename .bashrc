@@ -64,10 +64,12 @@ shopt -s histappend
 shopt -s checkwinsize
 
 # If command is a valid directory name, cd to it
-shopt -s autocd
+# Suppress any errors on outdated bash
+shopt -s autocd 2> /dev/null
 
 # Corrects minor errors in directories names
-shopt -s cdspell dirspell
+# Suppress any errors on outdated bash
+shopt -s cdspell dirspell 2> /dev/null
 
 # Enables regexp-like repetition characters
 # ?(patterns-list) - zero or one patterns
