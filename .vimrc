@@ -30,6 +30,7 @@ set backspace=indent,eol,start
 
 " UI settings
 set title
+set nowrap
 set ruler
 set number
 set showcmd
