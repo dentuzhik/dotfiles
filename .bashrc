@@ -63,7 +63,21 @@ shopt -s histappend
 # Check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# If set, the pattern "**" used in a pathname expansion context will  match all files and zero or more directories and subdirectories.
+# If command is a valid directory name, cd to it
+shopt -s autocd
+
+# Corrects minor errors in directories names
+shopt -s cdspell dirspell
+
+# Enables regexp-like repetition characters
+# ?(patterns-list) - zero or one patterns
+# *(patterns-list) - zero or more patterns
+# +(patterns-list) - one or more patterns
+# @(patterns-list) - one of the patterns
+# !(patterns-list) - everything expect patterns
+shopt -s extglob
+
+# Exapnd '**' to all files and directories recursively
 # Suppress any errors on outdated bash
 shopt -s globstar 2> /dev/null
 
