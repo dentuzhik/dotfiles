@@ -23,7 +23,7 @@ function link {
     local is_overwritten=$3
 
     for entry_name in $entries; do
-        ln -fFhs $base_dir/$entry_name ~/$entry_name
+        ln -fFns $base_dir/$entry_name ~/$entry_name
         if [ ! $is_overwritten ]; then
             echo 'Linked '$entry_name'.'
         else
