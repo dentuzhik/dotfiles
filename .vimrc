@@ -78,6 +78,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'SevInf/vim-bemhtml'
 Plugin 'othree/yajs.vim'
+Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'mhinz/vim-startify'
 
 call vundle#end()
@@ -103,3 +104,6 @@ let NERDTreeKeepTreeInNewTab=1
 
 " NERDCommenter settings
 let NERDSpaceDelims=1
+
+" JS libraries settings
+let g:used_javascript_libs = 'jquery,lodash,underscore'
