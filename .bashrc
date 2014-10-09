@@ -35,8 +35,8 @@ if [ -f $GIT_COMPLETION_FILE ]; then
 fi
 
 # A bit fancier PS1
-BASE_PS1='['`blue '\t'`' '`yellow '#\#'`']'
-PS1=$BASE_PS1' \W '`red $'\xe2\x86\x92'`' '
+BASE_PS1='['`prompt_blue '\t'`' '`prompt_yellow '#\#'`']'
+PS1=$BASE_PS1' \W '`prompt_red $'\xe2\x86\x92'`' '
 
 if [ -f $GIT_PROMPT_FILE ]; then
     source $GIT_PROMPT_FILE
@@ -45,7 +45,7 @@ if [ -f $GIT_PROMPT_FILE ]; then
     GIT_PS1_SHOWCOLORHINTS=1
     # GIT_PS1_SHOWUNTRACKEDFILES=1
     GIT_PS1_SHOWUPSTREAM='verbose'
-    PROMPT_COMMAND='__git_ps1 "'$BASE_PS1' \W" " '`red $'\xe2\x86\x92'`' "'
+    PROMPT_COMMAND='__git_ps1 "'$BASE_PS1' \W" " '`prompt_red $'\xe2\x86\x92'`' "'
 fi
 
 # Loading aliases

@@ -68,7 +68,7 @@ public_key=`cat $key_file".pub"`
 data='{"title": "'$machine_name'", "key": "'$public_key'"}'
 
 echo
-echo -e 'The following key will be added to your Github account ('`red $gh_host'/'$gh_username`') for '`red $machine_name`':'
+echo 'The following key will be added to your Github account ('`echo_red $gh_host'/'$gh_username`') for '`echo_red $machine_name`':'
 echo "$public_key"
 
 read -p 'Do you want to continue (y/n)? ' yn
