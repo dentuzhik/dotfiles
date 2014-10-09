@@ -10,7 +10,7 @@ LC_ALL='en_US.UTF-8'
 # Export path to reference in other scripts
 export DOTFILES_HOME=~/dotfiles
 
-source $DOTFILES_HOME/helper_functions.sh
+source $DOTFILES_HOME/scripts/helpers.sh
 
 # Default bash-completion script
 BASH_COMPLETION_FILE=/etc/bash_completion
