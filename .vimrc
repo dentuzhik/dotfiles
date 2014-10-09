@@ -78,6 +78,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'SevInf/vim-bemhtml'
 Plugin 'othree/yajs.vim'
+Plugin 'mhinz/vim-startify'
 
 call vundle#end()
 
