@@ -42,8 +42,13 @@
 	cf = config
 	l = log --oneline --graph --decorate
 	lp = log -p --relative-date
+	ll = !git lp -1
 	a = add
 	aa = add -A
+	rs = reset
+	rss = reset --soft
+	rsh = reset --hard
+	cln = clean -fdx
         # Short format with branch info
 	s = status -sb
 	st = status
@@ -51,12 +56,14 @@
 	co = checkout
 	cb = checkout -b
 	ci = commit
+	cim = commit -m
         # Add everything, then commit
-	cia = "!f() { git aa; if [ -z \"$1\" ]; then git ci; else git ci -m \"$1\"; fi }; f"
+	cia = "!f() { git add -A; if [ -z \"$1\" ]; then git commit; else git commit -m \"$1\"; fi }; f"
 	ca = commit --amend
-	caa = commit -a --amend
+	caa = "!f() { git add -A; git commit --amend; }; f"
+	cah = "!f() { git add -A; git commit --amend -C 'HEAD'; }; f"
         # Ammend commit author, with useful defaults
-	cau = "!f() { git commit --amend --author \"${1-`git cf user.name`} <${2-`git cf user.email`}>\" -C HEAD; }; f"
+	cau = "!f() { git commit --amend --author \"${1-`git config user.name`} <${2-`git config user.email`}>\" -C HEAD; }; f"
 	br = branch
 	brs = branch -a
 	tgs = tag -l
