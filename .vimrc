@@ -4,6 +4,8 @@ set noswapfile
 set nobackup
 set noerrorbells
 set t_Co=256
+set ttyfast
+set lazyredraw
 
 " Content settings
 set encoding=utf-8
@@ -41,6 +43,8 @@ set laststatus=2
 set colorcolumn=120
 set list
 set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_
+set scrolloff=5
+set sidescrolloff=5
 
 " Fixing common typos
 command W w
@@ -91,6 +95,8 @@ endif
 filetype plugin indent on
 filetype indent on
 syntax enable
+syntax sync minlines=256
+set synmaxcol=256
 
 let g:solarized_termcolors=256
 set background=dark
