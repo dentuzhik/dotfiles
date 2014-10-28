@@ -2,6 +2,10 @@ function echo_red() {
     echo -e "\e[1;31m$1\e[0;39m"
 }
 
+function echo_green() {
+    echo -e "\e[1;32m$1\e[0;39m"
+}
+
 function echo_yellow() {
     echo -e "\e[1;33m$1\e[0;39m"
 }
@@ -20,6 +24,10 @@ function echo_magenta() {
 
 function prompt_red() {
     echo "\[\e[1;31m\]$1\[\e[0;39m\]"
+}
+
+function prompt_green() {
+    echo "\[\e[1;32m\]$1\[\e[0;39m\]"
 }
 
 function prompt_yellow() {
