@@ -89,12 +89,13 @@ shopt -s globstar 2> /dev/null
 # The one and the only
 EDITOR='vim'
 
-# RVM
-PATH=$PATH:~/.rvm/bin
-
 # Heroku Toolbelt
 PATH=$PATH:/usr/local/heroku/bin
 
 # Set up NVM
 export NVM_DIR=~/.nvm
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+# Set up RVM
+export PATH=$PATH:~/.rvm/bin
+[[ -s "~/.rvm/scripts/rvm" ]] && source "~/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
