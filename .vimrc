@@ -121,6 +121,3 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " NERDCommenter settings
 let NERDSpaceDelims=1
-
-" JS libraries settings
-let g:used_javascript_libs = 'jquery,lodash,underscore'
