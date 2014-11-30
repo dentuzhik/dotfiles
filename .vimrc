@@ -105,7 +105,19 @@ colorscheme solarized
 " NERDTree settings
 let NERDTreeMinimalUI=1
 let NERDTreeShowHidden=1
-let NERDTreeKeepTreeInNewTab=1
+let NERDTreeAutoCenter=1
+let NERDTreeChDirMode=2
+let NERDTreeAutoDeleteBuffer=1
+let NERDTreeAutoCenterThreshold=5
+let NERDTreeWinSize=35
+
+" Open NERDTree on vim startup
+autocmd vimenter * NERDTree
+" Open NERDTree if no files specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+:nnoremap <leader>t :NERDTreeToggle<CR>
 
 " NERDCommenter settings
 let NERDSpaceDelims=1
