@@ -30,6 +30,7 @@ alias la="ls -A"
 alias h="history"
 alias j="jobs"
 
-alias vimod='vim -O `git diff --name-only --diff-filter=M`'
+alias vimod='vim -O $(git diff --name-only --diff-filter=M)'
+alias combmod='csscomb $(git diff --name-only --diff-filter=M)'
 
 alias ghcl=github_clone_organization
