@@ -81,6 +81,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'SevInf/vim-bemhtml'
+Plugin 'wavded/vim-stylus'
 Plugin 'othree/yajs.vim'
 Plugin 'mhinz/vim-startify'
 
