@@ -72,18 +72,25 @@ call vundle#begin()
 Plugin 'gmarik/vundle'
 
 Plugin 'altercation/vim-colors-solarized'
+
 Plugin 'editorconfig/editorconfig-vim'
+Plugin 'mhinz/vim-startify'
+Plugin 'kien/ctrlp.vim'
+
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/syntastic'
+
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
-Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-repeat'
+
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'Raimondi/delimitMate'
 Plugin 'SevInf/vim-bemhtml'
 Plugin 'wavded/vim-stylus'
 Plugin 'othree/yajs.vim'
-Plugin 'mhinz/vim-startify'
 
 call vundle#end()
 
@@ -122,3 +129,10 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " NERDCommenter settings
 let NERDSpaceDelims=1
+
+let delimitMate_balance_matchpairs=1
+
+let g:gitgutter_max_signs=1000
+
+let g:ctrlp_show_hidden=1
+let g:ctrlp_match_window = 'max:15'
