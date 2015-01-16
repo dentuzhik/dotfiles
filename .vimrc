@@ -135,4 +135,6 @@ let delimitMate_balance_matchpairs=1
 let g:gitgutter_max_signs=1000
 
 let g:ctrlp_show_hidden=1
-let g:ctrlp_match_window = 'max:15'
+let g:ctrlp_lazy_update=1
+let g:ctrlp_clear_cache_on_exit=0
+let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn))|node_modules$'
