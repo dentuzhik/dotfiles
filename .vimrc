@@ -75,6 +75,7 @@ Plugin 'altercation/vim-colors-solarized'
 
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'mhinz/vim-startify'
+Plugin 'sickill/vim-pasta'
 Plugin 'kien/ctrlp.vim'
 
 Plugin 'scrooloose/nerdtree'
