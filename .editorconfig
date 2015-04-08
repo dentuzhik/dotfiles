@@ -8,5 +8,11 @@ indent_style = space
 insert_final_new_line = true
 trim_trailing_whitespace = true
 
-[*.md]
+[**.{js,css}]
+indent_size = 4
+
+[**.{json,html,jade}]
+indent_size = 2
+
+[**.md]
 trim_trailing_whitespace = ignore
