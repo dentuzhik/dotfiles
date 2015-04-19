@@ -4,8 +4,9 @@ case $- in
       *) return;;
 esac
 
-LC_CTYPE='en_US.UTF-8'
-LC_ALL='en_US.UTF-8'
+export LC_CTYPE='en_US.UTF-8'
+export LC_ALL='en_US.UTF-8'
+export LANG='en_US.UTF-8'
 
 # Export path to reference in other scripts
 export DOTFILES_HOME=~/dotfiles
