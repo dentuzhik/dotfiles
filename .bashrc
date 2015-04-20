@@ -17,7 +17,7 @@ source $DOTFILES_HOME/scripts/helpers.sh
 BASH_COMPLETION_FILE=/etc/bash_completion
 
 # If default script is not found, try to replace it with Brew version
-if [ ! -f $BASH_COMPLETION_FILE ]; then
+if [[ -n $(type brew 2> /dev/null) ]]; then
     BASH_COMPLETION_FILE=$(brew --prefix)$BASH_COMPLETION_FILE
 fi
 
