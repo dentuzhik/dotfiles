@@ -78,7 +78,6 @@ Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'sickill/vim-pasta'
 
-Plugin 'mhinz/vim-startify'
 Plugin 'kien/ctrlp.vim'
 
 Plugin 'scrooloose/nerdtree'
@@ -124,7 +123,7 @@ let NERDTreeAutoCenterThreshold=5
 let NERDTreeWinSize=35
 
 " Open NERDTree on vim startup
-autocmd vimenter * NERDTree
+" autocmd vimenter * NERDTree
 " Open NERDTree if no files specified
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
