@@ -1,7 +1,7 @@
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
-      *) return;;
+    *) return;;
 esac
 
 export LC_CTYPE='en_US.UTF-8'

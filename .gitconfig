@@ -7,8 +7,8 @@
 	whitespace = -l
 	autocrlf = input
 	excludesfile = ~/.gitignore
-        # Make `git rebase` safer on OS X
-        # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+	# Make `git rebase` safer on OS X
+	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
 	trustctime = false
 
 [credential]
@@ -25,7 +25,7 @@
 	autocorrect = 1
 
 [apply]
-        whitespace = fix
+	whitespace = fix
 
 [diff]
 	tool = vimdiff
@@ -49,7 +49,7 @@
 	rss = reset --soft
 	rsh = reset --hard
 	cln = clean -fdx
-        # Short format with branch info
+	# Short format with branch info
 	s = status -sb
 	st = status
 	di = diff
@@ -57,12 +57,12 @@
 	cb = checkout -b
 	ci = commit
 	cim = commit -m
-        # Add everything, then commit
+	# Add everything, then commit
 	cia = "!f() { git add -A; if [ -z \"$1\" ]; then git commit; else git commit -m \"$1\"; fi }; f"
 	ca = commit --amend
 	caa = "!f() { git add -A; git commit --amend; }; f"
 	cah = "!f() { git add -A; git commit --amend -C 'HEAD'; }; f"
-        # Ammend commit author, with useful defaults
+	# Ammend commit author, with useful defaults
 	cau = "!f() { git commit --amend --author \"${1-`git config user.name`} <${2-`git config user.email`}>\" -C HEAD; }; f"
 	br = branch
 	brs = branch -a

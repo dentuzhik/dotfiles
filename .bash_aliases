@@ -24,8 +24,8 @@ alias egrep="egrep --color=auto"
 alias rgrep="rgrep --color=auto"
 
 alias ls="ls ${colorflag}"
-alias l="ls -AlhFG"
 alias la="ls -A"
+alias l="ls -AlhFG"
 
 alias h="history"
 alias j="jobs"

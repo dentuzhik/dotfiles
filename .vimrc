@@ -26,6 +26,7 @@ set autoindent
 set expandtab
 set smartindent
 set smarttab
+set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set backspace=indent,eol,start
@@ -73,9 +74,11 @@ Plugin 'gmarik/vundle'
 
 Plugin 'altercation/vim-colors-solarized'
 
+Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'editorconfig/editorconfig-vim'
-Plugin 'mhinz/vim-startify'
 Plugin 'sickill/vim-pasta'
+
+Plugin 'mhinz/vim-startify'
 Plugin 'kien/ctrlp.vim'
 
 Plugin 'scrooloose/nerdtree'
