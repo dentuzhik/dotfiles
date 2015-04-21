@@ -143,3 +143,5 @@ let g:ctrlp_show_hidden=1
 let g:ctrlp_lazy_update=1
 let g:ctrlp_clear_cache_on_exit=0
 let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn))|node_modules$'
+
+autocmd BufRead,BufNewFile .jshintrc,.jscsrc set filetype=json
