@@ -94,6 +94,7 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'SevInf/vim-bemhtml'
 Plugin 'wavded/vim-stylus'
 Plugin 'othree/yajs.vim'
+Plugin 'digitaltoad/vim-jade'
 
 call vundle#end()
 
