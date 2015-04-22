@@ -71,6 +71,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'sickill/vim-pasta'
+Plugin 'sjl/gundo.vim'
 
 Plugin 'kien/ctrlp.vim'
 
@@ -140,3 +141,5 @@ let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn))|node_modules$'
 
 autocmd BufRead,BufNewFile .jshintrc,.jscsrc set filetype=json
 autocmd! BufWritePost .vimrc source $MYVIMRC
+
+:nmap <leader>u :GundoToggle<CR>
