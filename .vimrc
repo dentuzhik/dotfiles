@@ -86,10 +86,12 @@ Plugin 'tpope/vim-repeat'
 
 Plugin 'airblade/vim-gitgutter'
 Plugin 'Raimondi/delimitMate'
+
+Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'digitaltoad/vim-jade'
 Plugin 'SevInf/vim-bemhtml'
 Plugin 'wavded/vim-stylus'
 Plugin 'othree/yajs.vim'
-Plugin 'digitaltoad/vim-jade'
 
 call vundle#end()
 
