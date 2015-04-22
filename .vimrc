@@ -47,12 +47,6 @@ set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_
 set scrolloff=5
 set sidescrolloff=5
 
-" Fixing common typos
-command W w
-command Q q
-command WQ wq
-command Wq wq
-
 " Required for Vundle initialization
 filetype off
 
@@ -145,3 +139,4 @@ let g:ctrlp_clear_cache_on_exit=0
 let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn))|node_modules$'
 
 autocmd BufRead,BufNewFile .jshintrc,.jscsrc set filetype=json
+autocmd! BufWritePost .vimrc source $MYVIMRC
