@@ -81,6 +81,7 @@ Plugin 'scrooloose/syntastic'
 
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-repeat'
 
 Plugin 'airblade/vim-gitgutter'
@@ -142,3 +143,11 @@ autocmd BufRead,BufNewFile .jshintrc,.jscsrc set filetype=json
 autocmd! BufWritePost .vimrc source $MYVIMRC
 
 :nmap <leader>u :GundoToggle<CR>
+
+:nmap <C-S-Up> [e
+:nmap <C-S-Down> ]e
+
+:vmap <C-S-Up> [egv
+:vmap <C-S-Down> ]egv
+
+:nmap gV `[v`]
