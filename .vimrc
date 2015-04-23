@@ -92,6 +92,7 @@ Plugin 'digitaltoad/vim-jade'
 Plugin 'SevInf/vim-bemhtml'
 Plugin 'wavded/vim-stylus'
 Plugin 'othree/yajs.vim'
+Plugin 'nginx.vim'
 
 call vundle#end()
 
@@ -142,6 +143,7 @@ let g:ctrlp_clear_cache_on_exit=0
 let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn))|node_modules$'
 
 autocmd BufRead,BufNewFile .jshintrc,.jscsrc set filetype=json
+autocmd BufRead,BufNewFile *nginx.conf* set filetype=nginx
 autocmd! BufWritePost .vimrc source $MYVIMRC
 
 :nmap <leader>u :GundoToggle<CR>
