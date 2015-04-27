@@ -142,7 +142,10 @@ let g:ctrlp_lazy_update=1
 let g:ctrlp_clear_cache_on_exit=0
 let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn))|node_modules$'
 
-autocmd BufRead,BufNewFile .jshintrc,.jscsrc set filetype=json
+let g:pasta_paste_before_mapping = ',P'
+let g:pasta_paste_after_mapping = ',p'
+
+autocmd BufRead,BufNewFile .jshintrc,.jscsrc,.bowerrc,.ember-cli set filetype=json
 autocmd BufRead,BufNewFile *nginx.conf* set filetype=nginx
 autocmd! BufWritePost .vimrc source $MYVIMRC
 
