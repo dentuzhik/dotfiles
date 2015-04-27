@@ -1,3 +1,5 @@
+shopt -s expand_aliases
+
 # Enable aliases to be sudo'ed
 alias sudo="sudo "
 

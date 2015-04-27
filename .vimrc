@@ -1,3 +1,5 @@
+let $BASH_ENV='~/.bash_aliases'
+
 " General settings
 set nocompatible
 set noswapfile
