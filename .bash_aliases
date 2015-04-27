@@ -19,6 +19,14 @@ else
     colorflag="-G"
 fi
 
+if [[ -z $(type pbcopy 2> /dev/null) ]]; then
+    alias pbcopy='xclip -selection clipboard'
+    alias pbpaste='xclip -selection clipboard -o'
+fi
+
+# Assumes that appropriate listener is launched on local machine
+alias rcopy='cat | nc -q1 localhost 2224'
+
 alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
 alias rgrep="rgrep --color=auto"
