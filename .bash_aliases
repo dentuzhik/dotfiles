@@ -19,13 +19,16 @@ else
     colorflag="-G"
 fi
 
-if [[ -z $(type pbcopy 2> /dev/null) ]]; then
-    alias pbcopy='xclip -selection clipboard'
-    alias pbpaste='xclip -selection clipboard -o'
+if [[ -z $SSH_TTY ]]; then
+    if [[ -z $(type pbcopy 2> /dev/null) ]]; then
+        alias pbcopy='xclip -selection clipboard'
+        alias pbpaste='xclip -selection clipboard -o'
+    fi
+else
+    # Assumes that appropriate listener is launched on local machine
+    alias pbcopy='cat | nc localhost 2224'
 fi
 
-# Assumes that appropriate listener is launched on local machine
-alias rcopy='cat | nc -q1 localhost 2224'
 
 alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
