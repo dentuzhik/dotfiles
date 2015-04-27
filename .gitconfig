@@ -53,6 +53,7 @@
 	s = status -sb
 	st = status
 	di = diff
+	dc = diff --cached
 	co = checkout
 	cb = checkout -b
 	ci = commit
