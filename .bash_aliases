@@ -29,6 +29,8 @@ else
     alias pbcopy='cat | nc localhost 2224'
 fi
 
+alias pbc='pbcopy'
+alias pbp='pbpaste'
 
 alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
