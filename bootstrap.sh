@@ -44,7 +44,6 @@ case $yn in
     'y')
         curl_git_scripts ~
         link $base_dir "$entries"
-        echo 'You should start a new shell session for changes to take effect'
     ;;
     'n')
         echo 'Aborted.'
