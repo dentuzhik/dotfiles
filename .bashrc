@@ -125,10 +125,10 @@ if [ -z "$TMUX" ]; then
 
         # Add all default keys to ssh auth
         ssh-add 2> /dev/null
-    fi
 
-    # Start tmux, if available
-    if [[ -n $(type tmux) ]]; then
-        tmux attach || tmux new
+        # Start tmux, if available
+        if [[ -n $(type tmux) ]]; then
+            tmux attach || tmux new
+        fi
     fi
 fi
