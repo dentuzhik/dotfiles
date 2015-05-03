@@ -107,24 +107,11 @@ if [ -z "$TMUX" ]; then
     # We logged in via SSH
     if [ ! -z "$SSH_TTY" ]; then
 
-        # If ssh auth variable is missing
-        if [ -z "$SSH_AUTH_SOCK" ]; then
-            export SSH_AUTH_SOCK="$HOME/.ssh/.auth_socket"
+        if [ ! -z "$SSH_AUTH_SOCK" -a "$SSH_AUTH_SOCK" != "$HOME/.ssh/agent_sock" ] ; then
+            unlink "$HOME/.ssh/agent_sock" 2>/dev/null
+            ln -s "$SSH_AUTH_SOCK" "$HOME/.ssh/agent_sock"
+            export SSH_AUTH_SOCK="$HOME/.ssh/agent_sock"
         fi
-
-        # If socket is available create the new auth session
-        if [ ! -S "$SSH_AUTH_SOCK" ]; then
-            $(ssh-agent -a $SSH_AUTH_SOCK) &> /dev/null
-            echo $SSH_AGENT_PID > $HOME/.ssh/.auth_pid
-        fi
-
-        # If agent isn't defined, recreate it from pid file
-        if [ -z $SSH_AGENT_PID ]; then
-            export SSH_AGENT_PID=`cat $HOME/.ssh/.auth_pid`
-        fi
-
-        # Add all default keys to ssh auth
-        ssh-add 2> /dev/null
 
         # Start tmux, if available
         if [[ -n $(type tmux) ]]; then
