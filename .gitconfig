@@ -76,6 +76,7 @@
 	# Move HEAD (rename current branch)
 	mvh = !sh -c 'git branch -m `git rev-parse --abbrev-ref HEAD` $1' --
 	team = shortlog --summary --numbered
+	show-merge = "!f() { git show $(git rev-list $1...HEAD --merges --topo-order | tail -1); }; f"
 
 # URL shorthands
 [url "git@github.com:"]
