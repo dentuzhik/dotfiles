@@ -49,3 +49,23 @@ alias vimod='vim -O $(git diff --name-only --diff-filter=M)'
 alias combmod='csscomb $(git diff --name-only --diff-filter=M)'
 
 alias ghcl=github_clone_organization
+
+# Work specific
+function wcp_dir {
+    echo ~/work/wc${1-1}/web4
+}
+
+function wcp {
+    cd $(wcp_dir $1)
+}
+
+function upw {
+    git co -q dev
+    git pull --ff-only upstream dev
+    git push
+
+    cd - 1> /dev/null
+}
+
+alias upw=upw
+alias wp=wcp

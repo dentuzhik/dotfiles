@@ -1,5 +1,15 @@
 source $DOTFILES_HOME/scripts/colors.sh
 
+function ls_completion {
+    local dir_path="$1"
+    COMPLETION=()
+
+    if [[ $COMP_CWORD == 1 ]]; then
+        COMPREPLY=( $(compgen -W "$(ls $dir_path)" -- "${COMP_WORDS[COMP_CWORD]}") )
+        return 0
+    fi
+}
+
 function github_clone_organization() {
     local org_name=$1
     local gh_host=${2-'github.com'}
@@ -28,3 +38,5 @@ function github_clone_organization() {
         ;;
     esac
 }
+
+export -f ls_completion
