@@ -75,8 +75,6 @@ Plugin 'editorconfig/editorconfig-vim'
 Plugin 'sickill/vim-pasta'
 Plugin 'sjl/gundo.vim'
 
-Plugin 'kien/ctrlp.vim'
-
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/syntastic'
@@ -89,7 +87,9 @@ Plugin 'tpope/vim-repeat'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'Raimondi/delimitMate'
 
+Plugin 'mattn/emmet-vim'
 Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'terryma/vim-multiple-cursors'
 Plugin 'digitaltoad/vim-jade'
 Plugin 'SevInf/vim-bemhtml'
 Plugin 'wavded/vim-stylus'
