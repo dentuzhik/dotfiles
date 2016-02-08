@@ -38,6 +38,12 @@
 [push]
 	default = simple
 
+[rebase]
+	autostash = true
+
+[stash]
+	showPatch = true
+
 [alias]
 	cf = config
 	l = log --oneline --graph --decorate
@@ -73,10 +79,13 @@
 	rbi = "!r() { git rebase -i HEAD~${1-5}; }; r"
 	# Add all, then rebase continue
 	arc = !git add -A && git rebase --continue
-	# Move HEAD (rename current branch)
-	mvh = !sh -c 'git branch -m `git rev-parse --abbrev-ref HEAD` $1' --
 	team = shortlog --summary --numbered
 	show-merge = "!f() { git show $(git rev-list $1...HEAD --merges --topo-order | tail -1); }; f"
+	spu = !sh -c 'git push origin -u ${1-"$(git rev-parse --abbrev-ref HEAD)"}'
+	# Local shorthands
+	sco = !sh -c 'git co SERP-$0'
+	scb = !sh -c 'git co -b SERP-$0'
+	sbd = !sh -c 'git br -d SERP-$0'
 
 # URL shorthands
 [url "git@github.com:"]
@@ -88,11 +97,19 @@
 [url "git://github.com/"]
 	insteadOf = "github:"
 
-[url "git@gist.github.com:"]
-	insteadOf = "gst:"
-	pushInsteadOf = "gist:"
-	pushInsteadOf = "git://gist.github.com/"
-	pushInsteadOf = "https://gist.github.com/"
+[url "git@github.yandex-team.ru:"]
+	pushInsteadOf = "ghyt:"
+	pushInsteadOf = "git://github.yandex-team.ru/"
+	pushInsteadOf = "https://github.yandex-team.ru/"
 
-[url "git://gist.github.com/"]
-	insteadOf = "gist:"
+[url "https://github.yandex-team.ru/"]
+	insteadOf = "ghyt:"
+
+[filter "lfs"]
+	required = true
+    clean = git-lfs clean %f
+    smudge = git-lfs smudge --skip %f
+
+[lfs]
+	batch = true
+	concurrenttransfers = 15
