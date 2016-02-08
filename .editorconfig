@@ -10,7 +10,7 @@ trim_trailing_whitespace = true
 [**.{js,css}]
 indent_size = 4
 
-[**.{json,html,jade}]
+[**.{json,html,jade,yaml}]
 indent_size = 2
 
 [**.md]
