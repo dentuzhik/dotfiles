@@ -35,6 +35,12 @@ if [ -f $GIT_COMPLETION_FILE ]; then
     source $GIT_COMPLETION_FILE
 fi
 
+TMUXP_COMPLETION=$(which tmuxp.bash)
+# Load tmuxp-completion script
+if [ -f $TMUXP_COMPLETION ]; then
+    source $TMUXP_COMPLETION
+fi
+
 # A bit fancier PS1
 BASE_PS1='['`prompt_blue '\t'`' '`prompt_yellow '#\#'`']'
 PS1=$BASE_PS1' \W '`prompt_red $'\xe2\x86\x92'`' '
