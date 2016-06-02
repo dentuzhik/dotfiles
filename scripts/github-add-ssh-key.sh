@@ -1,4 +1,4 @@
-source $DOTFILES_HOME/helper_functions.sh
+source $DOTFILES_HOME/scripts/colors.sh
 
 function setup_trap() {
     trap $1 SIGHUP SIGINT SIGQUIT SIGABRT SIGKILL SIGALRM SIGTERM

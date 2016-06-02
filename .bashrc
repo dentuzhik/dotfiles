@@ -35,12 +35,6 @@ if [ -f $GIT_COMPLETION_FILE ]; then
     source $GIT_COMPLETION_FILE
 fi
 
-TMUXP_COMPLETION=$(which tmuxp.bash)
-# Load tmuxp-completion script
-if [ -f $TMUXP_COMPLETION ]; then
-    source $TMUXP_COMPLETION
-fi
-
 # A bit fancier PS1
 BASE_PS1='['`prompt_blue '\t'`' '`prompt_yellow '#\#'`']'
 PS1=$BASE_PS1' \W '`prompt_red $'\xe2\x86\x92'`' '
@@ -106,6 +100,11 @@ export NVM_DIR=~/.nvm
 # Set up RVM
 export PATH="$PATH:$HOME/.rvm/bin"
 
+# Load tmuxp-completion script
+TMUXP_COMPLETION=$(which tmuxp.bash)
+if [ -f $TMUXP_COMPLETION ]; then
+    source $TMUXP_COMPLETION
+fi
 
 # https://robinwinslow.co.uk/2012/07/20/tmux-and-ssh-auto-login-with-ssh-agent-finally
 # We're not in a tmux session
