@@ -21,6 +21,9 @@ if [[ -n $(type brew 2> /dev/null) ]]; then
     BASH_COMPLETION_FILE=$(brew --prefix)$BASH_COMPLETION_FILE
 fi
 
+# Add path for Homebrew cask
+export PATH="/usr/local/sbin:$PATH"
+
 # Load bash-completion script
 if [ -f $BASH_COMPLETION_FILE ]; then
     source $BASH_COMPLETION_FILE
@@ -48,6 +51,16 @@ if [ -f $GIT_PROMPT_FILE ]; then
     GIT_PS1_SHOWUPSTREAM='verbose'
     PROMPT_COMMAND='__git_ps1 "'$BASE_PS1' \W" " '`prompt_red $'\xe2\x86\x92'`' "'
 fi
+
+# Loading chpwd hook implementation
+source $DOTFILES_HOME/scripts/chpwd.sh
+
+# Redefining cd to export chpwd hook
+function cd()
+{
+    builtin cd $@
+    chpwd
+}
 
 # Loading aliases
 if [ -f ~/.bash_aliases ]; then
@@ -94,16 +107,14 @@ EDITOR='vim'
 PATH=$PATH:/usr/local/heroku/bin
 
 # Set up NVM
-export NVM_DIR=~/.nvm
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+source $DOTFILES_HOME/scripts/nvm.sh
 
 # Set up RVM
 export PATH="$PATH:$HOME/.rvm/bin"
 
-# Load tmuxp-completion script
-TMUXP_COMPLETION=$(which tmuxp.bash)
-if [ -f $TMUXP_COMPLETION ]; then
-    source $TMUXP_COMPLETION
+# Completion for tmuxp, if available
+if [[ -n $(which tmuxp) ]]; then
+    eval "$(_TMUXP_COMPLETE=source tmuxp)"
 fi
 
 # https://robinwinslow.co.uk/2012/07/20/tmux-and-ssh-auto-login-with-ssh-agent-finally

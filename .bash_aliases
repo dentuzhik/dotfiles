@@ -16,9 +16,17 @@ alias dotvim="vim ~/.vimrc"
 # GNU `ls`
 if ls --color &> /dev/null; then
     colorflag="--color=auto"
-# OS X `ls`
+# OSX `ls`
 else
     colorflag="-G"
+fi
+
+# GNU 'stat'
+if stat -c "%a %n" &> /dev/null; then
+    statoptions='-c "%A %a %n"'
+# OSX `stat`
+else
+    statoptions='-f "%A %a %N"'
 fi
 
 if [[ -z $SSH_TTY ]]; then
@@ -40,32 +48,11 @@ alias rgrep="rgrep --color=auto"
 
 alias ls="ls ${colorflag}"
 alias la="ls -A"
+alias lo="stat ${statoptions}"
 alias l="ls -AlhFG"
 
 alias h="history"
 alias j="jobs"
 
-alias vimod='vim -O $(git diff --name-only --diff-filter=M)'
-alias combmod='csscomb $(git diff --name-only --diff-filter=M)'
-
 alias ghcl=github_clone_organization
-
-# Work specific
-function wcp_dir {
-    echo ~/work/wc${1-1}/web4
-}
-
-function wcp {
-    cd $(wcp_dir $1)
-}
-
-function upw {
-    git co -q dev
-    git pull --ff-only upstream dev
-    git push
-
-    cd - 1> /dev/null
-}
-
-alias upw=upw
-alias wp=wcp
+alias t=testlio

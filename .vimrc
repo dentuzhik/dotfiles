@@ -91,9 +91,8 @@ Plugin 'mattn/emmet-vim'
 Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'digitaltoad/vim-jade'
-Plugin 'SevInf/vim-bemhtml'
 Plugin 'wavded/vim-stylus'
-Plugin 'othree/yajs.vim'
+Plugin 'yajs.vim'
 Plugin 'nginx.vim'
 
 call vundle#end()
