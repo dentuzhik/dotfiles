@@ -112,6 +112,13 @@ source $DOTFILES_HOME/scripts/nvm.sh
 # Set up RVM
 export PATH="$PATH:$HOME/.rvm/bin"
 
+# Set up z
+# Requires manual installation of z via brew
+source $(brew --prefix)/etc/profile.d/z.sh
+
+# Set up scm_breeze
+source $DOTFILES_HOME/scripts/scm_breeze.sh
+
 # Completion for tmuxp, if available
 if [[ -n $(which tmuxp) ]]; then
     eval "$(_TMUXP_COMPLETE=source tmuxp)"
