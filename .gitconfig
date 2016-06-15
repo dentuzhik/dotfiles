@@ -35,6 +35,7 @@
 [diff]
 	tool = vimdiff
 	noprefix = true
+	compactionHeuristic = true
 
 [merge]
 	log = true
