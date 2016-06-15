@@ -52,6 +52,10 @@ if [ -f $GIT_PROMPT_FILE ]; then
     PROMPT_COMMAND='__git_ps1 "'$BASE_PS1' \W" " '`prompt_red $'\xe2\x86\x92'`' "'
 fi
 
+if [[ -n $(type brew 2> /dev/null) ]]; then
+    PATH=$PATH:$(brew --prefix git)/share/git-core/contrib/diff-highlight
+fi
+
 # Loading chpwd hook implementation
 source $DOTFILES_HOME/scripts/chpwd.sh
 
