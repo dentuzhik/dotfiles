@@ -84,8 +84,13 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-repeat'
 
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'jasoncodes/ctrlp-modified.vim'
+
 Plugin 'airblade/vim-gitgutter'
 Plugin 'Raimondi/delimitMate'
+
+Plugin 'szw/vim-g'
 
 Plugin 'mattn/emmet-vim'
 Plugin 'mustache/vim-mustache-handlebars'
@@ -122,11 +127,12 @@ let NERDTreeAutoDeleteBuffer=1
 let NERDTreeAutoCenterThreshold=5
 let NERDTreeWinSize=35
 
-" Open NERDTree on vim startup
-" autocmd vimenter * NERDTree
 " Open NERDTree if no files specified
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | wincmd p | endif
+
+" Close Vim, if the only window left is NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 :nnoremap <leader>t :NERDTreeToggle<CR>
 :nnoremap <leader>f :NERDTreeFind<CR>
@@ -138,13 +144,48 @@ let delimitMate_balance_matchpairs=1
 
 let g:gitgutter_max_signs=1000
 
-let g:ctrlp_show_hidden=1
-let g:ctrlp_lazy_update=1
-let g:ctrlp_clear_cache_on_exit=0
-let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn))|node_modules$'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_reuse_window = 'nerd'
+" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup --hidden -g ""'
+" ag is fast enough that CtrlP doesn't need to cache
+let g:ctrlp_use_caching = 0
+
+map <Leader>m :CtrlPModified<CR>
+map <Leader>M :CtrlPBranch<CR>
 
 let g:pasta_paste_before_mapping = ',P'
 let g:pasta_paste_after_mapping = ',p'
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 2
+let g:syntastic_check_on_open = 1
+let g:syntastic_auto_jump = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_loc_list_height=5
+
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_json_checkers=['jsonlint']
+let g:syntastic_sh_checkers = ['shellcheck']
+
+function! ToggleErrors()
+    if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))
+        " No location/quickfix list shown, open syntastic error location panel
+        Errors
+    else
+        lclose
+    endif
+endfunction
+nnoremap <silent> <Leader>e :call ToggleErrors()<CR>
+nnoremap <silent> ]l :lnext<CR>
+nnoremap <silent> [l :lprev<CR>
+
+let g:vim_g_command = "Go"
+let g:vim_g_f_command = "Gf"
 
 autocmd BufRead,BufNewFile .jshintrc,.jscsrc,.bowerrc,.ember-cli set filetype=json
 autocmd BufRead,BufNewFile *nginx.conf* set filetype=nginx
@@ -157,5 +198,8 @@ autocmd! BufWritePost .vimrc source $MYVIMRC
 
 :vmap <C-S-Up> [egv
 :vmap <C-S-Down> ]egv
+
+iab reuqure require
+iab reuire require
 
 :nmap gV `[v`]
