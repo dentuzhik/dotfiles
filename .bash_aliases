@@ -10,7 +10,7 @@ alias ....="cd ../../.."
 alias -- -="cd -"
 
 alias dots="cd $DOTFILES_HOME"
-alias dotvim="vim ~/.vimrc"
+alias dotvim="cd $DOTFILES_HOME; vim $DOTFILES_HOME/.vimrc"
 
 # Detect which `ls` flavor is in use
 # GNU `ls`

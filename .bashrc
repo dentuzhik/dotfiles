@@ -1,3 +1,5 @@
+# shellcheck source=/dev/null
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -25,7 +27,7 @@ fi
 export PATH="/usr/local/sbin:$PATH"
 
 # Load bash-completion script
-if [ -f $BASH_COMPLETION_FILE ]; then
+if [ -f "$BASH_COMPLETION_FILE" ]; then
     source $BASH_COMPLETION_FILE
 fi
 
@@ -39,17 +41,17 @@ if [ -f $GIT_COMPLETION_FILE ]; then
 fi
 
 # A bit fancier PS1
-BASE_PS1='['`prompt_blue '\t'`' '`prompt_yellow '#\#'`']'
-PS1=$BASE_PS1' \W '`prompt_red $'\xe2\x86\x92'`' '
+BASE_PS1='['$(prompt_blue '\t')']'
+PS1=$BASE_PS1' \W '$(prompt_red $'\xe2\x86\x92')' '
 
 if [ -f $GIT_PROMPT_FILE ]; then
     source $GIT_PROMPT_FILE
 
-    GIT_PS1_SHOWDIRTYSTATE=1
-    GIT_PS1_SHOWCOLORHINTS=1
+    export GIT_PS1_SHOWDIRTYSTATE=1
+    export GIT_PS1_SHOWCOLORHINTS=1
     # GIT_PS1_SHOWUNTRACKEDFILES=1
-    GIT_PS1_SHOWUPSTREAM='verbose'
-    PROMPT_COMMAND='__git_ps1 "'$BASE_PS1' \W" " '`prompt_red $'\xe2\x86\x92'`' "'
+    export GIT_PS1_SHOWUPSTREAM='verbose'
+    PROMPT_COMMAND='__git_ps1 "'$BASE_PS1' \W" " '$(prompt_red $'\xe2\x86\x92')' "'
 fi
 
 if [[ -n $(type brew 2> /dev/null) ]]; then
@@ -62,7 +64,7 @@ source $DOTFILES_HOME/scripts/chpwd.sh
 # Redefining cd to export chpwd hook
 function cd()
 {
-    builtin cd $@
+    builtin cd "$@"
     chpwd
 }
 
@@ -105,7 +107,7 @@ shopt -s globstar 2> /dev/null
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # The one and the only
-EDITOR='vim'
+export EDITOR='vim'
 
 # Heroku Toolbelt
 PATH=$PATH:/usr/local/heroku/bin
@@ -126,6 +128,9 @@ source $(brew --prefix)/etc/profile.d/z.sh
 # Set up scm_breeze
 source $DOTFILES_HOME/scripts/scm_breeze.sh
 
+# Set up thefuck
+eval "$(thefuck --alias)"
+
 # Completion for tmuxp, if available
 if [[ -n $(which tmuxp) ]]; then
     eval "$(_TMUXP_COMPLETE=source tmuxp)"
@@ -137,7 +142,7 @@ if [ -z "$TMUX" ]; then
     # We logged in via SSH
     if [ ! -z "$SSH_TTY" ]; then
 
-        if [ ! -z "$SSH_AUTH_SOCK" -a "$SSH_AUTH_SOCK" != "$HOME/.ssh/agent_sock" ] ; then
+        if [ ! -z "$SSH_AUTH_SOCK" ] && [ "$SSH_AUTH_SOCK" != "$HOME/.ssh/agent_sock" ] ; then
             unlink "$HOME/.ssh/agent_sock" 2>/dev/null
             ln -s "$SSH_AUTH_SOCK" "$HOME/.ssh/agent_sock"
             export SSH_AUTH_SOCK="$HOME/.ssh/agent_sock"
