@@ -92,7 +92,7 @@ Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'digitaltoad/vim-jade'
 Plugin 'wavded/vim-stylus'
-Plugin 'yajs.vim'
+Plugin 'othree/yajs.vim'
 Plugin 'nginx.vim'
 
 call vundle#end()
