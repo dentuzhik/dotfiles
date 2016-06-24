@@ -113,6 +113,9 @@ PATH=$PATH:/usr/local/heroku/bin
 # Set up NVM
 source $DOTFILES_HOME/scripts/nvm.sh
 
+# Set up npm completion
+source $DOTFILES_HOME/scripts/npm_completion.sh
+
 # Set up RVM
 export PATH="$PATH:$HOME/.rvm/bin"
 
