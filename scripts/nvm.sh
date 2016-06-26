@@ -1,3 +1,4 @@
+# shellcheck source=/dev/null
 source $DOTFILES_HOME/scripts/colors.sh
 
 export NVM_DIR="$HOME/.nvm"
@@ -25,7 +26,7 @@ function setup_nvm() {
 }
 
 function upgrade_nvm() {
-    local date_difference=$(( ($(gdate --date="$(get_current_date)" +%s) - $(gdate --date="$(cat .nvmupdate)" +%s) )/(60*60*24) ))
+    local date_difference=$(( ($(gdate --date="$(get_current_date)" +%s) - $(gdate --date="$(cat $HOME/.nvmupdate)" +%s) )/(60*60*24) ))
 
     # Update treshold could be easily extracted into environment variable
     if [[ $date_difference -gt 7 ]]; then
@@ -58,7 +59,7 @@ function install_nvm() {
     # Postinstall steps
     nvm install node
     nvm alias default system
-    echo $(get_current_date) > .nvmupdate
+    echo $(get_current_date) > "$HOME/.nvmupdate"
 
     # Clear all the mess
     clear
