@@ -19,8 +19,8 @@ source $DOTFILES_HOME/scripts/helpers.sh
 BASH_COMPLETION_FILE=/etc/bash_completion
 
 # If default script is not found, try to replace it with Brew version
-if [[ -n $(type brew 2> /dev/null) ]]; then
-    BASH_COMPLETION_FILE=$(brew --prefix)$BASH_COMPLETION_FILE
+if [[ -n $(type brew 2> /dev/null) ]] && [[ -f $(brew --prefix)/share/bash-completion/bash_completion ]]; then
+    BASH_COMPLETION_FILE=$(brew --prefix)/share/bash-completion/bash_completion
 fi
 
 # Add path for Homebrew cask
