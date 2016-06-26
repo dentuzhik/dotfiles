@@ -57,8 +57,6 @@ function install_nvm() {
     source "$NVM_DIR/nvm.sh"
 
     # Postinstall steps
-    nvm install node
-    nvm alias default system
     echo $(get_current_date) > "$HOME/.nvmupdate"
 
     # Clear all the mess
