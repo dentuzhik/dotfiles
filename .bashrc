@@ -125,11 +125,20 @@ export PATH="$PATH:$HOME/.rvm/bin"
 # Requires manual installation of z via brew
 source $(brew --prefix)/etc/profile.d/z.sh
 
+# Z integration with fzf-tmux
+unalias z 2> /dev/null
+z() {
+  [ $# -gt 0 ] && _z "$*" && return
+    cd "$(_z -l 2>&1 | fzf-tmux +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
+}
+
 # Set up scm_breeze
 source $DOTFILES_HOME/scripts/scm_breeze.sh
 
 # Set up thefuck
 eval "$(thefuck --alias)"
+
+export EVENT_NOKQUEUE=1
 
 # Completion for tmuxp, if available
 if [[ -n $(which tmuxp) ]]; then
@@ -154,3 +163,10 @@ if [ -z "$TMUX" ]; then
         fi
     fi
 fi
+
+YARN_PATH=$(yarn global bin)
+export PATH=$PATH:$YARN_PATH
+
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

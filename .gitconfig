@@ -10,6 +10,7 @@
 	# Make `git rebase` safer on OS X
 	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
 	trustctime = false
+	commentChar = %
 
 [credential]
 	helper = cache --timeout=28800
@@ -88,10 +89,6 @@
 	team = shortlog --summary --numbered
 	show-merge = "!f() { git show $(git rev-list $1...HEAD --merges --topo-order | tail -1); }; f"
 	spu = !sh -c 'git push origin -u ${1-"$(git rev-parse --abbrev-ref HEAD)"}'
-	# Local shorthands
-	sco = !sh -c 'git co SERP-$0'
-	scb = !sh -c 'git co -b SERP-$0'
-	sbd = !sh -c 'git br -d SERP-$0'
 
 # URL shorthands
 [url "git@github.com:"]
@@ -103,13 +100,14 @@
 [url "git://github.com/"]
 	insteadOf = "github:"
 
-[url "git@github.yandex-team.ru:"]
-	pushInsteadOf = "ghyt:"
-	pushInsteadOf = "git://github.yandex-team.ru/"
-	pushInsteadOf = "https://github.yandex-team.ru/"
+[url "git@gitlab.com:"]
+	insteadOf = "gl:"
+	pushInsteadOf = "gitlab:"
+	pushInsteadOf = "git://gitlab.com/"
+	pushInsteadOf = "https://gitlab.com/"
 
-[url "https://github.yandex-team.ru/"]
-	insteadOf = "ghyt:"
+[url "git://gitlab.com/"]
+	insteadOf = "gitlab:"
 
 [filter "lfs"]
 	required = true

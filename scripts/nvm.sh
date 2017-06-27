@@ -43,6 +43,8 @@ function upgrade_nvm() {
                     install_nvm $latest_nvm_release
                 ;;
                 'n')
+                    # Remember the choice
+                    echo $(get_current_date) > "$HOME/.nvmupdate"
                     return
                 ;;
             esac
