@@ -173,10 +173,6 @@ map <Leader>M :CtrlPBranch<CR>
 let g:airline#extensions#ale#enabled = 1
 " let g:ale_open_list = 1
 let g:ale_echo_cursor = 1
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'scss': ['stylelint']
-\}
 
 function! ToggleErrors()
     if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))

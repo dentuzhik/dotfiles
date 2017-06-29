@@ -18,6 +18,7 @@ function setup_nvm() {
     if [ ! -d "$NVM_DIR" ]; then
         echo 'Installing latest version of nvm'
         install_nvm $latest_nvm_release
+        echo $(get_current_date) > "$HOME/.nvmupdate"
         return
     fi
 
@@ -26,7 +27,7 @@ function setup_nvm() {
 }
 
 function upgrade_nvm() {
-    local date_difference=$(( ($(gdate --date="$(get_current_date)" +%s) - $(gdate --date="$(cat $HOME/.nvmupdate)" +%s) )/(60*60*24) ))
+    local date_difference=$(( ($(gdate --date="$(get_current_date)" +%s) - $(gdate --date="$(cat $HOME/.nvmupdate &> /dev/null)" +%s) )/(60*60*24) ))
 
     # Update treshold could be easily extracted into environment variable
     if [[ $date_difference -gt 7 ]]; then
