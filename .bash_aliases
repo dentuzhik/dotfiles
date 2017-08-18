@@ -112,8 +112,14 @@ is_in_git_repo() {
   git rev-parse HEAD > /dev/null 2>&1
 }
 
+vimod() {
+    is_in_git_repo || return
+    local files
+    IFS=$'\n' files=($(git ls-files -m | fzf-tmux --multi --select-1 --exit-0))
+    [[ -n "$files" ]] && vim -O "${files[@]}"
+}
+
 fgs() {
-  is_in_git_repo || return
   git -c color.status=always status --short |
   fzf-tmux -m --ansi --nth 2..,.. \
     --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1}) | head -500' |
@@ -124,7 +130,7 @@ fgb() {
   is_in_git_repo || return
   git branch -a --color=always | grep -v '/HEAD\s' | sort |
   fzf-tmux --ansi --multi --tac --preview-window right:70% \
-    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
+    --preview 'git l --color=always $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
   sed 's/^..//' | cut -d' ' -f1 |
   sed 's#^remotes/##'
 }
@@ -197,6 +203,7 @@ fsw() {
     {}
     FZF-EOF"
 }
+
 
 bind '"\er": redraw-current-line'
 bind '"\C-g\C-f": "$(fgs)\e\C-e\er"'

@@ -92,6 +92,7 @@ Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'sickill/vim-pasta'
 Plugin 'sjl/gundo.vim'
+Plugin 'shime/vim-livedown'
 
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
@@ -173,6 +174,10 @@ map <Leader>M :CtrlPBranch<CR>
 let g:airline#extensions#ale#enabled = 1
 " let g:ale_open_list = 1
 let g:ale_echo_cursor = 1
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'scss': ['stylelint']
+\}
 
 function! ToggleErrors()
     if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))
@@ -205,11 +210,13 @@ let NERDSpaceDelims=1
 let delimitMate_balance_matchpairs=1
 let g:gitgutter_max_signs=1000
 
+autocmd BufRead,BufNewFile *.mjs set filetype=javascript
 autocmd BufRead,BufNewFile .eslintrc set filetype=json
 autocmd BufRead,BufNewFile *nginx.conf* set filetype=nginx
 autocmd! BufWritePost .vimrc source $MYVIMRC
 
 :nmap <leader>u :GundoToggle<CR>
+:nmap <leader>m :LivedownPreview<CR>
 
 :nmap <C-S-Up> [e
 :nmap <C-S-Down> ]e
