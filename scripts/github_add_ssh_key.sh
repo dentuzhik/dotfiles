@@ -50,6 +50,8 @@ machine_name=`whoami`'@'`uname -n`
 read -p 'Enter your Github username: ' gh_username
 read -s -p 'Enter your Github password: ' gh_password
 echo
+read -s -p 'Enter your Github MFA code: ' gh_mfa_code
+echo
 
 key_file=~/.ssh/"$key_file_name"_rsa
 
@@ -74,7 +76,7 @@ echo "$public_key"
 read -p 'Do you want to continue (y/n)? ' yn
 case $yn in
     'y')
-        curl -su $gh_username:$gh_password -X POST -d "$data" $api_url
+        curl -su $gh_username:$gh_password -H "X-GitHub-OTP: $gh_mfa_code" -X POST -d "$data" $api_url
         echo 'Github key was successfully created.'
     ;;
     'n')

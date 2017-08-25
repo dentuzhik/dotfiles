@@ -54,11 +54,9 @@ alias l="ls -AlhFG"
 alias h="history"
 alias j="jobs"
 
+alias dc=docker
+alias dcp=docker-compose
 alias ghcl=github_clone_organization
-alias start-testlio='tmux kill-session -t work; docker-machine kill; docker-machine start; docker-machine env; eval $(docker-machine env); source ~/work/testlio-toolbox/testlio.sh; t hosts; tmuxp load ~/.tmuxp.yaml'
-alias t=testlio
-
-export TOT=$(cat ~/.testlio_oauth_token)
 
 function req() {
     http $@ "Authorization: Bearer $TOT"
