@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			@font-face {
+				font-family: 'Open Sans';
+				src: url('./fonts/OpenSans-Light-webfont.eot');
+				src: url('./fonts/OpenSans-Light-webfont.eot?#iefix')         format('embedded-opentype'),
+					 url('./fonts/OpenSans-Light-webfont.woff')               format('woff'),
+					 url('./fonts/OpenSans-Light-webfont.ttf')                format('truetype'),
+					 url('./fonts/OpenSans-Light-webfont.svg#open_sanslight') format('svg');
+				font-weight: normal;
+				font-style: normal;
+			}
+
+			html, body {
+				border:  0;
+				height:  100%;
+				margin:  0;
+				padding: 0;
+				width:   100%;
+			}
+
+			body {
+				-webkit-transition: background-color 0.8s;
+				transition: background-color 0.8s;
+			}
+
+			.main {
+				position:   absolute;
+				top:        50%;
+				text-align: center;
+				-webkit-transform: translateY(-50%);
+				transform:  translateY(-50%);
+				width:      100%;
+			}
+
+			h1, h2 {
+				color:       #fff;
+				font-family: 'Open Sans';
+				font-weight: 300;
+			}
+
+			h1 { font-size: 120px; }
+			h2 { font-size: 30px;  }
+		</style>
+	</head>
+
+	<body>
+		<main class="main">
+			<h1 id="time"></h1>
+			<h2 id="color"></h2>
+		</main>
+
+		<script>
+			function $(s) {
+				return document.querySelector(s);
+			}
+
+			function pad(str, pad) {
+				return (pad + str).slice(-pad.length - 1);
+			}
+
+			(function dotime () {
+				var date  = new Date();
+				var hours = pad(date.getHours(),   '0');
+				var mins  = pad(date.getMinutes(), '0');
+				var secs  = pad(date.getSeconds(), '0');
+				var color = '#' + hours + mins + secs;
+
+				$('#time').innerHTML  = [hours, mins, secs].join(' : ');
+				$('#color').innerHTML = color;
+
+				document.body.style.background = color;
+
+				setTimeout(function () {
+					dotime();
+				}, 1000);
+			}());
+		</script>
+	</body>
+</html>
