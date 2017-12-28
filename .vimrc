@@ -55,83 +55,88 @@ set sidescrolloff=5
 filetype off
 
 " Automatically setting up Vundle, if not installed
-let has_vundle=1
-if !filereadable(expand('~/.vim/bundle/Vundle.vim/README.md'))
-    let has_vundle=0
-    silent !mkdir -p ~/.vim/bundle
-    silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+let has_plug=1
+if !filereadable(expand('~/.local/share/nvim/site/autoload/plug.vim'))
+    let has_plug=0
+    !echo 'Fetching vim-plug into ~/.local/share/nvim/site/autoload/plug.vim'
+    !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    :q
 endif
 
 " Stuff, required for Vundle to work
 set nocompatible
 filetype off
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.config/nvim/plugged')
 
 " let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'altercation/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized'
 
 " Syntax highlighting plugins
-Plugin 'othree/html5.vim'
-Plugin 'othree/yajs.vim'
-Plugin 'othree/es.next.syntax.vim'
-Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'elzr/vim-json'
+Plug 'othree/html5.vim'
+Plug 'othree/yajs.vim'
+Plug 'othree/es.next.syntax.vim'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'elzr/vim-json'
+Plug 'tmux-plugins/vim-tmux'
+Plug 'digitaltoad/vim-jade'
+Plug 'wavded/vim-stylus'
+Plug 'neoclide/vim-jsx-improve'
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'chr4/nginx.vim'
 
-Plugin 'digitaltoad/vim-jade'
-Plugin 'wavded/vim-stylus'
-Plugin 'mxw/vim-jsx'
-Plugin 'mustache/vim-mustache-handlebars'
-Plugin 'nginx.vim'
+" IDE-like features
+Plug 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'airblade/vim-gitgutter'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'jasoncodes/ctrlp-modified.vim'
+Plug 'mileszs/ack.vim'
+Plug 'dyng/ctrlsf.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'shime/vim-livedown'
+Plug 'mattn/emmet-vim'
+Plug 'sjl/gundo.vim'
+Plug 'heavenshell/vim-jsdoc'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
-Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'sickill/vim-pasta'
-Plugin 'sjl/gundo.vim'
-Plugin 'shime/vim-livedown'
+" Session management plugins
+Plug 'tpope/vim-obsession'
+Plug 'dhruvasagar/vim-prosession'
 
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
+" Filesystem integrations
+Plug 'editorconfig/editorconfig-vim'
+Plug 'tpope/vim-projectionist'
 
-Plugin 'heavenshell/vim-jsdoc'
-Plugin 'w0rp/ale'
-Plugin 'ternjs/tern_for_vim'
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'mattn/emmet-vim'
-Plugin 'othree/jspc.vim'
+" Editor enhancements
+Plug 'scrooloose/nerdcommenter'
+Plug 'Raimondi/delimitMate'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-repeat'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'sickill/vim-pasta'
 
-Plugin 'vim-airline/vim-airline'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-projectionist'
+" Linting, Autocompletion & Snippets
+Plug 'w0rp/ale'
 
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'jasoncodes/ctrlp-modified.vim'
-
-Plugin 'mileszs/ack.vim'
-Plugin 'dyng/ctrlsf.vim'
-
-Plugin 'airblade/vim-gitgutter'
-Plugin 'Raimondi/delimitMate'
-
-Plugin 'terryma/vim-multiple-cursors'
-
-Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plugin 'junegunn/fzf.vim'
-
-call vundle#end()
-
-" Installing Vundle plugins the first time, quits when done
-if has_vundle == 0
-    :silent! PluginInstall
-    :q
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
 endif
+
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'wokalski/autocomplete-flow'
+Plug 'othree/jspc.vim'
+
+call plug#end()
 
 filetype plugin indent on
 filetype indent on
@@ -168,16 +173,21 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup --hidden -g ""'
 let g:ctrlp_use_caching = 0
 let g:ctrlp_map = '<c-_>'
 
-map <Leader>m :CtrlPModified<CR>
-map <Leader>M :CtrlPBranch<CR>
+map <leader>m :CtrlPModified<CR>
+map <leader>M :CtrlPBranch<CR>
 
 let g:airline#extensions#ale#enabled = 1
 " let g:ale_open_list = 1
 let g:ale_echo_cursor = 1
+let g:ale_fix_on_save = 1
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'scss': ['stylelint']
 \}
+let g:ale_fixers = {
+\   'javascript': ['eslint']
+\ }
+nmap <leader>f :ALEFix<CR>
 
 function! ToggleErrors()
     if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))
@@ -186,7 +196,7 @@ function! ToggleErrors()
         lclose
     endif
 endfunction
-nnoremap <silent> <Leader>e :call ToggleErrors()<CR>
+nnoremap <silent> <leader>e :call ToggleErrors()<CR>
 nnoremap <silent> ]l :lnext<CR>
 nnoremap <silent> [l :lprev<CR>
 
@@ -205,6 +215,25 @@ function! Multiple_cursors_after()
     endif
 endfunction
 
+" Enable deoplete & neosnippet
+let g:deoplete#enable_at_startup = 1
+
+" Start: deoplete-flow
+function! StrTrim(txt)
+  return substitute(a:txt, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
+endfunction
+
+let g:flow_path = StrTrim(system('PATH=$(npm bin):$PATH && which flow'))
+
+if g:flow_path != 'flow not found'
+  let g:deoplete#sources#flow#flow_bin = g:flow_path
+endif
+" End: deoplete-flow
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-t>"
+let g:UltiSnipsJumpBackwardTrigger="<c-g>"
+
 " Other plugins settings
 let NERDSpaceDelims=1
 let delimitMate_balance_matchpairs=1
@@ -218,11 +247,11 @@ autocmd! BufWritePost .vimrc source $MYVIMRC
 :nmap <leader>u :GundoToggle<CR>
 :nmap <leader>m :LivedownPreview<CR>
 
-:nmap <C-S-Up> [e
-:nmap <C-S-Down> ]e
+:nnoremap <C-I> [e
+:nnoremap <C-K> ]e
 
-:vmap <C-S-Up> [egv
-:vmap <C-S-Down> ]egv
+:vnoremap <C-I> [egv
+:vnoremap <C-K> ]egv
 
 iab reuqure require
 iab reuire require
@@ -234,5 +263,5 @@ if executable('ag')
 endif
 
 cnoreabbrev ag Ack!
-:nnoremap <Leader>a :Ack!<CR>
-:vnoremap <Leader>a y:Ack! <C-r>=fnameescape(@")<CR><CR>
+:nnoremap <leader>a :Ack!<CR>
+:vnoremap <leader>a y:Ack! <C-r>=fnameescape(@")<CR><CR>

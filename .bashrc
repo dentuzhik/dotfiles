@@ -106,8 +106,8 @@ shopt -s globstar 2> /dev/null
 # Make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# The one and the only
-export EDITOR='vim'
+# The king is dead, long live the king
+export EDITOR='nvim'
 
 # Heroku Toolbelt
 PATH=$PATH:/usr/local/heroku/bin
@@ -139,6 +139,10 @@ source $DOTFILES_HOME/scripts/scm_breeze.sh
 eval "$(thefuck --alias)"
 
 export EVENT_NOKQUEUE=1
+
+if [[ ! -d $HOME/.vim/undodir ]]; then
+    mkdir ~/.vim/undodir
+fi
 
 # Completion for tmuxp, if available
 if [[ -n $(which tmuxp) ]]; then
