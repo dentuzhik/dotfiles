@@ -1,5 +1,8 @@
 shopt -s expand_aliases
 
+alias ovim='vim'
+alias vim='nvim'
+
 # Enable aliases to be sudo'ed
 alias sudo="sudo "
 
@@ -11,6 +14,7 @@ alias -- -="cd -"
 
 alias dots="cd $DOTFILES_HOME"
 alias dotvim="vim $DOTFILES_HOME/.vimrc"
+alias dotnvim="vim $DOTFILES_HOME/.nvim/init.vim"
 
 # Detect which `ls` flavor is in use
 # GNU `ls`
@@ -57,9 +61,11 @@ alias j="jobs"
 alias dc=docker
 alias dcp=docker-compose
 alias ghcl=github_clone_organization
+alias dclimg="docker images -q --filter dangling=true | xargs docker rmi"
 
+AAT=`cat ~/.airlane_dev_oauth_token`
 function req() {
-    http $@ "Authorization: Bearer $TOT"
+    http $@ "Authorization: $AAT"
 }
 
 # Always use fzf-tmux executable
@@ -157,17 +163,25 @@ fgr() {
   cut -d$'\t' -f1
 }
 
-# fbr - checkout git branch
+fct() {
+    local tags target
+    tags=$(git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
+    target=$(
+    echo "$tags" |
+    fzf-tmux -d30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
+    git checkout $(echo "$target" | awk '{print $2}')
+}
+
 fco() {
-    local tags branches target
-    tags=$(
-    git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
+    local branches target
+
     branches=$(
     git branch --all | grep -v HEAD             |
     sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
     sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
+
     target=$(
-    (echo "$tags"; echo "$branches") |
+    echo "$branches" |
     fzf-tmux -d30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
     git checkout $(echo "$target" | awk '{print $2}')
 }

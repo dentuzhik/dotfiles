@@ -17,6 +17,10 @@
 
 [color]
 	ui = true
+    diff = true
+    branch = true
+    status = true
+    pager = true
 	interactive = true
 
 [interactive]
@@ -65,8 +69,8 @@
 	# Short format with branch info
 	s = status -sb
 	st = status
-	di = diff
-	dc = diff --cached
+	di = diff --color
+	dc = diff --color --cached
 	co = checkout
 	cb = checkout -b
 	ci = commit
@@ -117,3 +121,5 @@
 [lfs]
 	batch = true
 	concurrenttransfers = 15
+[hub]
+	protocol = ssh

@@ -1,4 +1,10 @@
-function curl_git_scripts {
+download_tmux_plugin_manager() {
+    if [ ! -d ~/.tmux/plugins/tpm ]; then
+        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    fi
+}
+
+curl_git_scripts() {
     local target_dir=$1
     local git_completion_url='https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash'
     local git_prompt_url='https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh'
@@ -17,21 +23,19 @@ function curl_git_scripts {
 }
 
 # Basic symlinking
-function link {
+link() {
     local base_dir=$1
     local entries=$2
     local is_overwritten=$3
 
     for entry_name in $entries; do
-        ln -fFns $base_dir/$entry_name ~/$entry_name
-        if [ ! $is_overwritten ]; then
-            echo 'Linked '$entry_name'.'
+        ln -fFns "$base_dir/$entry_name" ~/"$entry_name"
+        if [ ! "$is_overwritten" ]; then
+            echo "Linked $entry_name."
         else
-            echo 'Linked ovewritten '$entry_name'.'
+            echo "Linked ovewritten $entry_name."
         fi
     done
-
-    echo 'Done.'
 }
 
 : ${dotfiles_dir:=~/dotfiles}
@@ -43,7 +47,14 @@ read -p 'Do you want to continue (y/n)? ' yn
 case $yn in
     'y')
         curl_git_scripts ~
+        download_tmux_plugin_manager
         link $base_dir "$entries"
+
+        # Set up Neovim
+        mkdir -p ~/.config/nvim
+        cp -rf .nvim/init.vim ~/.config/nvim
+        echo 'Linked Neovim configuration'
+        echo 'Done!'
     ;;
     'n')
         echo 'Aborted.'
