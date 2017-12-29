@@ -68,6 +68,8 @@ function req() {
     http $@ "Authorization: $AAT"
 }
 
+alias tpl='tmuxp load .'
+
 # Always use fzf-tmux executable
 alias fzf='fzf-tmux -d 30'
 alias fzf-tmux='fzf-tmux -d 30'
