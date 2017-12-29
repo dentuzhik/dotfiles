@@ -3,7 +3,7 @@
 	email = dentuzhik@gmail.com
 
 [core]
-	editor = vim
+	editor = nvim
 	whitespace = -l
 	autocrlf = input
 	excludesfile = ~/.gitignore
@@ -123,3 +123,7 @@
 	concurrenttransfers = 15
 [hub]
 	protocol = ssh
+[github]
+	user = dentuzhik
+[ghi]
+	token = !security find-internet-password -a dentuzhik -s github.com -l 'ghi token' -w

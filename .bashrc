@@ -168,7 +168,7 @@ if [ -z "$TMUX" ]; then
     fi
 fi
 
-if [[ -n $(which tmuxp) ]]; then
+if [[ -n $(which yarn) ]]; then
     YARN_PATH=$(yarn global bin)
     export PATH=$PATH:$YARN_PATH
 fi
