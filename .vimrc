@@ -111,7 +111,7 @@ Plug 'tpope/vim-projectionist'
 
 " Editor enhancements
 Plug 'scrooloose/nerdcommenter'
-Plug 'Raimondi/delimitMate'
+Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
@@ -121,6 +121,7 @@ Plug 'sickill/vim-pasta'
 
 " Linting, Autocompletion & Snippets
 Plug 'w0rp/ale'
+Plug 'ternjs/tern_for_vim'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -219,6 +220,8 @@ endfunction
 let g:deoplete#enable_at_startup = 1
 
 " Start: deoplete-flow
+" Configuration to prefer local flow (from node_modules) to a globally
+" installed version
 function! StrTrim(txt)
   return substitute(a:txt, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
 endfunction
@@ -229,6 +232,20 @@ if g:flow_path != 'flow not found'
   let g:deoplete#sources#flow#flow_bin = g:flow_path
 endif
 " End: deoplete-flow
+"
+" Start: tern & deoplete-ternjs
+let g:tern#command = ["tern"]
+let g:tern#arguments = ["--persistent"]
+let g:tern_map_keys = 1
+
+let g:deoplete#sources#ternjs#types = 1
+let g:deoplete#sources#ternjs#include_keywords = 1
+
+let g:deoplete#sources#ternjs#filetypes = [
+\   'jsx',
+\   'javascript.jsx',
+\ ]
+" End: deoplete-ternjs
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-t>"

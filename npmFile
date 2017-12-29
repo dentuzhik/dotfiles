@@ -8,3 +8,4 @@ livedown
 npm-check
 serve
 tern
+flow-typed
