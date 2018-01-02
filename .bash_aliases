@@ -1,8 +1,6 @@
 shopt -s expand_aliases
 
-alias ovim='vim'
 alias vim='nvim'
-
 # Enable aliases to be sudo'ed
 alias sudo="sudo "
 
@@ -63,10 +61,12 @@ alias dcp=docker-compose
 alias ghcl=github_clone_organization
 alias dclimg="docker images -q --filter dangling=true | xargs docker rmi"
 
-AAT=`cat ~/.airlane_dev_oauth_token`
-function req() {
-    http $@ "Authorization: $AAT"
-}
+if [ -f ~/.airlane_dev_oauth_token ]; then
+    AAT=$(cat ~/.airlane_dev_oauth_token)
+    function req() {
+        http "$@" "Authorization: $AAT"
+    }
+fi
 
 alias tpl='tmuxp load .'
 
