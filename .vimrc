@@ -69,7 +69,8 @@ filetype off
 
 call plug#begin('~/.config/nvim/plugged')
 
-" let Vundle manage Vundle, required
+Plug 'rakr/vim-one'
+Plug 'joshdick/onedark.vim'
 Plug 'altercation/vim-colors-solarized'
 
 " Syntax highlighting plugins
@@ -92,6 +93,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jasoncodes/ctrlp-modified.vim'
+Plug 'DavidEGx/ctrlp-smarttabs'
 Plug 'mileszs/ack.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'tpope/vim-fugitive'
@@ -146,9 +148,21 @@ syntax enable
 syntax sync minlines=256
 set synmaxcol=256
 
+" disable Background Color Erase (BCE) so that color schemes
+" render properly when inside 256-color tmux and GNU screen.
+" see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+set t_ut=
+set t_8b=^[[48;2;%lu;%lu;%lum
+set t_8f=^[[38;2;%lu;%lu;%lum
+" set termguicolors
+
 let g:solarized_termcolors=256
 set background=dark
 colorscheme solarized
+
+" let g:one_allow_italics = 1
+" set background=dark
+" colorscheme one
 
 " NERDTree settings
 let NERDTreeMinimalUI=1
@@ -174,14 +188,17 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup --hidden -g ""'
 " ag is fast enough that CtrlP doesn't need to cache
 let g:ctrlp_use_caching = 0
 let g:ctrlp_map = '<c-_>'
+let g:ctrlp_extensions = ['smarttabs']
+:nnoremap <leader>t :CtrlPSmartTabs<CR>
 
 map <leader>m :CtrlPModified<CR>
-map <leader>M :CtrlPBranch<CR>
+map <leader>b :CtrlPBranch<CR>
 
 let g:airline#extensions#ale#enabled = 1
 " let g:ale_open_list = 1
 let g:ale_echo_cursor = 1
 let g:ale_fix_on_save = 1
+let g:ale_completion_enabled = 1
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'scss': ['stylelint']
@@ -266,7 +283,7 @@ autocmd BufRead,BufNewFile *nginx.conf* set filetype=nginx
 autocmd! BufWritePost .vimrc source $MYVIMRC
 
 :nmap <leader>u :GundoToggle<CR>
-:nmap <leader>m :LivedownPreview<CR>
+:nmap <leader>M :LivedownPreview<CR>
 
 :nnoremap <C-I> [e
 :nnoremap <C-K> ]e
