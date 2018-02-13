@@ -83,6 +83,7 @@ Plug 'digitaltoad/vim-jade'
 Plug 'wavded/vim-stylus'
 Plug 'neoclide/vim-jsx-improve'
 Plug 'mustache/vim-mustache-handlebars'
+Plug 'leafgarland/typescript-vim'
 Plug 'chr4/nginx.vim'
 
 " IDE-like features
@@ -189,6 +190,9 @@ let g:ale_fixers = {
 \   'javascript': ['eslint']
 \ }
 nmap <leader>f :ALEFix<CR>
+
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
 
 function! ToggleErrors()
     if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))
