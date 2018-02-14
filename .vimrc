@@ -189,10 +189,8 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup --hidden -g ""'
 let g:ctrlp_use_caching = 0
 let g:ctrlp_map = '<c-_>'
 let g:ctrlp_extensions = ['smarttabs']
-:nnoremap <leader>t :CtrlPSmartTabs<CR>
-
+map <leader>t :CtrlPSmartTabs<CR>
 map <leader>m :CtrlPModified<CR>
-map <leader>b :CtrlPBranch<CR>
 
 let g:airline#extensions#ale#enabled = 1
 " let g:ale_open_list = 1
@@ -206,7 +204,7 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \   'javascript': ['eslint']
 \ }
-nmap <leader>f :ALEFix<CR>
+nmap <leader>F :ALEFix<CR>
 
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
@@ -221,21 +219,6 @@ endfunction
 nnoremap <silent> <leader>e :call ToggleErrors()<CR>
 nnoremap <silent> ]l :lnext<CR>
 nnoremap <silent> [l :lprev<CR>
-
-" Called once right before you start selecting multiple cursors
-function! Multiple_cursors_before()
-    if exists(':NeoCompleteLock')==2
-        exe 'NeoCompleteLock'
-    endif
-endfunction
-
-" Called once only when the multiple selection is canceled
-" (default <Esc>)
-function! Multiple_cursors_after()
-    if exists(':NeoCompleteUnlock')==2
-        exe 'NeoCompleteUnlock'
-    endif
-endfunction
 
 " Enable deoplete & neosnippet
 let g:deoplete#enable_at_startup = 1
@@ -303,3 +286,8 @@ endif
 cnoreabbrev ag Ack!
 :nnoremap <leader>a :Ack!<CR>
 :vnoremap <leader>a y:Ack! <C-r>=fnameescape(@")<CR><CR>
+
+:nmap <leader>f <Pulug>CtrlSFPrompt
+:vmap <leader>f <Plug>CtrlSFVwordExec
+:nmap <leader>w <Plug>CtrlSFCCwordPath
+:nmap <leader>W <Plug>CtrlSFCwordPath

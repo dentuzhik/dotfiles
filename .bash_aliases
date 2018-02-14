@@ -121,7 +121,7 @@ is_in_git_repo() {
 vimod() {
     is_in_git_repo || return
     local files
-    IFS=$'\n' files=($(git ls-files -m | fzf-tmux --multi --select-1 --exit-0))
+    IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; echo "$(git ls-files --modified --others --exclude-standard)" ; } | fzf-tmux --multi --select-1 --exit-0))
     [[ -n "$files" ]] && vim -O "${files[@]}"
 }
 
