@@ -94,6 +94,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jasoncodes/ctrlp-modified.vim'
 Plug 'DavidEGx/ctrlp-smarttabs'
+Plug 'tacahiroy/ctrlp-funky'
 Plug 'mileszs/ack.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'tpope/vim-fugitive'
@@ -183,14 +184,18 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 :nnoremap <leader>` :NERDTreeFind<CR>
 
 let g:ctrlp_working_path_mode = 'ra'
-" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup --hidden -g ""'
+"ctrl+p ignore files in .gitignore
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 " ag is fast enough that CtrlP doesn't need to cache
 let g:ctrlp_use_caching = 0
 let g:ctrlp_map = '<c-_>'
 let g:ctrlp_extensions = ['smarttabs']
 map <leader>t :CtrlPSmartTabs<CR>
 map <leader>m :CtrlPModified<CR>
+
+let g:ctrlp_funky_matchtype = 'path'
+let g:ctrlp_funky_syntax_highlight = 1
+nnoremap <leader>fu :CtrlPFunky<Cr>
 
 let g:airline#extensions#ale#enabled = 1
 " let g:ale_open_list = 1
