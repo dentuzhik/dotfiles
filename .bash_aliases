@@ -97,7 +97,7 @@ function fe() {
         IFS=$'\n' files=($(git ls-files . -co --exclude-standard | fzf-tmux --query "$1" --multi --select-1 --exit-0))
     fi
 
-    [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+    [[ -n "$files" ]] && ${EDITOR:-vim} -p "${files[@]}"
 }
 
 # Modified version where you can press
@@ -105,20 +105,36 @@ function fe() {
 #   - CTRL-E or Enter key to open with the $EDITOR
 function fo() {
     local out file key
-    IFS=$'\n' out=($(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e))
+    IFS=$'\n' out=($(fzf-tmux --query="$1" --multi --exit-0 --expect=ctrl-o,ctrl-e))
     key=${out[0]}
     file=${out[1]}
     if [ -n "$file" ]; then
-        [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
+        [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} -p "$file"
     fi
 }
 
 
-vimod() {
+fmd() {
     is_in_git_repo || return
     local files
     IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; echo "$(git ls-files --modified --others --exclude-standard)" ; } | fzf-tmux --multi --select-1 --exit-0))
-    [[ -n "$files" ]] && vim -O "${files[@]}"
+    [[ -n "$files" ]] && vim -p "${files[@]}"
+}
+
+fad() {
+    is_in_git_repo || return
+    local files target
+
+    IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; echo "$(git ls-files --modified --others --exclude-standard)" ; } | fzf-tmux --multi --select-1 --exit-0))
+    git add "${files[@]}"
+}
+
+frs() {
+    is_in_git_repo || return
+    local files target
+
+    IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; } | fzf-tmux --multi --select-1 --exit-0))
+    git reset HEAD "${files[@]}"
 }
 
 fgs() {
@@ -162,6 +178,7 @@ fgr() {
 }
 
 fct() {
+    is_in_git_repo || return
     local tags target
     tags=$(git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
     target=$(
@@ -171,6 +188,22 @@ fct() {
 }
 
 fco() {
+    is_in_git_repo || return
+    local branches target
+
+    branches=$(
+    git branch --all | grep -v HEAD             |
+        sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
+        sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
+
+    target=$(
+    echo "$branches" |
+        fzf-tmux -d30 --query="$1" --select-1 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
+    git checkout $(echo "$target" | awk '{print $2}')
+}
+
+fme() {
+    is_in_git_repo || return
     local branches target
 
     branches=$(
@@ -181,10 +214,26 @@ fco() {
     target=$(
     echo "$branches" |
         fzf-tmux -d30 --query="$1" -- --no-hscroll --ansi +m -d "\t" -n 2) || return
-    git checkout $(echo "$target" | awk '{print $2}')
+    git merge --no-ff --no-edit $(echo "$target" | awk '{print $2}')
+}
+
+frbi() {
+    is_in_git_repo || return
+    HASH=$(git log --oneline --no-decorate | head -n 30 | fzf)
+    git rebase -i $(echo ${HASH} | awk '{ print $1 }')
+}
+
+fce() {
+    is_in_git_repo || return
+    HASH=$(git log --pretty=oneline | head -n 50 | fzf-tmux --query="$1" --exit-0) || return
+    HASHZ=$(echo ${HASH} | awk '{ print $1 }') || return
+    IFS=$'\n' FILES=($(git show --pretty='format:' --name-only $HASHZ | fzf-tmux --multi --exit-0))
+
+    [[ -n "$FILES" ]] && ${EDITOR:-vim} -p "${FILES[@]}"
 }
 
 fst() {
+    is_in_git_repo || return
     local out k reflog
     out=(
     $(git stash list --pretty='%C(yellow)%gd %>(14)%Cgreen%cr %C(blue)%gs' |
@@ -204,6 +253,7 @@ esac
 }
 
 fsw() {
+    is_in_git_repo || return
     git log --graph --color=always \
         --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
         fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
