@@ -92,9 +92,9 @@ function fe() {
     local files
 
     if [[ $(is_in_git_repo)  ]]; then
-        IFS=$'\n' files=($(ag -l --nocolor -f --nogroup --hidden -g "" | fzf-tmux --query "$1" --multi --select-1 --exit-0))
-    else
         IFS=$'\n' files=($(git ls-files . -co --exclude-standard | fzf-tmux --query "$1" --multi --select-1 --exit-0))
+    else
+        IFS=$'\n' files=($(ag -l --nocolor -f --nogroup --hidden -g "" | fzf-tmux --query "$1" --multi --select-1 --exit-0))
     fi
 
     [[ -n "$files" ]] && ${EDITOR:-vim} -p "${files[@]}"
@@ -113,6 +113,24 @@ function fo() {
     fi
 }
 
+function fse() {
+    local files
+
+    [[ -n $1 ]] || return
+
+    if [[ is_in_git_repo  ]]; then
+        IFS=$'\n' files=(
+            $(
+                git grep -il "$1" |
+                fzf-tmux --multi --select-1 --exit-0 --preview "git grep -ih -C 10 --color=always $1 {}"
+            )
+        )
+    else
+        IFS=$'\n' files=($(ag -l --nocolor -f --nogroup --hidden "$1" | fzf-tmux --multi --select-1 --exit-0))
+    fi
+
+    [[ -n "$files" ]] && ${EDITOR:-vim} -p "${files[@]}"
+}
 
 fmd() {
     is_in_git_repo || return
