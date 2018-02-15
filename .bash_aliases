@@ -137,14 +137,14 @@ frs() {
     git reset HEAD "${files[@]}"
 }
 
-fgs() {
+fst() {
     git -c color.status=always status --short |
         fzf-tmux -m --ansi --nth 2..,.. \
         --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1}) | head -500' |
         cut -c4- | sed 's/.* -> //'
 }
 
-fgb() {
+fbr() {
     is_in_git_repo || return
     git branch -a --color=always | grep -v '/HEAD\s' | sort |
         fzf-tmux --ansi --multi --tac --preview-window right:70% \
@@ -180,10 +180,13 @@ fgr() {
 fct() {
     is_in_git_repo || return
     local tags target
+
     tags=$(git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
     target=$(
-    echo "$tags" |
-        fzf-tmux -d30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
+        echo "$tags" |
+        fzf-tmux -d30 -- --no-hscroll --ansi +m -d "\t" -n 2
+    ) || return
+
     git checkout $(echo "$target" | awk '{print $2}')
 }
 
@@ -192,13 +195,15 @@ fco() {
     local branches target
 
     branches=$(
-    git branch --all | grep -v HEAD             |
+        git branch --all | grep -v HEAD             |
         sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
-        sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
-
+        sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}'
+    ) || return
     target=$(
-    echo "$branches" |
-        fzf-tmux -d30 --query="$1" --select-1 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
+        echo "$branches" |
+        fzf-tmux -d30 --query="$1" --select-1 -- --no-hscroll --ansi +m -d "\t" -n 2
+    ) || return
+
     git checkout $(echo "$target" | awk '{print $2}')
 }
 
@@ -207,20 +212,35 @@ fme() {
     local branches target
 
     branches=$(
-    git branch --all | grep -v HEAD             |
-        sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
-        sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
+        git branch --all |
+        grep -v HEAD |
+        sed "s/.* //" |
+        sed "s#remotes/[^/]*/##" |
+        sort -u |
+        awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}'
+    ) || return
 
     target=$(
-    echo "$branches" |
-        fzf-tmux -d30 --query="$1" -- --no-hscroll --ansi +m -d "\t" -n 2) || return
+        echo "$branches" |
+        fzf-tmux -d30 --query="$1" -- --no-hscroll --ansi +m -d "\t" -n 2
+    ) || return
+
     git merge --no-ff --no-edit $(echo "$target" | awk '{print $2}')
 }
 
 frbi() {
     is_in_git_repo || return
     HASH=$(git log --oneline --no-decorate | head -n 30 | fzf)
+
     git rebase -i $(echo ${HASH} | awk '{ print $1 }')
+}
+
+fref() {
+    is_in_git_repo || return
+    HASH=$(git reflog | head -n 50 | fzf-tmux --query="$1" --exit-0) || return
+    HASHZ=$(echo ${HASH} | awk '{ print $1 }') || return
+
+    git reset --hard $HASHZ
 }
 
 fce() {
@@ -232,19 +252,22 @@ fce() {
     [[ -n "$FILES" ]] && ${EDITOR:-vim} -p "${FILES[@]}"
 }
 
-fst() {
+fsh() {
     is_in_git_repo || return
     local out k reflog
+
     out=(
-    $(git stash list --pretty='%C(yellow)%gd %>(14)%Cgreen%cr %C(blue)%gs' |
-        fzf --ansi --no-sort --header='enter:show, ctrl-d:diff, ctrl-o:pop, ctrl-y:apply, ctrl-x:drop' \
-        --preview='git stash show --color=always -p $(cut -d" " -f1 <<< {}) | head -'$LINES \
-        --preview-window=down:50% --reverse \
-        --bind='enter:execute(git stash show --color=always -p $(cut -d" " -f1 <<< {}) | less -r > /dev/tty)' \
-        --bind='ctrl-d:execute(git diff --color=always $(cut -d" " -f1 <<< {}) | less -r > /dev/tty)' \
-        --expect=ctrl-o,ctrl-y,ctrl-x))
+        $(git stash list --pretty='%C(yellow)%gd %>(14)%Cgreen%cr %C(blue)%gs' |
+            fzf --ansi --no-sort --header='enter:show, ctrl-d:diff, ctrl-o:pop, ctrl-y:apply, ctrl-x:drop' \
+            --preview='git stash show --color=always -p $(cut -d" " -f1 <<< {}) | head -'$LINES \
+            --preview-window=down:50% --reverse \
+            --bind='enter:execute(git stash show --color=always -p $(cut -d" " -f1 <<< {}) | less -r > /dev/tty)' \
+            --bind='ctrl-d:execute(git diff --color=always $(cut -d" " -f1 <<< {}) | less -r > /dev/tty)' \
+            --expect=ctrl-o,ctrl-y,ctrl-x)
+    )
     k=${out[0]}
     reflog=${out[1]}
+
     [ -n "$reflog" ] && case "$k" in
     ctrl-o) git stash pop $reflog ;;
     ctrl-y) git stash apply $reflog ;;
@@ -266,8 +289,3 @@ fsw() {
 
 
 bind '"\er": redraw-current-line'
-bind '"\C-g\C-f": "$(fgs)\e\C-e\er"'
-bind '"\C-g\C-b": "$(fgb)\e\C-e\er"'
-bind '"\C-g\C-t": "$(fgt)\e\C-e\er"'
-bind '"\C-g\C-h": "$(fgh)\e\C-e\er"'
-bind '"\C-g\C-r": "$(fgr)\e\C-e\er"'
