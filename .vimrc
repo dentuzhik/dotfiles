@@ -121,7 +121,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'sickill/vim-pasta'
 
 " Linting, Autocompletion & Snippets
 Plug 'w0rp/ale'
@@ -308,7 +307,7 @@ cnoreabbrev ag Ack!
 :nnoremap <leader>a :Ack!<CR>
 :vnoremap <leader>a y:Ack! <C-r>=fnameescape(@")<CR><CR>
 
-:nmap <leader>f <Pulug>CtrlSFPrompt
+:nmap <leader>f <Plug>CtrlSFPrompt
 :vmap <leader>f <Plug>CtrlSFVwordExec
 :nmap <leader>w <Plug>CtrlSFCCwordPath
 :nmap <leader>W <Plug>CtrlSFCwordPath

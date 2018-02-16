@@ -135,7 +135,7 @@ function fse() {
 fmd() {
     is_in_git_repo || return
     local files
-    IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; echo "$(git ls-files --modified --others --exclude-standard)" ; } | fzf-tmux --multi --select-1 --exit-0))
+    IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; echo "$(git ls-files --modified --others --exclude-standard)" ; } | sort -u | fzf-tmux --multi --select-1 --exit-0))
     [[ -n "$files" ]] && vim -p "${files[@]}"
 }
 
@@ -143,15 +143,23 @@ fad() {
     is_in_git_repo || return
     local files target
 
-    IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; echo "$(git ls-files --modified --others --exclude-standard)" ; } | fzf-tmux --multi --select-1 --exit-0))
+    IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; echo "$(git ls-files --modified --others --exclude-standard)" ; } | sort -u | fzf-tmux --multi --select-1 --exit-0))
     git add "${files[@]}"
+}
+
+fcf() {
+    is_in_git_repo || return
+    local files target
+
+    IFS=$'\n' files=($({ echo "$(git ls-files --modified --others --exclude-standard)" ; } | fzf-tmux --multi --query="$1" --exit-0))
+    git checkout -- "${files[@]}"
 }
 
 frs() {
     is_in_git_repo || return
     local files target
 
-    IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; } | fzf-tmux --multi --select-1 --exit-0))
+    IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; } | fzf-tmux --multi --query="$1" --select-1 --exit-0))
     git reset HEAD "${files[@]}"
 }
 
