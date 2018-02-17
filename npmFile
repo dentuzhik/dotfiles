@@ -13,3 +13,5 @@ npm-check
 serve
 tern
 flow-typed
+knex
+knex-migrate
