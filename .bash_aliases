@@ -91,7 +91,7 @@ is_in_git_repo() {
 function fe() {
     local files
 
-    if [[ $(is_in_git_repo)  ]]; then
+    if is_in_git_repo; then
         IFS=$'\n' files=($(git ls-files . -co --exclude-standard | fzf-tmux --query "$1" --multi --select-1 --exit-0))
     else
         IFS=$'\n' files=($(ag -l --nocolor -f --nogroup --hidden -g "" | fzf-tmux --query "$1" --multi --select-1 --exit-0))
@@ -118,7 +118,7 @@ function fse() {
 
     [[ -n $1 ]] || return
 
-    if [[ is_in_git_repo  ]]; then
+    if is_in_git_repo; then
         IFS=$'\n' files=(
             $(
                 git grep -il "$1" |
@@ -132,10 +132,40 @@ function fse() {
     [[ -n "$files" ]] && ${EDITOR:-vim} -p "${files[@]}"
 }
 
+fdc() {
+    is_in_git_repo || return
+    local files
+    IFS=$'\n' files=(
+        $(
+            echo "$(git diff --cached --name-only)" |
+            fzf-tmux --multi --select-1 --exit-0 --preview "git diff --color HEAD {}"
+        )
+    )
+
+    [[ -n "$files" ]] && git diff --cached --color "${files[@]}"
+}
+
+fdi() {
+    is_in_git_repo || return
+    local files
+    IFS=$'\n' files=(
+        $(
+            echo "$(git diff --name-only)" |
+            fzf-tmux --multi --select-1 --exit-0 --preview "git diff --color {}"
+        )
+    )
+
+    [[ -n "$files" ]] && git diff --color "${files[@]}"
+}
+
 fmd() {
     is_in_git_repo || return
     local files
-    IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; echo "$(git ls-files --modified --others --exclude-standard)" ; } | sort -u | fzf-tmux --multi --select-1 --exit-0))
+    IFS=$'\n' files=(
+        $({ echo "$(git diff --cached --name-only)" ; echo "$(git ls-files --modified --others --exclude-standard)" ; } |
+        awk NF | sort -u |
+        fzf-tmux --multi --select-1 --exit-0 --preview "git diff --color HEAD {}")
+    )
     [[ -n "$files" ]] && vim -p "${files[@]}"
 }
 

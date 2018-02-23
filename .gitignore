@@ -3,3 +3,6 @@
 
 # OSX directories meta files
 .DS_Store
+
+# Tern specific metadata
+.tern-port
