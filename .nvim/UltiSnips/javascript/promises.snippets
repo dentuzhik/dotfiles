@@ -1,0 +1,98 @@
+snippet pr "Promise.resolve()" w
+Promise.resolve($1)${2:;}
+endsnippet
+
+snippet pro "Promise.resolve({  })" w
+Promise.resolve({ $1 })${2:;}
+endsnippet
+
+snippet cpr "const = Promise.resolve()" b
+const ${1:resolvedValue} = Promise.resolve($2)${3:;}
+endsnippet
+
+snippet pre "Promise.reject()" w
+Promise.reject($1)${2:;}
+endsnippet
+
+snippet cpre "const = Promise.reject()" w
+const ${1:rejectedValue} = Promise.resolve($2)${3:;}
+endsnippet
+
+snippet prcr "new Promise()" w
+new Promise((resolve, reject) => {
+	$1
+})${2:;}
+endsnippet
+
+snippet cprcr "const = new Promise()" b
+const ${1:promise} = new Promise((resolve, reject) => {
+	$2
+});
+endsnippet
+
+snippet pra "Promise.all()" b
+Promise.all([$1, $2])${3:;}
+endsnippet
+
+snippet cpra "Promise.all()" b
+const ${1:promise} = Promise.all([$2, $3]);
+endsnippet
+
+snippet .th ".then()" i
+.then(${1:resolvedValue} => {
+	$2
+})${3:;}
+endsnippet
+
+snippet .the ".then()" i
+.then(
+	${1:resolvedValue} => {
+		$2
+	},
+	${3:err} => {
+		$4
+	},
+)${5:;}
+endsnippet
+
+snippet .ch ".catch()" i
+.catch(${1:err} => {
+	$2;
+})${3:;}
+endsnippet
+
+snippet .thch ".then().catch()" i
+.then(${1:resolvedValue} => {
+	$2
+})
+.catch(${3:err} => {
+	$4
+})${5:;}
+endsnippet
+
+snippet .fin ".finally()" i
+.finally(() => {
+
+});
+endsnippet
+
+snippet cpthe ".then()" i
+const ${1:promise} = $2.then(
+	${3:resolvedValue} => {
+		$4
+	},
+	${5:err} => {
+		$6
+	},
+);
+endsnippet
+
+snippet cpthch ".then()" i
+const ${1:promise} = $2
+	.then(${3:resolvedValue} => {
+		$4
+	})
+	.catch(${5:err} => {
+		$6
+	});
+endsnippet

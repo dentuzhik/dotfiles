@@ -1,0 +1,143 @@
+snippet aa "v1 && v2" w
+${1:v1} && ${2:v2}
+endsnippet
+
+snippet aaa "v1 && v2 && v3" w
+${1:v1} && ${2:v2} && ${3:v3}
+endsnippet
+
+snippet oo "v1 || v2" w
+${1:v1} || ${2:v2}
+endsnippet
+
+snippet ooo "v1 || v2 || v3" w
+${1:v1} || ${2:v2} || ${3:v3}
+endsnippet
+
+snippet if "if (cond) {}" b
+if (${1:cond}) {
+	$2
+}
+endsnippet
+
+snippet ifr "if (cond) return;" b
+if (${1:cond}) return;
+endsnippet
+
+snippet ifrn "if (cond) return null;" b
+if (${1:cond}) return null;
+endsnippet
+
+snippet ifrv "if (cond) return value;" b
+if (${1:cond}) return $2;
+endsnippet
+
+snippet ifa "if (c1 && c2) {}" b
+if (${1:cond1} && ${2:cond2}) \{
+	$3
+}
+endsnippet
+
+snippet ifar "if (c1 && c2) return;" b
+if (${1:cond1} && ${2:cond2}) return;
+endsnippet
+
+snippet ifarn "if (c1 && c2) return null;" b
+if (${1:cond1} && ${2:cond2}) return null;
+endsnippet
+
+snippet ifarv "if (c1 && c2) return v;" b
+if (${1:cond1} && ${2:cond2}) return $3;
+endsnippet
+
+snippet ifo "if (c1 || c2) {}" b
+if (${1:cond1} && ${2:cond2}) \{
+	$3
+}
+endsnippet
+
+snippet ifor "if (c1 || c2) return;" b
+if (${1:cond1} || ${2:cond2}) return;
+endsnippet
+
+snippet iforn "if (c1 || c2) return null;" b
+if (${1:cond1} || ${2:cond2}) return null;
+endsnippet
+
+snippet iforv "if (c1 || c2) return v;" b
+if (${1:cond1} || ${2:cond2}) return $3;
+endsnippet
+
+snippet ? "cond ? v1 : v2" w
+$1 ? $2 : $3
+endsnippet
+
+snippet a? "(c1 && c2) ? v1 : v2" w
+(${1:cond1} && ${2:cond2}) ? $3 : $4
+endsnippet
+
+snippet o? "(c1 || c2) ? v1 : v2" w
+(${1:cond1} || ${2:cond2}) ? $3 : $4
+endsnippet
+
+snippet c? "cond ? v1 : v2" b
+const $1 = ${2:cond} ? ${3:v1} : ${4:v2};
+endsnippet
+
+snippet ca? "(c1 && c2) ? v1 : v2" b
+const $1 = ($2 && $3) ? $4 : $5;
+endsnippet
+
+snippet co? "(c1 || c2) ? v1 : v2" b
+const $1 = ($2 || $3) ? $4 : $5;
+endsnippet
+
+snippet ife "if (cond) else {}" b
+if (${1:cond}) \{
+	$2
+} else \{
+	$3
+}
+endsnippet
+
+snippet ifae "if (c1 && c2) else {}" b
+if (${1:cond1} && ${2:cond2}) \{
+	$3
+} else \{
+	$4
+}
+endsnippet
+
+snippet ifoe "if (c1 || c2) else {}" b
+if (${1:cond1} || ${2:cond2}) \{
+	$3
+} else {
+	$4
+}
+endsnippet
+
+snippet ifei "if (cond) else if {}" b
+if (${1:cond1}) \{
+	$2
+} else if (${3:cond2}) \{
+	$4
+} else \{
+	$5
+}
+endsnippet
+
+snippet switch "switch (v) {}" b
+switch (${1:cond}) \{
+	case ${2:case1}:
+		$3
+		break;
+
+	case ${4:case2}:
+		$5
+		break;
+
+	default:
+		$6
+		break;
+}
+endsnippet

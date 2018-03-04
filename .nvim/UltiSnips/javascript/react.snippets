@@ -1,0 +1,317 @@
+# Imports of React dependencies
+snippet ir "import React" b
+import React from 'react';
+
+endsnippet
+
+snippet irc "import React and Component" b
+import React, \{ Component } from 'react';
+
+endsnippet
+
+snippet irpc "import React and PureComponent" b
+import React, \{ PureComponent } from 'react';
+
+endsnippet
+
+snippet irf "import React and Fragment" b
+import React, \{ Fragment } from 'react';
+
+endsnippet
+
+snippet ircf "import React, Component and Fragment" b
+import React, \{ Component, Fragment } from 'react';
+
+endsnippet
+
+snippet irpcf "import React, PureComponent and Fragment" b
+import React, \{ PureComponent, Fragment } from 'react';
+
+endsnippet
+
+snippet irx "import React Context"
+
+snippet ird "import ReactDOM" b
+import ReactDOM from 'react-dom';
+
+endsnippet
+
+snippet irp "import PropTypes" b
+import PropTypes from 'prop-types'
+
+endsnippet
+
+snippet irrp "import React and PropTypes" b
+import React from 'react';
+import PropTypes from 'prop-types';
+
+endsnippet
+
+snippet ircp "import React, Component and PropTypes" b
+import React, \{ Component } from 'react';
+import PropTypes from 'prop-types';
+
+endsnippet
+
+snippet irpcp "import React, PureComponent and PropTypes" b
+import React, \{ PureComponent } from 'react';
+import PropTypes from 'prop-types';
+
+endsnippet
+
+snippet ire "import All for React" b
+import React, \{ Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+
+endsnippet
+
+snippet irde "import All for React and ReactDOM" b
+import React, \{ Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+
+endsnippet
+
+# Defining React Components
+snippet rsc "React Component (Stateless)" b
+const ${1:ComponentName} = (${2:props}) => {
+	return (
+		${0}
+	);
+};
+
+$1.displayName = '$1';
+export default $1;
+endsnippet
+
+snippet rcc "React Component (Class)" b
+class ${1:ComponentName} extends Component {
+	${2:constructor(props) {
+		super(props);${3}
+	}}
+
+	render() {
+		return (${0});
+	}
+}
+
+export default $1;
+endsnippet
+
+
+# React API
+snippet ccln
+const ${1:clonedElement} = React.cloneElement($2${3:, ${4:myProps}})${0:;}
+endsnippet
+
+snippet rcln
+React.cloneElement($1${2:, ${3:myProps}})${0:;}
+endsnippet
+
+# ReactDOM API
+snippet fdn "findDOMNode" b
+const ${1} = React.findDOMNode(${2})${0:;}
+endsnippet
+
+snippet rdren "ReactDOM.render()" b
+ReactDOM.render(<${1:App} />, document.getElementById('${2:root}'));
+endsnippet
+
+# React.Component Class API
+
+snippet dp "defaultProps" b
+static defalutProps = \{
+	${1}
+}
+$0
+endsnippet
+
+snippet pt "propTypes" b
+static propTypes = \{
+	${1}
+}
+$0
+endsnippet
+
+snippet rcstr "constructor" bs
+constructor(props) \{
+	super(props);
+
+	$1
+	${2:this.state = \{
+        $3: $4
+    };}
+}
+$0
+endsnippet
+
+snippet cwm "componentWillMount" b
+componentWillMount() \{
+	${1}
+}
+$0
+endsnippet
+
+snippet cdm "componentDidMount" b
+componentDidMount() \{
+	${1}
+}
+$0
+endsnippet
+
+snippet cwrp "componentWillReceiveProps" b
+componentWillReceiveProps(${1:nextProps}) \{
+	${2}
+}
+$0
+endsnippet
+
+snippet scu "shouldComponentUpdate" b
+shouldComponentUpdate(${1:nextProps, nextState}) \{
+	${2}
+}
+$0
+endsnippet
+
+snippet cwu "componentWillUpdate" b
+componentWillUpdate(${1:nextProps, nextState}) \{
+	${2}
+}
+$0
+endsnippet
+
+snippet cdu "componentDidUpdate" b
+componentDidUpdate(${1:prevProps, prevState}) \{
+	${2}
+}
+$0
+endsnippet
+
+snippet cwum "componentWillUnmount" b
+componentWillUnmount() \{
+	${1}
+}
+$0
+endsnippet
+
+snippet cdch "componentDidCatch" b
+componentDidCatch(${1:error${2:, info}}) \{
+	${3}
+}
+$0
+endsnippet
+
+snippet ren "render" b
+render() \{
+	return (${1});
+}
+endsnippet
+
+# React.Component instance API
+snippet cst "const {  } = this.state;" b
+const {$1} = this.state${2:;}
+$0
+endsnippet
+
+snippet sst "simple this.setState()" b
+this.setState('${1:stateKey}', ${3});
+endsnippet
+
+snippet sstc "simple this.setState() with callback" b
+this.setState((prevState${1:, props}) => \{
+	return \{ ${2}: ${3} };
+});
+endsnippet
+
+snippet sost "this.setState()" b
+this.setState(\{
+	${1}: ${2},
+});
+endsnippet
+
+snippet cps "this.props"
+const \{$1${2:, ...otherProps}} = this.props${3:;}
+endsnippet
+
+snippet ps "this.props" i
+this.props${1:.}
+endsnippet
+
+snippet crefs "refs"
+const \{$1} = this.refs${0:;}
+endsnippet
+
+snippet refs "refs" i
+this.refs${1:;}
+endsnippet
+
+snippet fup "forceUpdate"
+this.forceUpdate()${1:;}
+endsnippet
+
+# PropTypes
+
+snippet pt.a "PropTypes array" i
+${1:key}: PropTypes.array${2:,}
+endsnippet
+
+snippet pt.b "PropTypes bool" i
+${1:key}: PropTypes.bool${2:,}
+endsnippet
+
+snippet pt.f "PropTypes func" i
+${1:key}: PropTypes.func${2:,}
+endsnippet
+
+snippet pt.n "PropTypes number" i
+${1:key}: PropTypes.number${2:,}
+endsnippet
+
+snippet pt.o "PropTypes object" i
+${1:key}: PropTypes.object${2:,}
+endsnippet
+
+snippet pt.s "PropTypes string" i
+${1:key}: PropTypes.string${2:,}
+endsnippet
+
+snippet pt.sb "PropTypes symbol" i
+${1:key}: PropTypes.symbol${2:,}
+endsnippet
+
+snippet pt.no "PropTypes node" i
+${1:key}: PropTypes.node${2:,}
+endsnippet
+
+snippet pt.e "PropTypes element" i
+${1:key}: PropTypes.element${2:,}
+endsnippet
+
+snippet pt.if "PropTypes instanceOf" i
+${1:key}: PropTypes.instanceOf($2)${3:,}
+endsnippet
+
+snippet pt.of "PropTypes oneOf" i
+${1:key}: PropTypes.oneOf($2)${3:,}
+endsnippet
+
+snippet ptoft "PropTypes oneOfType" i
+${1:key}: PropTypes.oneOfType($2)${3:,}
+endsnippet
+
+snippet pt.af "PropTypes arrayOf" i
+${1:key}: PropTypes.arrayOf($2)${3:,}
+endsnippet
+
+snippet pt.oo "PropTypes objectOf" i
+${1:key}: PropTypes.objectOf($2)${3:,}
+endsnippet
+
+snippet pt.sp "PropTypes shape" i
+${1:key}: PropTypes.shape({
+	$2
+})${3:,}
+endsnippet
+
+snippet .ir "PropTypes isRequired" i
+.isRequired${1:,}
+endsnippet

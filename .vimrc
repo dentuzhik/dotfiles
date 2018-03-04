@@ -7,7 +7,6 @@ set undodir=~/.vim/undodir
 set undofile
 set nobackup
 set noerrorbells
-set t_Co=256
 set ttyfast
 set lazyredraw
 
@@ -69,9 +68,9 @@ filetype off
 
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'rakr/vim-one'
-Plug 'joshdick/onedark.vim'
+" Color schemes
 Plug 'altercation/vim-colors-solarized'
+Plug 'KeitaNakamura/neodark.vim'
 
 " Syntax highlighting plugins
 Plug 'othree/html5.vim'
@@ -97,10 +96,11 @@ Plug 'DavidEGx/ctrlp-smarttabs'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'mileszs/ack.vim'
 Plug 'dyng/ctrlsf.vim'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-fugitive'
 Plug 'shime/vim-livedown'
 Plug 'mattn/emmet-vim'
-Plug 'sjl/gundo.vim'
+Plug 'k0kubun/vim-open-github'
 Plug 'heavenshell/vim-jsdoc'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -124,11 +124,11 @@ Plug 'michaeljsmith/vim-indent-object'
 
 " Linting, Autocompletion & Snippets
 Plug 'w0rp/ale'
-Plug 'ternjs/tern_for_vim'
+" Plug 'ternjs/tern_for_vim'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+  " Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 else
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
@@ -136,7 +136,6 @@ else
 endif
 
 Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 Plug 'wokalski/autocomplete-flow'
 Plug 'othree/jspc.vim'
 
@@ -151,18 +150,14 @@ set synmaxcol=256
 " disable Background Color Erase (BCE) so that color schemes
 " render properly when inside 256-color tmux and GNU screen.
 " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-set t_ut=
-set t_8b=^[[48;2;%lu;%lu;%lum
-set t_8f=^[[38;2;%lu;%lu;%lum
-" set termguicolors
+set termguicolors
 
-let g:solarized_termcolors=256
-set background=dark
-colorscheme solarized
-
-" let g:one_allow_italics = 1
+" let g:solarized_termcolors=256
 " set background=dark
-" colorscheme one
+" colorscheme solarized
+
+let g:neodark#background = '#202020'
+colorscheme neodark
 
 " NERDTree settings
 let NERDTreeMinimalUI=1
@@ -258,22 +253,22 @@ endif
 " End: deoplete-flow
 "
 " Start: tern & deoplete-ternjs
-let g:tern#command = ["tern"]
-let g:tern#arguments = ["--persistent"]
-let g:tern_map_keys = 1
+" let g:tern#command = ["tern"]
+" let g:tern#arguments = ["--persistent"]
+" let g:tern_map_keys = 1
 
-let g:deoplete#sources#ternjs#types = 1
-let g:deoplete#sources#ternjs#include_keywords = 1
+" let g:deoplete#sources#ternjs#types = 1
+" let g:deoplete#sources#ternjs#include_keywords = 1
 
-let g:deoplete#sources#ternjs#filetypes = [
-\   'jsx',
-\   'javascript.jsx',
-\ ]
+" let g:deoplete#sources#ternjs#filetypes = [
+" \   'jsx',
+" \   'javascript.jsx',
+" \ ]
 " End: deoplete-ternjs
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-t>"
-let g:UltiSnipsJumpBackwardTrigger="<c-g>"
+let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
+let g:UltiSnipsListSnippets='<leader>u'
+let g:UltiSnipsEditSplit='vertical'
 
 " Other plugins settings
 let NERDSpaceDelims=1
@@ -285,7 +280,6 @@ autocmd BufRead,BufNewFile .eslintrc set filetype=json
 autocmd BufRead,BufNewFile *nginx.conf* set filetype=nginx
 autocmd! BufWritePost .vimrc source $MYVIMRC
 
-:nmap <leader>u :GundoToggle<CR>
 :nmap <leader>M :LivedownPreview<CR>
 
 :nnoremap <C-I> [e

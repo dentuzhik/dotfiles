@@ -1,0 +1,95 @@
+snippet im "import 'm';" b
+import '${1:module}';
+$0
+endsnippet
+
+snippet imd "import v from 'm';" b
+import ${1:value} from '${2:module}';
+$0
+endsnippet
+
+snippet imn "import { v } from 'm';" b
+import { ${1:value} } from '${2:module}';
+$0
+endsnippet
+
+snippet imas "import { v as n } from 'm';" b
+import { ${1:value} as ${2:name} } from '${3:module}';
+$0
+endsnippet
+
+snippet im* "import * as ns from 'm';" b
+import * as ${1:namespace} from '${2:module}';
+$0
+endsnippet
+
+snippet imdn "import dv, { nv as n } from 'm';" b
+import ${1:defaulValue}, { ${2:namedValue} as ${3:name} } from '${4:module}';
+$0
+endsnippet
+
+snippet imd* "import dv, * as ns from 'm';" b
+import ${1:defaulValue}, * as ${2:namespace} from '${4:module}';
+$0
+endsnippet
+
+snippet ex
+export ${1:name};
+endsnippet
+
+snippet exd "export default v;" b
+export default ${1:value};
+endsnippet
+
+snippet exn "export { v };" b
+export { ${1:value} };
+endsnippet
+
+snippet exas "export { v as n };" b
+export { ${1:value} as ${2:name} };
+endsnippet
+
+snippet excv "export const n = v;" b
+export const ${1:name} = ${2:value};
+endsnippet
+
+snippet exdfun "export default function n() {}" b
+export function ${1:functionName}(${2:arg}) \{
+	$3
+}
+endsnippet
+
+snippet exdasf "export default async function() {}" b
+export default async function ${1:functionName}(${2:arg}) \{
+	$3
+}
+endsnippet
+
+snippet exdcl "export default class A;" b
+export default class ${1:ClassName} {
+	$2
+}
+endsnippet
+
+snippet exdcle "export default class A extends B;" b
+export default class ${1:OneClass} extends ${2:AnotherClass} {
+	$3
+}
+endsnippet
+
+snippet excfun "export const v = function n() {}" b
+export const ${1:functionName} = function $1(${2:arg}) \{
+	$3
+};
+endsnippet
+
+snippet excarf "export const v = (arg) => {}" b
+export const ${1:name} = (${2:arg}) => {$3};
+endsnippet
+
+snippet excasf "export const v = async function() {}" b
+export const ${1:functionName} = async function $1(${2:arg}) \{
+	$3
+};
+endsnippet
+

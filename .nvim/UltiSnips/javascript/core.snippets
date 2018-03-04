@@ -1,0 +1,47 @@
+snippet cv "const n = v;" b
+const ${1:name} = ${2:value};
+endsnippet
+
+snippet lv "let n = v;" b
+let ${1:name} = ${2:value};
+endsnippet
+
+snippet co "const v = object;" b
+const ${1:obj} = \{${2:
+	${3:prop}: ${4:value},
+}};
+endsnippet
+
+snippet lo "let v = object;" b
+let ${1:obj} = \{${2:
+	${3:prop}: ${4:value},
+}};
+endsnippet
+
+snippet caw "const v = await P;" b
+const $1 = await $2;
+endsnippet
+
+snippet law "let v = await P;" b
+let $1 = await $2;
+endsnippet
+
+snippet kv "key: value" w
+${1:key}: ${2:value},
+endsnippet
+
+snippet ckv "key: value" w
+[${1:key}]: ${2:value},
+endsnippet
+
+snippet obm "Object method"
+${1:methodName}(${2:arg}) \{
+	$3
+},
+endsnippet
+
+snippet asobm "Object method (async)"
+async ${1:methodName}(${2:arg}) \{
+	$3
+},
+endsnippet

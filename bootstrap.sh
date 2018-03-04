@@ -52,7 +52,9 @@ case $yn in
 
         # Set up Neovim
         mkdir -p ~/.config/nvim
-        cp -rf .nvim/init.vim ~/.config/nvim
+        ln -fFns "$base_dir/.nvim/init.vim" ~/.config/nvim/init.vim
+        ln -fFns "$base_dir/.nvim/UltiSnips" ~/.config/nvim/UltiSnips
+
         echo 'Linked Neovim configuration'
         echo 'Done!'
     ;;

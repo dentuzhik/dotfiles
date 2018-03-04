@@ -1,0 +1,75 @@
+snippet rt "return;" b
+return;
+endsnippet
+
+snippet rtv "return value;" b
+return $1;
+endsnippet
+
+snippet rtnl "return null;" b
+return null;
+endsnippet
+
+snippet rtpr "return Promise.resolve();" b
+return Promise.resolve(${1:value});
+endsnippet
+
+snippet rtpro "return Promise.resolve({  });" b
+return Promise.resolve({ ${1:${2:key}: ${3:value}} });
+endsnippet
+
+snippet rtc? "return (cond) ? v1 : v2;" b
+return ${1:cond} ? ${2:v1} : ${3:v2};
+endsnippet
+
+snippet rt? "return cond ? v1 : v2;" b
+return (${1:cond}) ? ${2:v1} : ${3:v2};
+endsnippet
+
+snippet 2a "2 arguments" i
+${1:arg1}, ${2:arg2}
+endsnippet
+
+snippet 3a "3 arguments" i
+${1:arg1}, ${2:arg2}, ${3:arg3}
+endsnippet
+
+snippet 4a "4 arguments" i
+${1:arg1}, ${2:arg2}, ${3:arg3}, ${4:arg4}
+endsnippet
+
+snippet fun "function() {}" b
+function ${1:functionName}(${2:arg}) \{
+	$3
+}
+endsnippet
+
+snippet cfun "const v = function() {}" b
+const ${1:functionName} = function $1(${2:arg}) \{
+	$3
+};
+endsnippet
+
+snippet asf "async function() {}" b
+async function ${1:functionName}(${2:arg}) \{
+	$3
+}
+endsnippet
+
+snippet casf "const v = async function() {}" b
+const ${1:functionName} = async function $1(${2:arg}) \{
+	$3
+}
+endsnippet
+
+snippet arf "() => {}" w
+(${2:arg}) => {$3}
+endsnippet
+
+snippet carf "const v = () => {}" b
+const ${1:name} = (${2:arg}) => {$3};
+endsnippet
+
+snippet caaf "const v = async () => {}" b
+const ${1:name} = async (${2:arg}) => {$3};
+endsnippet
