@@ -94,7 +94,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jasoncodes/ctrlp-modified.vim'
 Plug 'DavidEGx/ctrlp-smarttabs'
 Plug 'tacahiroy/ctrlp-funky'
-Plug 'mileszs/ack.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-fugitive'
@@ -124,11 +123,11 @@ Plug 'michaeljsmith/vim-indent-object'
 
 " Linting, Autocompletion & Snippets
 Plug 'w0rp/ale'
-" Plug 'ternjs/tern_for_vim'
+Plug 'ternjs/tern_for_vim'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  " Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 else
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
@@ -167,16 +166,9 @@ let NERDTreeChDirMode=2
 let NERDTreeAutoDeleteBuffer=1
 let NERDTreeAutoCenterThreshold=5
 let NERDTreeWinSize=35
-
-" Open NERDTree if no files specified
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | wincmd p | endif
-
-" Close Vim, if the only window left is NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
 :nnoremap <leader>` :NERDTreeFind<CR>
 
+" Settings for CtrlP
 let g:ctrlp_working_path_mode = 'ra'
 "ctrl+p ignore files in .gitignore
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
@@ -191,8 +183,9 @@ let g:ctrlp_funky_matchtype = 'path'
 let g:ctrlp_funky_syntax_highlight = 1
 nnoremap <leader>fu :CtrlPFunky<Cr>
 
+" Syntax liniting and automfixing
 let g:airline#extensions#ale#enabled = 1
-" let g:ale_open_list = 1
+
 let g:ale_echo_cursor = 1
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
@@ -205,9 +198,6 @@ let g:ale_fixers = {
 \ }
 nmap <leader>F :ALEFix<CR>
 
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
-
 function! ToggleErrors()
     if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))
         lopen
@@ -218,6 +208,23 @@ endfunction
 nnoremap <silent> <leader>e :call ToggleErrors()<CR>
 nnoremap <silent> ]l :lnext<CR>
 nnoremap <silent> [l :lprev<CR>
+
+" Settings for autocompletion (Deoplete & TernJS)
+let g:deoplete#enable_at_startup = 1
+"
+" Start: tern & deoplete-ternjs
+let g:tern#command = ["tern"]
+let g:tern#arguments = ["--persistent"]
+let g:tern_map_keys = 1
+
+let g:deoplete#sources#ternjs#types = 1
+let g:deoplete#sources#ternjs#include_keywords = 1
+
+let g:deoplete#sources#ternjs#filetypes = [
+\   'jsx',
+\   'javascript.jsx',
+\ ]
+" End: deoplete-ternjs
 
 " Start: deoplete and vim-multiple-cursors
 " Called once right before you start selecting multiple cursors
@@ -235,9 +242,6 @@ function! Multiple_cursors_after()
 endfunction
 " End: deoplete and vim-multiple-cursors
 
-" Enable deoplete & neosnippet
-let g:deoplete#enable_at_startup = 1
-
 " Start: deoplete-flow
 " Configuration to prefer local flow (from node_modules) to a globally
 " installed version
@@ -251,20 +255,6 @@ if g:flow_path != 'flow not found'
   let g:deoplete#sources#flow#flow_bin = g:flow_path
 endif
 " End: deoplete-flow
-"
-" Start: tern & deoplete-ternjs
-" let g:tern#command = ["tern"]
-" let g:tern#arguments = ["--persistent"]
-" let g:tern_map_keys = 1
-
-" let g:deoplete#sources#ternjs#types = 1
-" let g:deoplete#sources#ternjs#include_keywords = 1
-
-" let g:deoplete#sources#ternjs#filetypes = [
-" \   'jsx',
-" \   'javascript.jsx',
-" \ ]
-" End: deoplete-ternjs
 
 let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
 let g:UltiSnipsListSnippets='<leader>u'
@@ -272,8 +262,14 @@ let g:UltiSnipsEditSplit='vertical'
 
 " Other plugins settings
 let NERDSpaceDelims=1
-let delimitMate_balance_matchpairs=1
 let g:gitgutter_max_signs=1000
+
+
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+" Close Vim, if the only window left is NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 autocmd BufRead,BufNewFile *.mjs set filetype=javascript
 autocmd BufRead,BufNewFile .eslintrc set filetype=json
@@ -282,24 +278,10 @@ autocmd! BufWritePost .vimrc source $MYVIMRC
 
 :nmap <leader>M :LivedownPreview<CR>
 
-:nnoremap <C-I> [e
-:nnoremap <C-K> ]e
-
-:vnoremap <C-I> [egv
-:vnoremap <C-K> ]egv
-
 iab reuqure require
 iab reuire require
 
 :nmap gV `[v`]
-
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
-
-cnoreabbrev ag Ack!
-:nnoremap <leader>a :Ack!<CR>
-:vnoremap <leader>a y:Ack! <C-r>=fnameescape(@")<CR><CR>
 
 :nmap <leader>f <Plug>CtrlSFPrompt
 :vmap <leader>f <Plug>CtrlSFVwordExec
