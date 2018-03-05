@@ -101,8 +101,6 @@ Plug 'shime/vim-livedown'
 Plug 'mattn/emmet-vim'
 Plug 'k0kubun/vim-open-github'
 Plug 'heavenshell/vim-jsdoc'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
 
 " Session management plugins
 Plug 'tpope/vim-obsession'
@@ -180,8 +178,9 @@ map <leader>t :CtrlPSmartTabs<CR>
 map <leader>m :CtrlPModified<CR>
 
 let g:ctrlp_funky_matchtype = 'path'
+let g:ctrlp_funky_multi_buffers = 1
 let g:ctrlp_funky_syntax_highlight = 1
-nnoremap <leader>fu :CtrlPFunky<Cr>
+nmap <silent> <C-o> :CtrlPFunky<CR>
 
 " Syntax liniting and automfixing
 let g:airline#extensions#ale#enabled = 1
@@ -190,13 +189,17 @@ let g:ale_echo_cursor = 1
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
 let g:ale_linters = {
+\   'php': [],
 \   'javascript': ['eslint'],
+\   'typescript': ['tslint'],
 \   'scss': ['stylelint']
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint']
 \ }
 nmap <leader>F :ALEFix<CR>
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 function! ToggleErrors()
     if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))
@@ -264,12 +267,14 @@ let g:UltiSnipsEditSplit='vertical'
 let NERDSpaceDelims=1
 let g:gitgutter_max_signs=1000
 
-
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
+" Disable w0rp/ale syntax highlight inside ctrlp buffer
+autocmd BufEnter ControlP let b:ale_enabled = 0
+
 " Close Vim, if the only window left is NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 autocmd BufRead,BufNewFile *.mjs set filetype=javascript
 autocmd BufRead,BufNewFile .eslintrc set filetype=json
