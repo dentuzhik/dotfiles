@@ -21,8 +21,6 @@ set showmatch
 set hlsearch
 set ignorecase
 set smartcase
-" Clear the search highlight by pressing ENTER when in Normal mode (Typing commands)
-:nnoremap <CR> :nohlsearch<CR>/<BS><CR>
 
 " Indentation settings
 set autoindent
@@ -102,6 +100,11 @@ Plug 'mattn/emmet-vim'
 Plug 'k0kubun/vim-open-github'
 Plug 'heavenshell/vim-jsdoc'
 
+" Search improvements
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-fuzzy.vim'
+Plug 'bronson/vim-visual-star-search'
+
 " Session management plugins
 Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
@@ -155,6 +158,24 @@ set termguicolors
 
 let g:neodark#background = '#202020'
 colorscheme neodark
+
+" incesearch settings
+let g:incsearch#auto_nohlsearch = 1
+
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+
+" incsearch-fuzzy
+map z/ <Plug>(incsearch-fuzzy-/)
+map z? <Plug>(incsearch-fuzzy-?)
+map zg/ <Plug>(incsearch-fuzzy-stay)
 
 " NERDTree settings
 let NERDTreeMinimalUI=1
@@ -276,7 +297,6 @@ autocmd BufEnter ControlP let b:ale_enabled = 0
 " Close Vim, if the only window left is NERDTree
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-autocmd BufRead,BufNewFile *.mjs set filetype=javascript
 autocmd BufRead,BufNewFile .eslintrc set filetype=json
 autocmd BufRead,BufNewFile *nginx.conf* set filetype=nginx
 autocmd! BufWritePost .vimrc source $MYVIMRC

@@ -164,7 +164,34 @@ fmd() {
     IFS=$'\n' files=(
         $({ echo "$(git diff --cached --name-only)" ; echo "$(git ls-files --modified --others --exclude-standard)" ; } |
         awk NF | sort -u |
-        fzf-tmux --multi --select-1 --exit-0 --preview "git diff --color HEAD {}")
+        fzf-tmux --multi --exit-0 --preview "git diff --color HEAD {}")
+    )
+    [[ -n "$files" ]] && vim -p "${files[@]}"
+}
+
+fml() {
+    is_in_git_repo || return
+    local files
+    IFS=$'\n' files=(
+        $(
+            echo "$(git diff-tree --no-commit-id --name-only -r HEAD)" |
+            awk NF | sort -u |
+            fzf-tmux --multi --exit-0 --preview "git diff --color HEAD~1 {}"
+        )
+    )
+    [[ -n "$files" ]] && vim -p "${files[@]}"
+}
+
+fmb() {
+    is_in_git_repo || return
+    local files
+    local branch=${1:-dev}
+    IFS=$'\n' files=(
+        $(
+            echo "$(git diff --name-only $branch...HEAD)" |
+            awk NF | sort -u |
+            fzf-tmux --multi --exit-0 --preview "git diff --color $branch {}"
+        )
     )
     [[ -n "$files" ]] && vim -p "${files[@]}"
 }
