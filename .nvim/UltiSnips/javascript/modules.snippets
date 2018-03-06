@@ -1,36 +1,29 @@
 snippet im "import 'm';" b
 import '${1:module}';
-$0
 endsnippet
 
 snippet imd "import v from 'm';" b
 import ${1:value} from '${2:module}';
-$0
 endsnippet
 
 snippet imn "import { v } from 'm';" b
 import { ${1:value} } from '${2:module}';
-$0
 endsnippet
 
 snippet imas "import { v as n } from 'm';" b
 import { ${1:value} as ${2:name} } from '${3:module}';
-$0
 endsnippet
 
 snippet im* "import * as ns from 'm';" b
 import * as ${1:namespace} from '${2:module}';
-$0
 endsnippet
 
 snippet imdn "import dv, { nv as n } from 'm';" b
 import ${1:defaulValue}, { ${2:namedValue} as ${3:name} } from '${4:module}';
-$0
 endsnippet
 
 snippet imd* "import dv, * as ns from 'm';" b
 import ${1:defaulValue}, * as ${2:namespace} from '${4:module}';
-$0
 endsnippet
 
 snippet ex

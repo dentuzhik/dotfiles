@@ -1,0 +1,27 @@
+snippet desc "describe()"
+describe('$1', () => {
+	$2
+});
+endsnippet
+
+snippet bfe "beforeEach()"
+beforeEach(() => {
+	$1
+});
+endsnippet
+
+snippet afe "afterEach()"
+afterEach(() => {
+	$1
+});
+endsnippet
+
+snippet it "it()"
+it('$1', () => {
+	$2
+});
+endsnippet
+
+snippet exms "expect().toMatchSnapshot()" b
+expect($1).toMatchSnapshot();
+endsnippet

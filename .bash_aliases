@@ -200,7 +200,13 @@ fad() {
     is_in_git_repo || return
     local files target
 
-    IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; echo "$(git ls-files --modified --others --exclude-standard)" ; } | sort -u | fzf-tmux --multi --select-1 --exit-0))
+    IFS=$'\n' files=(
+        $(
+            { echo "$(git diff --cached --name-only)" ; echo "$(git ls-files --modified --others --exclude-standard)" ; } |
+            awk NF | sort -u |
+            fzf-tmux --multi --exit-0 --preview "git diff --color HEAD {}"
+        )
+    )
     git add "${files[@]}"
 }
 
@@ -208,7 +214,13 @@ fcf() {
     is_in_git_repo || return
     local files target
 
-    IFS=$'\n' files=($({ echo "$(git ls-files --modified --others --exclude-standard)" ; } | fzf-tmux --multi --query="$1" --exit-0))
+    IFS=$'\n' files=(
+        $(
+            { echo "$(git ls-files --modified --others --exclude-standard)" ; } |
+            awk NF | sort -u |
+            fzf-tmux --multi --exit-0 --preview "git diff --color HEAD {}"
+        )
+    )
     git checkout -- "${files[@]}"
 }
 

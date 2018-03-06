@@ -1,44 +1,34 @@
 # Imports of React dependencies
 snippet ir "import React" b
 import React from 'react';
-
 endsnippet
 
 snippet irc "import React and Component" b
 import React, \{ Component } from 'react';
-
 endsnippet
 
 snippet irpc "import React and PureComponent" b
 import React, \{ PureComponent } from 'react';
-
 endsnippet
 
 snippet irf "import React and Fragment" b
 import React, \{ Fragment } from 'react';
-
 endsnippet
 
 snippet ircf "import React, Component and Fragment" b
 import React, \{ Component, Fragment } from 'react';
-
 endsnippet
 
 snippet irpcf "import React, PureComponent and Fragment" b
 import React, \{ PureComponent, Fragment } from 'react';
-
 endsnippet
-
-snippet irx "import React Context"
 
 snippet ird "import ReactDOM" b
 import ReactDOM from 'react-dom';
-
 endsnippet
 
 snippet irp "import PropTypes" b
-import PropTypes from 'prop-types'
-
+import PropTypes from 'prop-types';
 endsnippet
 
 snippet irrp "import React and PropTypes" b
@@ -112,7 +102,7 @@ snippet fdn "findDOMNode" b
 const ${1} = React.findDOMNode(${2})${0:;}
 endsnippet
 
-snippet rdren "ReactDOM.render()" b
+snippet rdren "ReactDOM.render()" w
 ReactDOM.render(<${1:App} />, document.getElementById('${2:root}'));
 endsnippet
 
@@ -138,7 +128,7 @@ constructor(props) \{
 
 	$1
 	${2:this.state = \{
-        $3: $4
+	    $3: $4
     };}
 }
 $0
@@ -207,13 +197,17 @@ render() \{
 endsnippet
 
 # React.Component instance API
+snippet stp "this.state.{prop}" w
+this.state.$1
+endsnippet
+
 snippet cst "const {  } = this.state;" b
-const {$1} = this.state${2:;}
+const { ${1:stateProp} } = this.state${2:;}
 $0
 endsnippet
 
 snippet sst "simple this.setState()" b
-this.setState('${1:stateKey}', ${3});
+this.setState({ ${1:stateKey}: ${2:stateValue} });
 endsnippet
 
 snippet sstc "simple this.setState() with callback" b
@@ -228,20 +222,28 @@ this.setState(\{
 });
 endsnippet
 
-snippet cps "this.props"
-const \{$1${2:, ...otherProps}} = this.props${3:;}
+snippet cps "const { p } = this.props;" b
+const \{ ${1:someProp} } = this.props${2:;}
 endsnippet
 
-snippet ps "this.props" i
-this.props${1:.}
+snippet pps "this.props" i
+this.props$1
 endsnippet
 
-snippet crefs "refs"
+snippet psp "this.props.p" i
+this.props.$1
+endsnippet
+
+snippet crefs "const v = this.refs"
 const \{$1} = this.refs${0:;}
 endsnippet
 
-snippet refs "refs" i
+snippet refs "this.refs" i
 this.refs${1:;}
+endsnippet
+
+snippet bcm "this.f = this.f.bind(this);"
+this.$1 = this.$1.bind(this);
 endsnippet
 
 snippet fup "forceUpdate"
