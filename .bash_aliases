@@ -202,7 +202,7 @@ fad() {
 
     IFS=$'\n' files=(
         $(
-            { echo "$(git diff --cached --name-only)" ; echo "$(git ls-files --modified --others --exclude-standard)" ; } |
+            { echo "$(git ls-files --modified --others --exclude-standard)" ; } |
             awk NF | sort -u |
             fzf-tmux --multi --exit-0 --preview "git diff --color HEAD {}"
         )

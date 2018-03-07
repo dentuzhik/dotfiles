@@ -195,13 +195,21 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-stand
 let g:ctrlp_use_caching = 0
 let g:ctrlp_map = '<c-_>'
 let g:ctrlp_extensions = ['smarttabs']
-map <leader>t :CtrlPSmartTabs<CR>
-map <leader>m :CtrlPModified<CR>
+nmap <silent> <C-M-o> :CtrlPSmartTabs<CR>
+nmap <silent> <leader>m :CtrlPModified<CR>
 
 let g:ctrlp_funky_matchtype = 'path'
 let g:ctrlp_funky_multi_buffers = 1
 let g:ctrlp_funky_syntax_highlight = 1
 nmap <silent> <C-o> :CtrlPFunky<CR>
+
+" Settings for Emmet, especially to work with JSX
+let g:user_emmet_settings = {
+\  'javascript': {
+\      'extends': 'jsx',
+\      'quote_char': "'"
+\  },
+\}
 
 " Syntax liniting and automfixing
 let g:airline#extensions#ale#enabled = 1
@@ -303,8 +311,14 @@ autocmd! BufWritePost .vimrc source $MYVIMRC
 
 :nmap <leader>M :LivedownPreview<CR>
 
-iab reuqure require
-iab reuire require
+" Reselect visual block after indent/outdent. Allow ident/outdent multiple
+" times
+:vnoremap < <gv
+:vnoremap > >gv
+
+ab reuqure require
+ab reuire require
+ab lenght length
 
 :nmap gV `[v`]
 
@@ -312,3 +326,6 @@ iab reuire require
 :vmap <leader>f <Plug>CtrlSFVwordExec
 :nmap <leader>w <Plug>CtrlSFCCwordPath
 :nmap <leader>W <Plug>CtrlSFCwordPath
+
+" Autosave only when there is something to save. Always saving makes build
+autocmd FocusLost,BufLeave,TabLeave,WinLeave * update

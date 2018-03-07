@@ -102,8 +102,12 @@ snippet fdn "findDOMNode" b
 const ${1} = React.findDOMNode(${2})${0:;}
 endsnippet
 
-snippet rdren "ReactDOM.render()" w
+snippet rdir "ReactDOM.render()" w
 ReactDOM.render(<${1:App} />, document.getElementById('${2:root}'));
+endsnippet
+
+snippet rdr "ReactDOM.render()" w
+ReactDOM.render(<${1:Component} />, ${2:element});
 endsnippet
 
 # React.Component Class API
