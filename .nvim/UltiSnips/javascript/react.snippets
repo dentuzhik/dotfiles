@@ -27,7 +27,7 @@ snippet ird "import ReactDOM" b
 import ReactDOM from 'react-dom';
 endsnippet
 
-snippet irp "import PropTypes" b
+snippet irpt "import PropTypes" b
 import PropTypes from 'prop-types';
 endsnippet
 
@@ -59,6 +59,10 @@ snippet irde "import All for React and ReactDOM" b
 import React, \{ Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
+endsnippet
+
+snippet irtr "import TestRenderer" b
+import TestRenderer from 'react-test-renderer';
 endsnippet
 
 # Defining React Components
@@ -133,7 +137,7 @@ constructor(props) \{
 	$1
 	${2:this.state = \{
 	    $3: $4
-    };}
+    \};}
 }
 $0
 endsnippet
@@ -246,6 +250,10 @@ snippet refs "this.refs" i
 this.refs${1:;}
 endsnippet
 
+snippet ref "ref={ref => v}" i
+ref={ref => this.${1:refProperty} = ref}
+endsnippet
+
 snippet bcm "this.f = this.f.bind(this);"
 this.$1 = this.$1.bind(this);
 endsnippet
@@ -272,8 +280,12 @@ snippet pt.n "PropTypes number" i
 ${1:key}: PropTypes.number${2:,}
 endsnippet
 
-snippet pt.o "PropTypes object" i
-${1:key}: PropTypes.object${2:,}
+snippet pt.o "PropTypes object" w
+${1:key}: PropTypes.object,
+endsnippet
+
+snippet pt.or "PropTypes object (required)" w
+${1:key}: PropTypes.object.isRequired,
 endsnippet
 
 snippet pt.s "PropTypes string" i
