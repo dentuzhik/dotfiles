@@ -246,7 +246,7 @@ let g:deoplete#enable_at_startup = 1
 "
 " Start: tern & deoplete-ternjs
 let g:tern#command = ["tern"]
-let g:tern#arguments = ["--persistent"]
+let g:tern#arguments = ["--persistent", "--no-port-file"]
 let g:tern_map_keys = 1
 
 let g:deoplete#sources#ternjs#types = 1
