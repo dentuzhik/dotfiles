@@ -136,7 +136,6 @@ else
 endif
 
 Plug 'SirVer/ultisnips'
-Plug 'wokalski/autocomplete-flow'
 Plug 'othree/jspc.vim'
 
 call plug#end()
@@ -215,7 +214,7 @@ let g:user_emmet_settings = {
 let g:airline#extensions#ale#enabled = 1
 
 let g:ale_echo_cursor = 1
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
 let g:ale_completion_enabled = 1
 let g:ale_linters = {
 \   'php': [],

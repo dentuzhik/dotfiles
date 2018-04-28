@@ -333,3 +333,23 @@ endsnippet
 snippet .ir "PropTypes isRequired" i
 .isRequired${1:,}
 endsnippet
+
+snippet rtic "return <Component />" i
+return <${1:Component} />;
+endsnippet
+
+snippet rtmic "return <Component />" i
+return (
+	<${1:Component}
+		$2
+	/>
+);
+endsnippet
+
+snippet rtc "return <Component />" i
+return (
+	<${1:Component}>
+		$2
+	</$1>
+);
+endsnippet
