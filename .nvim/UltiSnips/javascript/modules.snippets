@@ -46,14 +46,14 @@ snippet excv "export const n = v;" b
 export const ${1:name} = ${2:value};
 endsnippet
 
-snippet exdfun "export default function n() {}" b
-export function ${1:functionName}(${2:arg}) \{
+snippet exdfun "export default function f() {}" b
+export default function ${1:functionName}(${2}) \{
 	$3
 }
 endsnippet
 
 snippet exdasf "export default async function() {}" b
-export default async function ${1:functionName}(${2:arg}) \{
+export default async function ${1:functionName}(${2}) \{
 	$3
 }
 endsnippet
@@ -70,18 +70,24 @@ export default class ${1:OneClass} extends ${2:AnotherClass} {
 }
 endsnippet
 
+snippet exfun "export function n() {}" b
+export function ${1:functionName}(${2}) \{
+	$3
+}
+endsnippet
+
 snippet excfun "export const v = function n() {}" b
-export const ${1:functionName} = function $1(${2:arg}) \{
+export const ${1:functionName} = function $1(${2}) \{
 	$3
 };
 endsnippet
 
-snippet excarf "export const v = (arg) => {}" b
-export const ${1:name} = (${2:arg}) => {$3};
+snippet excarf "export const v = () => {}" b
+export const ${1:name} = (${2}) => {$3};
 endsnippet
 
 snippet excasf "export const v = async function() {}" b
-export const ${1:functionName} = async function $1(${2:arg}) \{
+export const ${1:functionName} = async function $1(${2}) \{
 	$3
 };
 endsnippet
