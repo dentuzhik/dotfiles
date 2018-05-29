@@ -124,11 +124,11 @@ Plug 'michaeljsmith/vim-indent-object'
 
 " Linting, Autocompletion & Snippets
 Plug 'w0rp/ale'
-Plug 'ternjs/tern_for_vim'
+" Plug 'ternjs/tern_for_vim'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+  " Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 else
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
@@ -192,7 +192,6 @@ let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 " ag is fast enough that CtrlP doesn't need to cache
 let g:ctrlp_use_caching = 0
-let g:ctrlp_map = '<c-_>'
 let g:ctrlp_extensions = ['smarttabs']
 nmap <silent> <C-M-o> :CtrlPSmartTabs<CR>
 nmap <silent> <leader>m :CtrlPModified<CR>
@@ -242,19 +241,20 @@ nnoremap <silent> [l :lprev<CR>
 
 " Settings for autocompletion (Deoplete & TernJS)
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#min_patter_length = 3
 "
 " Start: tern & deoplete-ternjs
-let g:tern#command = ["tern"]
-let g:tern#arguments = ["--persistent", "--no-port-file"]
-let g:tern_map_keys = 1
+" let g:tern#command = ["tern"]
+" let g:tern#arguments = ["--persistent", "--no-port-file"]
+" let g:tern_map_keys = 1
 
-let g:deoplete#sources#ternjs#types = 1
-let g:deoplete#sources#ternjs#include_keywords = 1
+" let g:deoplete#sources#ternjs#types = 1
+" let g:deoplete#sources#ternjs#include_keywords = 1
 
-let g:deoplete#sources#ternjs#filetypes = [
-\   'jsx',
-\   'javascript.jsx',
-\ ]
+" let g:deoplete#sources#ternjs#filetypes = [
+" \   'jsx',
+" \   'javascript.jsx',
+" \ ]
 " End: deoplete-ternjs
 
 " Start: deoplete and vim-multiple-cursors
@@ -327,4 +327,4 @@ ab lenght length
 :nmap <leader>W <Plug>CtrlSFCwordPath
 
 " Autosave only when there is something to save. Always saving makes build
-autocmd FocusLost,BufLeave,TabLeave,WinLeave * update
+" autocmd FocusLost,BufLeave,TabLeave,WinLeave * update
