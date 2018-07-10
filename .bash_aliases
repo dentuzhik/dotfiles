@@ -60,6 +60,7 @@ alias dc=docker
 alias dcp=docker-compose
 alias ghcl=github_clone_organization
 alias dclimg="docker images -q --filter dangling=true | xargs docker rmi"
+alias cask="brew cask"
 
 mwb-cat() {
 unzip -p $1 document.mwb.xml | sed -E 's/_ptr_="[x0-9a-fA-F]{8,18}"/_ptr_=""/'
