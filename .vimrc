@@ -66,6 +66,8 @@ filetype off
 
 call plug#begin('~/.config/nvim/plugged')
 
+" Plug 'semanser/vim-outdated-plugins'
+
 " Color schemes
 Plug 'altercation/vim-colors-solarized'
 Plug 'KeitaNakamura/neodark.vim'

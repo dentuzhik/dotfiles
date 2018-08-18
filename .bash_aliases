@@ -59,6 +59,7 @@ alias j="jobs"
 alias dc=docker
 alias dcp=docker-compose
 alias ghcl=github_clone_organization
+alias dclcnt="docker ps --no-trunc -aq | xargs docker rm"
 alias dclimg="docker images -q --filter dangling=true | xargs docker rmi"
 alias cask="brew cask"
 
