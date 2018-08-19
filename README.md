@@ -17,6 +17,12 @@ But for that you will need first [manually install brew](https://brew.sh/).
 ## Safari
 Copy over Safar Preferences from `./preferences` to `~/Library/Preferences`
 
+## Other Software
+[Battery Health 3](https://fiplab.com/apps/battery-health-3-for-mac)
+[Pipifier](https://github.com/arnoappenzeller/PiPifier)
+[Bear](https://itunes.apple.com/ee/app/bear/id1091189122?mt=12)
+[XCode](https://itunes.apple.com/ee/app/xcode/id497799835?mt=12)
+
 ## Alfred 
 Alfred is installed using Homebrew in the previous step. Some of the alfred packages are can be found in the global npm installation (below). I manage preferences through cloud file storage, because they contain personal data. 
 
