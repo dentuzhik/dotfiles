@@ -7,6 +7,7 @@ Make sure to clone the repo into the root of your home directory, I haven't test
 ## Brew
 Homebrew will allow you to preinstall a lot of handy software in a single command.  
 But for that you will need first [manually install brew](https://brew.sh/).
+`/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
 
 * After that, go to `~/dotfiles` directory and execute `brew bundle install`
 * The total size of resulted `Applications` folder with current config is around **5.4GB**, so make sure you have good internet connection  
