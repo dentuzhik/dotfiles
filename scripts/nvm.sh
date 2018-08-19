@@ -56,6 +56,7 @@ function upgrade_nvm() {
 function install_nvm() {
     local release=${1-$(get_latest_nvm_release)}
 
+    mkdir ~/.nvm
     curl -o- "https://raw.githubusercontent.com/creationix/nvm/$release/install.sh" | bash
     source "$NVM_DIR/nvm.sh"
 

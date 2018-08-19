@@ -40,12 +40,16 @@ link() {
 
 : ${dotfiles_dir:=~/dotfiles}
 : ${base_dir:=~/dotfiles}
-: ${entries:='.bash_profile .bashrc .bash_aliases .vimrc .ssh/config .tmux.conf .gitconfig .gitignore .editorconfig .mongorc.js'}
+: ${entries:='.bash_profile .bashrc .bash_aliases .vimrc .ssh/config .config/karabiner .tmux.conf .gitconfig .gitignore .editorconfig .mongorc.js'}
 
 echo 'This script may overwrite some files in your $HOME'
 read -p 'Do you want to continue (y/n)? ' yn
 case $yn in
     'y')
+        touch ~/.hushlogin
+        chsh -s /usr/local/bin/bash
+        echo $BASH_VERSION
+
         curl_git_scripts ~
         download_tmux_plugin_manager
         link $base_dir "$entries"

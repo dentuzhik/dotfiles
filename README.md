@@ -13,6 +13,9 @@ But for that you will need first [manually install brew](https://brew.sh/).
 
 ![Large Apps](./images/applications-top-above-200mb.png)
 
+## Safari
+Copy over Safar Preferences from `./preferences` to `~/Library/Preferences`
+
 ## Alfred 
 Alfred is installed using Homebrew in the previous step. Some of the alfred packages are can be found in the global npm installation (below). I manage preferences through cloud file storage, because they contain personal data. 
 
