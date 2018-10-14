@@ -8,7 +8,7 @@ set undofile
 set nobackup
 set noerrorbells
 set ttyfast
-set lazyredraw
+set mouse=a
 
 " Content settings
 set encoding=utf-8
@@ -85,6 +85,8 @@ Plug 'neoclide/vim-jsx-improve'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'leafgarland/typescript-vim'
 Plug 'chr4/nginx.vim'
+Plug 'neoclide/jsonc.vim'
+" Plug 'tpope/vim-markdown'
 
 " IDE-like features
 Plug 'scrooloose/nerdtree'
@@ -100,7 +102,15 @@ Plug 'tpope/vim-fugitive'
 Plug 'shime/vim-livedown'
 Plug 'mattn/emmet-vim'
 Plug 'k0kubun/vim-open-github'
+Plug 'junkblocker/patchreview-vim'
+Plug 'codegram/vim-codereview'
 Plug 'heavenshell/vim-jsdoc'
+Plug 'rizzatti/dash.vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'skywind3000/asyncrun.vim'
+
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'Shougo/denite.nvim'
 
 " Search improvements
 Plug 'haya14busa/incsearch.vim'
@@ -116,26 +126,29 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-projectionist'
 
 " Editor enhancements
+Plug 'junegunn/goyo.vim'
 Plug 'scrooloose/nerdcommenter'
+Plug 'tomtom/tcomment_vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'machakann/vim-highlightedyank'
 
 " Linting, Autocompletion & Snippets
 Plug 'w0rp/ale'
 " Plug 'ternjs/tern_for_vim'
 
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  " Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+" if has('nvim')
+"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"   " Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+" else
+"   Plug 'Shougo/deoplete.nvim'
+"   Plug 'roxma/nvim-yarp'
+"   Plug 'roxma/vim-hug-neovim-rpc'
+" endif
 
 Plug 'SirVer/ultisnips'
 Plug 'othree/jspc.vim'
@@ -159,6 +172,8 @@ set termguicolors
 
 let g:neodark#background = '#202020'
 colorscheme neodark
+
+let g:markdown_fenced_languages = ['htmml', 'css', 'javascript', 'js=javascript', 'typescript', 'bash=sh', 'python']
 
 " incesearch settings
 let g:incsearch#auto_nohlsearch = 1
@@ -186,7 +201,23 @@ let NERDTreeChDirMode=2
 let NERDTreeAutoDeleteBuffer=1
 let NERDTreeAutoCenterThreshold=5
 let NERDTreeWinSize=35
-:nnoremap <leader>` :NERDTreeFind<CR>
+:nnoremap <leader>` :call NERDTreeFindIfClosed()<CR>
+function! NERDTreeFindIfClosed()
+    if exists("g:NERDTree") && g:NERDTree.IsOpen()
+        NERDTreeClose
+    else
+        NERDTreeFind
+    endif
+endfunction
+
+" NERDCommenter settings
+let g:NERDDefaultAlign = 'left'
+let g:NERDCustomDelimiters={
+\ 'javascript': { 'left': '//', 'right': '', 'leftAlt': '{/*', 'rightAlt': '*/}' },
+\}
+
+" Highlight-yank
+let g:highlightedyank_highlight_duration = 2000
 
 " Settings for CtrlP
 let g:ctrlp_working_path_mode = 'ra'
@@ -195,7 +226,8 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-stand
 " ag is fast enough that CtrlP doesn't need to cache
 let g:ctrlp_use_caching = 0
 let g:ctrlp_extensions = ['smarttabs']
-nmap <silent> <C-M-o> :CtrlPSmartTabs<CR>
+let g:ctrlp_smarttabs_modify_tabline = 0
+nmap <silent> <C-i> :CtrlPSmartTabs<CR>
 nmap <silent> <leader>m :CtrlPModified<CR>
 
 let g:ctrlp_funky_matchtype = 'path'
@@ -213,6 +245,10 @@ let g:user_emmet_settings = {
 
 " Syntax liniting and automfixing
 let g:airline#extensions#ale#enabled = 1
+" TODO add more stuff to airline
+" let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
+" let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+" let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
 let g:ale_echo_cursor = 1
 let g:ale_fix_on_save = 0
@@ -224,7 +260,8 @@ let g:ale_linters = {
 \   'scss': ['stylelint']
 \}
 let g:ale_fixers = {
-\   'javascript': ['eslint']
+\   'javascript': ['eslint'],
+\   'json': ['prettier']
 \ }
 nmap <leader>F :ALEFix<CR>
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
@@ -240,6 +277,15 @@ endfunction
 nnoremap <silent> <leader>e :call ToggleErrors()<CR>
 nnoremap <silent> ]l :lnext<CR>
 nnoremap <silent> [l :lprev<CR>
+
+" Settings for Dash plugin
+:nmap <silent> <leader>d <Plug>DashSearch
+:vmap <silent> <leader>d <Plug>DashSearch
+:nmap <silent> <leader>D <Plug>DashGlobalSearch
+:vmap <silent> <leader>D <Plug>DashGlobalSearch
+let g:dash_map = {
+\ 'javascript' : ['rweb:'],
+\ }
 
 " Settings for autocompletion (Deoplete & TernJS)
 let g:deoplete#enable_at_startup = 1
@@ -265,12 +311,23 @@ function! Multiple_cursors_before()
     if exists('g:deoplete#disable_auto_complete')
        let g:deoplete#disable_auto_complete = 1
     endif
+
+    if exists('g:coc_enabled')
+        " :execute "CocDisable"
+        :silent exec "CocDisable"
+        let g:coc_disabled = 1
+    endif
 endfunction
 
 " Called once only when the multiple selection is canceled (default <Esc>)
 function! Multiple_cursors_after()
     if exists('g:deoplete#disable_auto_complete')
        let g:deoplete#disable_auto_complete = 0
+    endif
+
+    if exists('g:coc_disabled')
+        " :execute "CocEnable"
+        :silent exec "CocEnable"
     endif
 endfunction
 " End: deoplete and vim-multiple-cursors
@@ -323,6 +380,47 @@ ab lenght length
 
 :nmap gV `[v`]
 
+let g:goyo_width=120
+let g:goyo_height=90
+let g:goyo_linenr=1
+nnoremap <silent> <leader>g :Goyo<CR>
+
+function! s:goyo_enter()
+  " silent !tmux set status off
+  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  set mouse=a
+  " set noshowmode
+  " set noshowcmd
+  set scrolloff=100
+
+  " Remove artifacts for NeoVim on true colors transparent background.
+  " guifg is the terminal's background color (b/c of translucence).
+  " https://github.com/junegunn/goyo.vim/issues/156#issuecomment-328386711
+  hi! VertSplit    gui=NONE guifg=#1a1d24 guibg=NONE
+  hi! StatusLine   gui=NONE guifg=#1a1d24 guibg=NONE
+  hi! StatusLineNC gui=NONE guifg=#1a1d24 guibg=NONE
+  hi! EndOfBuffer  gui=NONE guifg=#1a1d24 guibg=NONE
+endfunction
+
+function! s:goyo_leave()
+  " silent !tmux set status on
+  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  " set showmode
+  " set showcmd
+  set scrolloff=5
+
+   " Recover original colorscheme highlightings (deep-space)
+  hi! VertSplit    gui=NONE    guifg=#51617d guibg=#1b202a
+  hi! StatusLine   gui=NONE    guifg=#9aa7bd guibg=#323c4d
+  hi! StatusLineNC gui=reverse guifg=#232936 guibg=#51617d
+  hi! link         EndOfBuffer NonText
+endfunction
+
+au! User GoyoEnter
+au  User GoyoEnter nested call <SID>goyo_enter()
+au! User GoyoLeave
+au  User GoyoLeave nested call <SID>goyo_leave()
+
 :nmap <leader>f <Plug>CtrlSFPrompt
 :vmap <leader>f <Plug>CtrlSFVwordExec
 :nmap <leader>w <Plug>CtrlSFCCwordPath
@@ -330,3 +428,104 @@ ab lenght length
 
 " Autosave only when there is something to save. Always saving makes build
 " autocmd FocusLost,BufLeave,TabLeave,WinLeave * update
+
+if exists("+showtabline")
+    " Rename tabs to show tab number.
+    " (Based on http://stackoverflow.com/questions/5927952/whats-implementation-of-vims-default-tabline-function)
+    function! MyTabLine()
+        let s = ''
+        let t = tabpagenr()
+        let i = 1
+        while i <= tabpagenr('$')
+            let buflist = tabpagebuflist(i)
+            let winnr = tabpagewinnr(i)
+            let s .= '%' . i . 'T'
+            let s .= (i == t ? '%1*' : '%2*')
+
+            let s .= (i == t ? '%#TabNumSel#' : '%#TabNum#')
+            let s .= ' ' . i . ' '
+            let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
+
+            let bufnr = buflist[winnr - 1]
+            let file = bufname(bufnr)
+            let buftype = getbufvar(bufnr, '&buftype')
+
+            if buftype == 'help'
+                let file = 'help:' . fnamemodify(file, ':t:r')
+
+            elseif buftype == 'quickfix'
+                let file = 'quickfix'
+
+            elseif buftype == 'nofile'
+                if file =~ '\/.'
+                    let file = substitute(file, '.*\/\ze.', '', '')
+                endif
+
+            else
+                let file = pathshorten(fnamemodify(file, ':p:~:.:r'))
+                if getbufvar(bufnr, '&modified')
+                    let file = '+' . file
+                endif
+
+            endif
+
+            if file == ''
+                let file = '[No Name]'
+            endif
+
+            let s .= ' ' . file
+
+            let nwins = tabpagewinnr(i, '$')
+            if nwins > 1
+                let modified = ''
+                for b in buflist
+                    if getbufvar(b, '&modified') && b != bufnr
+                        let modified = '*'
+                        break
+                    endif
+                endfor
+                let hl = (i == t ? '%#WinNumSel#' : '%#WinNum#')
+                let nohl = (i == t ? '%#TabLineSel#' : '%#TabLine#')
+                let s .= ' ' . modified . '(' . hl . winnr . nohl . '/' . nwins . ')'
+            endif
+
+            if i < tabpagenr('$')
+                let s .= ' %#TabLine#|'
+            else
+                let s .= ' '
+            endif
+
+            let i = i + 1
+
+        endwhile
+
+        let s .= '%T%#TabLineFill#%='
+        let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
+        return s
+
+    endfunction
+
+    highlight! TabNum term=bold,reverse cterm=bold,reverse ctermfg=1 ctermbg=7 gui=bold
+    highlight! TabNumSel term=bold,reverse cterm=bold,reverse ctermfg=1 ctermbg=7 gui=bold,reverse guifg=LightGrey guibg=Black
+    highlight! WinNum term=bold,underline cterm=bold,underline ctermfg=11 ctermbg=7 guifg=DarkBlue guibg=LightGrey
+    highlight! WinNumSel term=bold cterm=bold ctermfg=7 ctermbg=14 guifg=DarkBlue guibg=LightGrey
+
+    set tabline=%!MyTabLine()
+endif
+
+nmap <silent> <C-h> :tabprev<CR>
+nmap <silent> <C-l> :tabnext<CR>
+
+let g:asyncrun_encs = 'gbk'
+" let g:asyncrun_open = 40
+
+nmap <silent> <leader>A :AsyncRun -cwd=<root><Space>
+nmap <silent> <leader>a :AsyncRun! -cwd=<root><Space>
+
+augroup vimrc
+    autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(30, 1)
+    autocmd User AsyncRunStop call asyncrun#quickfix_toggle(30, 1)
+augroup END
+command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+
+nmap <silent> <leader>i :call asyncrun#quickfix_toggle(30)<CR>

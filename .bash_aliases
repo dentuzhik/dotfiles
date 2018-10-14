@@ -53,9 +53,6 @@ alias la="ls -A"
 alias lo="stat ${statoptions}"
 alias l="ls -AlhFG"
 
-alias h="history"
-alias j="jobs"
-
 alias dc=docker
 alias dcp=docker-compose
 alias ghcl=github_clone_organization
@@ -77,8 +74,13 @@ fi
 alias tpl='tmuxp load .'
 
 # Always use fzf-tmux executable
-alias fzf='fzf-tmux -d 30'
-alias fzf-tmux='fzf-tmux -d 30'
+alias bat='bat --theme=OneHalfDark --style=numbers,changes --color=always'
+alias butt=bat
+alias fzf-custom='fzf-tmux -d 40 --bind ctrl-f:preview-page-down,ctrl-b:preview-page-up,ctrl-r:toggle-all'
+alias fzf='fzf-custom'
+alias fzf-tmux='fzf-custom'
+
+alias ff='FZF_FS_OPENER=vim . fzf-fs'
 
 # GIT heart FZF
 # -------------
@@ -99,6 +101,15 @@ function fe() {
         IFS=$'\n' files=($(ag -l --nocolor -f --nogroup --hidden -g "" | fzf-tmux --query "$1" --multi --select-1 --exit-0))
     fi
 
+    [[ -n "$files" ]] && ${EDITOR:-vim} -p "${files[@]}"
+}
+
+# Fuzzy-fasd
+function ffe() {
+    [ $# -gt 0 ] && fasd -f -e ${EDITOR} "$*" && return
+
+    local files
+    files="$(fasd -Rfl "$1" | fzf-tmux --query "$1" --multi)"
     [[ -n "$files" ]] && ${EDITOR:-vim} -p "${files[@]}"
 }
 
@@ -134,39 +145,22 @@ function fse() {
     [[ -n "$files" ]] && ${EDITOR:-vim} -p "${files[@]}"
 }
 
-fdc() {
-    is_in_git_repo || return
-    local files
-    IFS=$'\n' files=(
-        $(
-            echo "$(git diff --cached --name-only)" |
-            fzf-tmux --multi --select-1 --exit-0 --preview "git diff --color HEAD {}"
-        )
-    )
-
-    [[ -n "$files" ]] && git diff --cached --color "${files[@]}"
-}
-
-fdi() {
-    is_in_git_repo || return
-    local files
-    IFS=$'\n' files=(
-        $(
-            echo "$(git diff --name-only)" |
-            fzf-tmux --multi --select-1 --exit-0 --preview "git diff --color {}"
-        )
-    )
-
-    [[ -n "$files" ]] && git diff --color "${files[@]}"
-}
-
 fmd() {
     is_in_git_repo || return
     local files
+    # IFS=$'\n' files=(
+    #     $({ echo "$(git diff --cached --name-only)" ; echo "$(git ls-files --modified --others --exclude-standard)" ; } |
+    #     awk NF | sort -u |
+    #     fzf-tmux --multi --exit-0 --preview "bat {}")
+    # )
+
     IFS=$'\n' files=(
-        $({ echo "$(git diff --cached --name-only)" ; echo "$(git ls-files --modified --others --exclude-standard)" ; } |
-        awk NF | sort -u |
-        fzf-tmux --multi --exit-0 --preview "git diff --color HEAD {}")
+        $(
+            git -c color.status=always status -s --short |
+                fzf-tmux -m --ansi --nth 2..,.. \
+                --preview "bat {-1}" |
+                cut -c4- | sed 's/.* -> //'
+        )
     )
     [[ -n "$files" ]] && vim -p "${files[@]}"
 }
@@ -192,7 +186,7 @@ fmb() {
         $(
             echo "$(git diff --name-only $branch...HEAD)" |
             awk NF | sort -u |
-            fzf-tmux --multi --exit-0 --preview "git diff --color $branch {}"
+            fzf-tmux --multi --exit-0 --preview "bat {}"
         )
     )
     [[ -n "$files" ]] && vim -p "${files[@]}"
@@ -206,10 +200,37 @@ fad() {
         $(
             { echo "$(git ls-files --modified --others --exclude-standard)" ; } |
             awk NF | sort -u |
-            fzf-tmux --multi --exit-0 --preview "git diff --color HEAD {}"
+            fzf-tmux --multi --exit-0 --preview "bat {}"
         )
     )
-    git add "${files[@]}"
+    [[ -n "$files" ]] && git add "${files[@]}"
+}
+
+fci() {
+    is_in_git_repo || return
+    local files target
+
+    IFS=$'\n' files=(
+        $(
+            { echo "$(git ls-files --modified --others --exclude-standard)" ; } |
+            awk NF | sort -u |
+            fzf-tmux --multi --exit-0 --preview "bat {}"
+        )
+    )
+    [[ -n "$files" ]] && git add "${files[@]}" && git commit
+}
+
+fll() {
+    HASHZ="@"
+    IFS=$'\n' FILES=(
+        $(
+            git show --pretty='format:' --name-status --color=always $HASHZ |
+            fzf-tmux -d50 --multi --exit-0 --preview-window right:70% --preview "git diff $HASHZ $HASHZ^ {-1} | bat -ldiff" |
+            cut -c3- | awk '{$1=$1};1'
+        )
+    )
+
+    [[ -n "$FILES" ]] && ${EDITOR:-vim} -p "${FILES[@]}"
 }
 
 fcf() {
@@ -223,7 +244,7 @@ fcf() {
             fzf-tmux --multi --exit-0 --preview "git diff --color HEAD {}"
         )
     )
-    git checkout -- "${files[@]}"
+    [[ -n "$files" ]] && git checkout -- "${files[@]}"
 }
 
 frs() {
@@ -231,30 +252,35 @@ frs() {
     local files target
 
     IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; } | fzf-tmux --multi --query="$1" --select-1 --exit-0))
-    git reset HEAD "${files[@]}"
+    [[ -n "$files" ]] && git reset HEAD "${files[@]}"
 }
 
-fst() {
-    git -c color.status=always status --short |
-        fzf-tmux -m --ansi --nth 2..,.. \
-        --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1}) | head -500' |
-        cut -c4- | sed 's/.* -> //'
+frshd() {
+    is_in_git_repo || return
+    local files target
+
+    IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; } | fzf-tmux --multi --query="$1" --select-1 --exit-0))
+    [[ -n "$files" ]] && git reset --hard HEAD "${files[@]}"
 }
 
 fbr() {
     is_in_git_repo || return
-    git branch -a --color=always | grep -v '/HEAD\s' | sort |
-        fzf-tmux --ansi --multi --tac --preview-window right:70% \
-        --preview 'git l --color=always $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
-        sed 's/^..//' | cut -d' ' -f1 |
-        sed 's#^remotes/##'
+    BRANCH=$(
+        git branch -a --color=always | grep -v '/HEAD\s' | sort |
+            fzf-tmux --ansi --multi --tac --preview-window right:70% \
+            --preview 'git l --color=always $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
+            sed 's/^..//' | cut -d' ' -f1 |
+            sed 's#^remotes/##'
+    ) || return
+
+    [[ ! -z "$BRANCH" ]] && fmci $BRANCH
 }
 
 fgt() {
     is_in_git_repo || return
     git tag --sort -version:refname |
         fzf-tmux --multi --preview-window right:70% \
-        --preview 'git show --color=always {} | head -'$LINES
+        --preview 'git show --patch-with-stat --color=always {} | head -'$LINES
 }
 
 fgh() {
@@ -262,15 +288,15 @@ fgh() {
     git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
         fzf-tmux --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
         --header 'Press CTRL-S to toggle sort' \
-        --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always | head -'$LINES |
+        --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --patch-with-stat --color=always | head -'$LINES |
         grep -o "[a-f0-9]\{7,\}"
 }
 
-fgr() {
+frmt() {
     is_in_git_repo || return
     git remote -v | awk '{print $1 "\t" $2}' | uniq |
-        fzf-tmux --tac \
-        --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" {1} | head -200' |
+        fzf-tmux --tac --preview-window=right:65% \
+        --preview 'git log --color=always --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" --remotes={1} | head -500' |
         cut -d$'\t' -f1
 }
 
@@ -327,24 +353,35 @@ fme() {
 
 frbi() {
     is_in_git_repo || return
-    HASH=$(git log --oneline --no-decorate | head -n 30 | fzf)
+    HASH=$(git log --oneline --decorate --graph --color=always | head -n 30 | fzf-tmux --ansi --reverse)
 
-    git rebase -i $(echo ${HASH} | awk '{ print $1 }')
+    [[ ! -z "$HASH" ]] && git rebase -i "$(echo ${HASH} | awk '{ print $1 }')^"
 }
 
 fref() {
     is_in_git_repo || return
-    HASH=$(git reflog | head -n 50 | fzf-tmux --query="$1" --exit-0) || return
+    HASH=$(git reflog --color=always | head -n 100 | fzf-tmux --ansi --reverse --query="$1" --exit-0) || return
     HASHZ=$(echo ${HASH} | awk '{ print $1 }') || return
 
-    git reset --hard $HASHZ
+    [[ ! -z "$HASH" ]] && git reset --hard $HASHZ
 }
 
-fce() {
+fmci() {
     is_in_git_repo || return
-    HASH=$(git log --pretty=oneline | head -n 50 | fzf-tmux --query="$1" --exit-0) || return
-    HASHZ=$(echo ${HASH} | awk '{ print $1 }') || return
-    IFS=$'\n' FILES=($(git show --pretty='format:' --name-only $HASHZ | fzf-tmux --multi --exit-0))
+    BRANCH=${1:-@}
+    HASH=$(
+        git log --oneline --graph --color=always $BRANCH | head -n 100 |
+            fzf-tmux --ansi --reverse --exit-0 \
+            --preview='grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --patch-with-stat --color=always'
+        ) || return
+    HASHZ=$(echo ${HASH} | grep -o "[a-f0-9]\{7,\}") || return
+    IFS=$'\n' FILES=(
+        $(
+            git show --pretty='format:' --name-status --color=always $HASHZ |
+            fzf-tmux --multi --exit-0 --preview "git diff $HASHZ $HASHZ^ {-1} | bat -ldiff" |
+            cut -c3- | awk '{$1=$1};1'
+        )
+    )
 
     [[ -n "$FILES" ]] && ${EDITOR:-vim} -p "${FILES[@]}"
 }
@@ -371,18 +408,5 @@ fsh() {
     ctrl-x) git stash drop $reflog ;;
 esac
 }
-
-fsw() {
-    is_in_git_repo || return
-    git log --graph --color=always \
-        --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-        fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-        --bind "ctrl-m:execute:
-    (grep -o '[a-f0-9]\{7\}' | head -1 |
-        xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
-    {}
-    FZF-EOF"
-}
-
 
 bind '"\er": redraw-current-line'
