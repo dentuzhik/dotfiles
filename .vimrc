@@ -130,6 +130,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tomtom/tcomment_vim'
 Plug 'jiangmiao/auto-pairs'
+Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
@@ -529,3 +530,8 @@ augroup END
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
 nmap <silent> <leader>i :call asyncrun#quickfix_toggle(30)<CR>
+
+let g:closetag_xhtml_filenames = '*.xhtml,*.js'
+let g:closetag_xhtml_filetypes = 'html,xhtml,phtml,javascript'
+
+let g:AutoPairsShortcutJump = '<C-e>'
