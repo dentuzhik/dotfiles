@@ -6,3 +6,6 @@
 
 # Tern specific metadata
 .tern-port
+
+# Commiting 1p-session to git is probably a bad idea :)
+.1p-session

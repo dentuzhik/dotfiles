@@ -251,7 +251,7 @@ this.refs${1:;}
 endsnippet
 
 snippet ref "ref={ref => v}" i
-ref={ref => this.${1:refProperty} = ref}
+ref={ref => { this.${1:refProperty} = ref; }}
 endsnippet
 
 snippet bcm "this.f = this.f.bind(this);"
@@ -268,16 +268,32 @@ snippet pt.a "PropTypes array" i
 ${1:key}: PropTypes.array${2:,}
 endsnippet
 
+snippet pt.ar "PropTypes array (required)" i
+${1:key}: PropTypes.array.isRequired,
+endsnippet
+
 snippet pt.b "PropTypes bool" i
 ${1:key}: PropTypes.bool${2:,}
+endsnippet
+
+snippet pt.br "PropTypes bool (required)" i
+${1:key}: PropTypes.bool.isRequired,
 endsnippet
 
 snippet pt.f "PropTypes func" i
 ${1:key}: PropTypes.func${2:,}
 endsnippet
 
+snippet pt.fr "PropTypes func (required)" i
+${1:key}: PropTypes.func.isRequired,
+endsnippet
+
 snippet pt.n "PropTypes number" i
 ${1:key}: PropTypes.number${2:,}
+endsnippet
+
+snippet pt.nr "PropTypes number (required)" i
+${1:key}: PropTypes.number.isRequired,
 endsnippet
 
 snippet pt.o "PropTypes object" w
@@ -292,6 +308,10 @@ snippet pt.s "PropTypes string" i
 ${1:key}: PropTypes.string${2:,}
 endsnippet
 
+snippet pt.sr "PropTypes string (required)" i
+${1:key}: PropTypes.string.isRequired,
+endsnippet
+
 snippet pt.sb "PropTypes symbol" i
 ${1:key}: PropTypes.symbol${2:,}
 endsnippet
@@ -300,7 +320,7 @@ snippet pt.no "PropTypes node" i
 ${1:key}: PropTypes.node${2:,}
 endsnippet
 
-snippet pt.e "PropTypes element" i
+snippet pt.el "PropTypes element" i
 ${1:key}: PropTypes.element${2:,}
 endsnippet
 

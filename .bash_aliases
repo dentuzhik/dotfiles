@@ -61,7 +61,7 @@ alias dclimg="docker images -q --filter dangling=true | xargs docker rmi"
 alias cask="brew cask"
 
 mwb-cat() {
-unzip -p $1 document.mwb.xml | sed -E 's/_ptr_="[x0-9a-fA-F]{8,18}"/_ptr_=""/'
+    unzip -p $1 document.mwb.xml | sed -E 's/_ptr_="[x0-9a-fA-F]{8,18}"/_ptr_=""/'
 }
 
 if [ -f ~/.airlane_dev_oauth_token ]; then
@@ -74,8 +74,6 @@ fi
 alias tpl='tmuxp load .'
 
 # Always use fzf-tmux executable
-alias bat='bat --theme=OneHalfDark --style=numbers,changes --color=always'
-alias butt=bat
 alias fzf-custom='fzf-tmux -d 40 --bind ctrl-f:preview-page-down,ctrl-b:preview-page-up,ctrl-r:toggle-all'
 alias fzf='fzf-custom'
 alias fzf-tmux='fzf-custom'
@@ -158,7 +156,7 @@ fmd() {
         $(
             git -c color.status=always status -s --short |
                 fzf-tmux -m --ansi --nth 2..,.. \
-                --preview "bat {-1}" |
+                --preview "bat --theme=OneHalfDark --style=numbers,changes --color=always {-1}" |
                 cut -c4- | sed 's/.* -> //'
         )
     )
@@ -378,7 +376,7 @@ fmci() {
     IFS=$'\n' FILES=(
         $(
             git show --pretty='format:' --name-status --color=always $HASHZ |
-            fzf-tmux --multi --exit-0 --preview "git diff $HASHZ $HASHZ^ {-1} | bat -ldiff" |
+            fzf-tmux --multi --exit-0 --preview "git diff $HASHZ $HASHZ^ {-1} | bat -ldiff --theme=OneHalfDark --style=numbers,changes --color=always" |
             cut -c3- | awk '{$1=$1};1'
         )
     )

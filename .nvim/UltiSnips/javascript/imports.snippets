@@ -1,0 +1,23 @@
+snippet ilo "import { v } from 'lodash';" b
+import { ${1:value} } from 'lodash';
+endsnippet
+
+snippet ico "import Component from 'components/*/*';" b
+import $1 from 'components/$1/$1';
+endsnippet
+
+snippet iut "import util from 'utils/*';" b
+import $1 from 'utils/$2';
+endsnippet
+
+snippet imut "import { util } from 'utils/*';" b
+import { ${1:value} } from 'utils/${2:moduleName}';
+endsnippet
+
+snippet icf "import config from 'config';" b
+import config from 'config';
+endsnippet
+
+snippet ias "import asset from 'assets/*';" b
+import ${1:asset} from 'assets/${2:filePath}';
+endsnippet

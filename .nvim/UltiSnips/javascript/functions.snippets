@@ -39,25 +39,25 @@ ${1:arg1}, ${2:arg2}, ${3:arg3}, ${4:arg4}
 endsnippet
 
 snippet fun "function() {}" b
-function ${1:functionName}(${2:arg}) \{
+function ${1:functionName}($2) \{
 	$3
 }
 endsnippet
 
 snippet cfun "const v = function() {}" b
-const ${1:functionName} = function $1(${2:arg}) \{
+const ${1:functionName} = function $1($2) \{
 	$3
 };
 endsnippet
 
 snippet asf "async function() {}" b
-async function ${1:functionName}(${2:arg}) \{
+async function ${1:functionName}($2) \{
 	$3
 }
 endsnippet
 
 snippet casf "const v = async function() {}" b
-const ${1:functionName} = async function $1(${2:arg}) \{
+const ${1:functionName} = async function $1($2) \{
 	$3
 }
 endsnippet

@@ -7,7 +7,6 @@ set undodir=~/.vim/undodir
 set undofile
 set nobackup
 set noerrorbells
-set ttyfast
 set mouse=a
 
 " Content settings
@@ -48,6 +47,9 @@ set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_
 set scrolloff=5
 set sidescrolloff=5
 
+set ttyfast
+set lazyredraw
+
 " Required for Vundle initialization
 filetype off
 
@@ -66,10 +68,8 @@ filetype off
 
 call plug#begin('~/.config/nvim/plugged')
 
-" Plug 'semanser/vim-outdated-plugins'
-
 " Color schemes
-Plug 'altercation/vim-colors-solarized'
+" Plug 'altercation/vim-colors-solarized'
 Plug 'KeitaNakamura/neodark.vim'
 
 " Syntax highlighting plugins
@@ -86,7 +86,7 @@ Plug 'mustache/vim-mustache-handlebars'
 Plug 'leafgarland/typescript-vim'
 Plug 'chr4/nginx.vim'
 Plug 'neoclide/jsonc.vim'
-" Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-markdown'
 
 " IDE-like features
 Plug 'scrooloose/nerdtree'
@@ -97,19 +97,19 @@ Plug 'jasoncodes/ctrlp-modified.vim'
 Plug 'DavidEGx/ctrlp-smarttabs'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'dyng/ctrlsf.vim'
-Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-fugitive'
-Plug 'shime/vim-livedown'
-Plug 'mattn/emmet-vim'
+Plug 'tpope/vim-rhubarb'
 Plug 'k0kubun/vim-open-github'
-Plug 'junkblocker/patchreview-vim'
-Plug 'codegram/vim-codereview'
-Plug 'heavenshell/vim-jsdoc'
 Plug 'rizzatti/dash.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'skywind3000/asyncrun.vim'
+Plug 'neoclide/npm.nvim', {'do' : 'npm install'}
+" Plug 'junkblocker/patchreview-vim'
+" Plug 'codegram/vim-codereview'
+" Plug 'heavenshell/vim-jsdoc'
+Plug 'shime/vim-livedown'
 
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+" Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'Shougo/denite.nvim'
 
 " Search improvements
@@ -118,8 +118,8 @@ Plug 'haya14busa/incsearch-fuzzy.vim'
 Plug 'bronson/vim-visual-star-search'
 
 " Session management plugins
-Plug 'tpope/vim-obsession'
-Plug 'dhruvasagar/vim-prosession'
+" Plug 'tpope/vim-obsession'
+" Plug 'dhruvasagar/vim-prosession'
 
 " Filesystem integrations
 Plug 'editorconfig/editorconfig-vim'
@@ -128,7 +128,7 @@ Plug 'tpope/vim-projectionist'
 " Editor enhancements
 Plug 'junegunn/goyo.vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'tomtom/tcomment_vim'
+" Plug 'tomtom/tcomment_vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-surround'
@@ -140,11 +140,9 @@ Plug 'machakann/vim-highlightedyank'
 
 " Linting, Autocompletion & Snippets
 Plug 'w0rp/ale'
-" Plug 'ternjs/tern_for_vim'
 
 " if has('nvim')
 "   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"   " Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 " else
 "   Plug 'Shougo/deoplete.nvim'
 "   Plug 'roxma/nvim-yarp'
@@ -152,7 +150,7 @@ Plug 'w0rp/ale'
 " endif
 
 Plug 'SirVer/ultisnips'
-Plug 'othree/jspc.vim'
+" Plug 'othree/jspc.vim'
 
 call plug#end()
 
@@ -174,9 +172,13 @@ set termguicolors
 let g:neodark#background = '#202020'
 colorscheme neodark
 
-let g:markdown_fenced_languages = ['htmml', 'css', 'javascript', 'js=javascript', 'typescript', 'bash=sh', 'python']
+" Start: PLUGINS SETTINGS
 
-" incesearch settings
+" Start: tpope/vim-markdown
+let g:markdown_fenced_languages = ['html', 'css', 'javascript', 'js=javascript', 'typescript', 'bash=sh', 'python']
+" End: tpope/vim-markdown
+
+" Start: haya14busa/incsearch.vim
 let g:incsearch#auto_nohlsearch = 1
 
 map /  <Plug>(incsearch-forward)
@@ -188,13 +190,15 @@ map *  <Plug>(incsearch-nohl-*)
 map #  <Plug>(incsearch-nohl-#)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
+" End: haya14busa/incsearch.vim
 
-" incsearch-fuzzy
+" Start: haya14busa/incsearch-fuzzy.vim
 map z/ <Plug>(incsearch-fuzzy-/)
 map z? <Plug>(incsearch-fuzzy-?)
 map zg/ <Plug>(incsearch-fuzzy-stay)
+" End: haya14busa/incsearch-fuzzy.vim
 
-" NERDTree settings
+" Start: scrooloose/nerdtree
 let NERDTreeMinimalUI=1
 let NERDTreeShowHidden=1
 let NERDTreeAutoCenter=1
@@ -202,6 +206,10 @@ let NERDTreeChDirMode=2
 let NERDTreeAutoDeleteBuffer=1
 let NERDTreeAutoCenterThreshold=5
 let NERDTreeWinSize=35
+
+" Close Vim, if the only window left is NERDTree
+" autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 :nnoremap <leader>` :call NERDTreeFindIfClosed()<CR>
 function! NERDTreeFindIfClosed()
     if exists("g:NERDTree") && g:NERDTree.IsOpen()
@@ -210,47 +218,57 @@ function! NERDTreeFindIfClosed()
         NERDTreeFind
     endif
 endfunction
+" End: scrooloose/nerdtree
 
-" NERDCommenter settings
+" Start: scrooloose/nerdcommenter
 let g:NERDDefaultAlign = 'left'
+let NERDSpaceDelims=1
 let g:NERDCustomDelimiters={
 \ 'javascript': { 'left': '//', 'right': '', 'leftAlt': '{/*', 'rightAlt': '*/}' },
 \}
+" End: scrooloose/nerdcommenter
 
-" Highlight-yank
+" Start: machakann/vim-highlightedyank
 let g:highlightedyank_highlight_duration = 2000
+" End: machakann/vim-highlightedyank
 
-" Settings for CtrlP
+" Start: ctrlpvim/ctrlp.vim
 let g:ctrlp_working_path_mode = 'ra'
-"ctrl+p ignore files in .gitignore
+" ctrl+p ignore files in .gitignore
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 " ag is fast enough that CtrlP doesn't need to cache
-let g:ctrlp_use_caching = 0
+let g:ctrlp_use_caching = 1
+
+" Disable w0rp/ale syntax highlight inside ctrlp buffer
+autocmd BufEnter ControlP let b:ale_enabled = 0
+" End: ctrlpvim/ctrlp.vim
+
+" Start: DavidEGx/ctrlp-smarttabs
 let g:ctrlp_extensions = ['smarttabs']
 let g:ctrlp_smarttabs_modify_tabline = 0
 nmap <silent> <C-i> :CtrlPSmartTabs<CR>
-nmap <silent> <leader>m :CtrlPModified<CR>
+" End: DavidEGx/ctrlp-smarttabs
 
+" Start: jasoncodes/ctrlp-modified.vim
+nmap <silent> <leader>m :CtrlPModified<CR>
+" End: jasoncodes/ctrlp-modified.vim
+
+" Start: tacahiroy/ctrlp-funky
 let g:ctrlp_funky_matchtype = 'path'
 let g:ctrlp_funky_multi_buffers = 1
 let g:ctrlp_funky_syntax_highlight = 1
 nmap <silent> <C-o> :CtrlPFunky<CR>
+" End: tacahiroy/ctrlp-funky
 
-" Settings for Emmet, especially to work with JSX
-let g:user_emmet_settings = {
-\  'javascript': {
-\      'extends': 'jsx',
-\      'quote_char': "'"
-\  },
-\}
-
-" Syntax liniting and automfixing
+" Start: vim-airline/vim-airline
 let g:airline#extensions#ale#enabled = 1
-" TODO add more stuff to airline
+
 " let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
 " let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 " let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+" End: vim-airline/vim-airline
 
+" Start: w0rp/ale
 let g:ale_echo_cursor = 1
 let g:ale_fix_on_save = 0
 let g:ale_completion_enabled = 1
@@ -268,6 +286,8 @@ nmap <leader>F :ALEFix<CR>
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
+" Not related to w0rp/ale, but since ale puts errors in location list it is
+" very handly to use this key binding
 function! ToggleErrors()
     if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))
         lopen
@@ -278,8 +298,9 @@ endfunction
 nnoremap <silent> <leader>e :call ToggleErrors()<CR>
 nnoremap <silent> ]l :lnext<CR>
 nnoremap <silent> [l :lprev<CR>
+" Start: w0rp/ale
 
-" Settings for Dash plugin
+" Start: rizzatti/dash.vim
 :nmap <silent> <leader>d <Plug>DashSearch
 :vmap <silent> <leader>d <Plug>DashSearch
 :nmap <silent> <leader>D <Plug>DashGlobalSearch
@@ -287,26 +308,21 @@ nnoremap <silent> [l :lprev<CR>
 let g:dash_map = {
 \ 'javascript' : ['rweb:'],
 \ }
+" End: rizzatti/dash.vim
 
-" Settings for autocompletion (Deoplete & TernJS)
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#min_patter_length = 3
-"
-" Start: tern & deoplete-ternjs
-" let g:tern#command = ["tern"]
-" let g:tern#arguments = ["--persistent", "--no-port-file"]
-" let g:tern_map_keys = 1
+" Start: Shougo/deoplete.nvim
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#min_patter_length = 3
+" End: Shougo/deoplete.nvim
 
-" let g:deoplete#sources#ternjs#types = 1
-" let g:deoplete#sources#ternjs#include_keywords = 1
+" Start: Shougo/denite.nvim
+call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
+call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
+" End: Shougo/denite.nvim
 
-" let g:deoplete#sources#ternjs#filetypes = [
-" \   'jsx',
-" \   'javascript.jsx',
-" \ ]
-" End: deoplete-ternjs
-
-" Start: deoplete and vim-multiple-cursors
+" Start: terryma/vim-multiple-cursors,Shougo/denite.nvim
 " Called once right before you start selecting multiple cursors
 function! Multiple_cursors_before()
     if exists('g:deoplete#disable_auto_complete')
@@ -331,56 +347,9 @@ function! Multiple_cursors_after()
         :silent exec "CocEnable"
     endif
 endfunction
-" End: deoplete and vim-multiple-cursors
+" End: terryma/vim-multiple-cursors,Shougo/denite.nvim
 
-" Start: deoplete-flow
-" Configuration to prefer local flow (from node_modules) to a globally
-" installed version
-function! StrTrim(txt)
-  return substitute(a:txt, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
-endfunction
-
-let g:flow_path = StrTrim(system('PATH=$(npm bin):$PATH && which flow'))
-
-if g:flow_path != 'flow not found'
-  let g:deoplete#sources#flow#flow_bin = g:flow_path
-endif
-" End: deoplete-flow
-
-let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
-let g:UltiSnipsListSnippets='<leader>u'
-let g:UltiSnipsEditSplit='vertical'
-
-" Other plugins settings
-let NERDSpaceDelims=1
-let g:gitgutter_max_signs=1000
-
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
-
-" Disable w0rp/ale syntax highlight inside ctrlp buffer
-autocmd BufEnter ControlP let b:ale_enabled = 0
-
-" Close Vim, if the only window left is NERDTree
-autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-autocmd BufRead,BufNewFile .eslintrc set filetype=json
-autocmd BufRead,BufNewFile *nginx.conf* set filetype=nginx
-autocmd! BufWritePost .vimrc source $MYVIMRC
-
-:nmap <leader>M :LivedownPreview<CR>
-
-" Reselect visual block after indent/outdent. Allow ident/outdent multiple
-" times
-:vnoremap < <gv
-:vnoremap > >gv
-
-ab reuqure require
-ab reuire require
-ab lenght length
-
-:nmap gV `[v`]
-
+" Start: junegunn/goyo.vim
 let g:goyo_width=120
 let g:goyo_height=90
 let g:goyo_linenr=1
@@ -421,14 +390,84 @@ au! User GoyoEnter
 au  User GoyoEnter nested call <SID>goyo_enter()
 au! User GoyoLeave
 au  User GoyoLeave nested call <SID>goyo_leave()
+" End: junegunn/goyo.vim
 
+" Start: SirVer/ultisnips
+let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
+let g:UltiSnipsListSnippets='<leader>U'
+let g:UltiSnipsEditSplit='vertical'
+" End: SirVer/ultisnips
+
+" Start: dyng/ctrlsf.vim
 :nmap <leader>f <Plug>CtrlSFPrompt
 :vmap <leader>f <Plug>CtrlSFVwordExec
 :nmap <leader>w <Plug>CtrlSFCCwordPath
 :nmap <leader>W <Plug>CtrlSFCwordPath
+" End: dyng/ctrlsf.vim
+
+" Start: skywind3000/asyncrun.vim
+let g:asyncrun_encs = 'gbk'
+
+nmap <silent> <leader>A :AsyncRun -cwd=<root><Space>
+nmap <silent> <leader>a :AsyncRun! -cwd=<root><Space>
+
+augroup vimrc
+    autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(30, 1)
+    autocmd User AsyncRunStop call asyncrun#quickfix_toggle(30, 1)
+augroup END
+command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+
+nmap <silent> <leader>i :call asyncrun#quickfix_toggle(30)<CR>
+" End: skywind3000/asyncrun.vim
+
+" Start: shime/vim-livedown
+:nmap <leader>M :LivedownPreview<CR>
+" End: shime/vim-livedown
+
+" Start: airblade/vim-gitgutter
+let g:gitgutter_max_signs=1000
+" End: airblade/vim-gitgutter
+
+" Start: alvan/vim-closetag
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.js,*.md'
+let g:closetag_filetypes = '*.html,*.xhtml,*.phtml,*.js'
+
+let g:closetag_xhtml_filenames = '*.xhtml,*.js'
+let g:closetag_xhtml_filetypes = 'html,xhtml,phtml,javascript'
+" End: alvan/vim-closetag
+
+" Start: jiangmiao/auto-pairs
+let g:AutoPairsShortcutJump = '<C-e>'
+" End: jiangmiao/auto-pairs
+
+" End: PLUGINS SETTINGS
+
+" Start: AUTOCMDs
 
 " Autosave only when there is something to save. Always saving makes build
 " autocmd FocusLost,BufLeave,TabLeave,WinLeave * update
+
+autocmd BufRead,BufNewFile .eslintrc,.babelrc set filetype=json
+autocmd BufRead,BufNewFile *nginx.conf* set filetype=nginx
+" autocmd! BufWritePost .vimrc source $MYVIMRC
+
+" End: AUTOCMDs
+
+" Start: REMAPPINGS
+
+" Reselect visual block after indent/outdent. Allow ident/outdent multiple times
+:vnoremap < <gv
+:vnoremap > >gv
+nmap gV `[v`]
+
+nmap <silent> <C-h> :tabprev<CR>
+nmap <silent> <C-l> :tabnext<CR>
+
+" End: REMAPPINGS
+
+ab reuqure require
+ab reuire require
+ab lenght length
 
 if exists("+showtabline")
     " Rename tabs to show tab number.
@@ -513,25 +552,3 @@ if exists("+showtabline")
 
     set tabline=%!MyTabLine()
 endif
-
-nmap <silent> <C-h> :tabprev<CR>
-nmap <silent> <C-l> :tabnext<CR>
-
-let g:asyncrun_encs = 'gbk'
-" let g:asyncrun_open = 40
-
-nmap <silent> <leader>A :AsyncRun -cwd=<root><Space>
-nmap <silent> <leader>a :AsyncRun! -cwd=<root><Space>
-
-augroup vimrc
-    autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(30, 1)
-    autocmd User AsyncRunStop call asyncrun#quickfix_toggle(30, 1)
-augroup END
-command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
-
-nmap <silent> <leader>i :call asyncrun#quickfix_toggle(30)<CR>
-
-let g:closetag_xhtml_filenames = '*.xhtml,*.js'
-let g:closetag_xhtml_filetypes = 'html,xhtml,phtml,javascript'
-
-let g:AutoPairsShortcutJump = '<C-e>'
