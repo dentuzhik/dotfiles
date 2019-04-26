@@ -104,6 +104,7 @@ Plug 'rizzatti/dash.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'neoclide/npm.nvim', {'do' : 'npm install'}
+Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
 " Plug 'junkblocker/patchreview-vim'
 " Plug 'codegram/vim-codereview'
 " Plug 'heavenshell/vim-jsdoc'
@@ -237,7 +238,7 @@ let g:ctrlp_working_path_mode = 'ra'
 " ctrl+p ignore files in .gitignore
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 " ag is fast enough that CtrlP doesn't need to cache
-let g:ctrlp_use_caching = 1
+let g:ctrlp_use_caching = 0
 
 " Disable w0rp/ale syntax highlight inside ctrlp buffer
 autocmd BufEnter ControlP let b:ale_enabled = 0

@@ -66,9 +66,9 @@
 	rss = reset --soft
 	rsh = reset --hard
 	cln = clean -fdx
-	ps = push
-	psf = push -f
-	psu = !sh -c 'git push origin -u ${1-"$(git rev-parse --abbrev-ref HEAD)"}'
+	pu = push
+	puf = push -f
+	pus = !sh -c 'git push origin -u ${1-"$(git rev-parse --abbrev-ref HEAD)"}'
 	# Short format with branch info
 	s = status -sb
 	st = status
@@ -87,8 +87,10 @@
 	cau = "!f() { git commit --amend --author \"${1-`git config user.name`} <${2-`git config user.email`}>\" -C HEAD; }; f"
 	br = branch
 	brs = branch -a
+	sut = branch --set-upstream-to
+	sup = !sh -c 'git branch --set-upstream-to origin/${1-"$(git rev-parse --abbrev-ref HEAD)"}'
 	tgs = tag -l
-	rts = remote -v
+	rv = remote -v
 	rb = rebase
 	rbi = "!r() { git rebase -i HEAD~${1-5}; }; r"
 	# Add all, then rebase continue

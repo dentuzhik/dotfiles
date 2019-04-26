@@ -351,8 +351,9 @@ fme() {
 
 frbi() {
     is_in_git_repo || return
-    HASH=$(git log --oneline --decorate --graph --color=always | head -n 30 | fzf-tmux --ansi --reverse)
+    REBASESTRING=$(git log --oneline --decorate --graph --color=always | head -n 30 | fzf-tmux --ansi --reverse)
 
+    HASH="$(echo ${REBASESTRING} | awk '{ print $2 }')"
     [[ ! -z "$HASH" ]] && git rebase -i "$(echo ${HASH} | awk '{ print $1 }')^"
 }
 
@@ -384,6 +385,7 @@ fmci() {
     [[ -n "$FILES" ]] && ${EDITOR:-vim} -p "${FILES[@]}"
 }
 
+# NOT WORKING
 fsh() {
     is_in_git_repo || return
     local out k reflog
