@@ -19,3 +19,4 @@ flow-typed
 knex
 knex-migrate
 react-devtools
+ios-simulator-app-exporter
