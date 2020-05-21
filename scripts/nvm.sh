@@ -9,7 +9,7 @@ function get_current_date() {
 
 function get_latest_nvm_release() {
     echo $(
-        curl -s "https://api.github.com/repos/creationix/nvm/releases/latest" |
+        curl -s -L "https://api.github.com/repositories/612230/releases/latest" |
         python -c "import sys; from json import loads; print(loads(sys.stdin.read())['tag_name'])"
     )
 }

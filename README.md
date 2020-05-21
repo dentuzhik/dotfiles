@@ -4,10 +4,17 @@ These are the dotfiles [I](https://twitter.com/dentuzhik) use for my personal OS
 If you find the list of applications not suitable for you, feel free to fork the repo and adjust it the way you see fit.  
 Make sure to clone the repo into the root of your home directory, I haven't tested anything with any other setup.
 
+## Install
+```
+git clone https://github.com/dentuzhik/dotfiles.git
+```
+
 ## Brew
 Homebrew will allow you to preinstall a lot of handy software in a single command.  
 But for that you will need first [manually install brew](https://brew.sh/).
-`/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+```
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
 
 * After that, go to `~/dotfiles` directory and execute `brew bundle install`
 * The total size of resulted `Applications` folder with current config is around **5.4GB**, so make sure you have good internet connection  
@@ -15,13 +22,13 @@ But for that you will need first [manually install brew](https://brew.sh/).
 ![Large Apps](./images/applications-top-above-200mb.png)
 
 ## Safari
-Copy over Safar Preferences from `./preferences` to `~/Library/Preferences`
+Copy over Safari Preferences from `./preferences` to `~/Library/Preferences`
 
 ## Other Software
 [Battery Health 3](https://fiplab.com/apps/battery-health-3-for-mac)
 [Pipifier](https://github.com/arnoappenzeller/PiPifier)
 [Bear](https://itunes.apple.com/ee/app/bear/id1091189122?mt=12)
-[XCode](https://itunes.apple.com/ee/app/xcode/id497799835?mt=12)
+[Xcode](https://itunes.apple.com/ee/app/xcode/id497799835?mt=12)
 
 ## Alfred 
 Alfred is installed using Homebrew in the previous step. Some of the alfred packages are can be found in the global npm installation (below). I manage preferences through cloud file storage, because they contain personal data. 
@@ -54,7 +61,7 @@ Now you don't have to install node globally, and can just use whatever version y
 I use some of the globally installed packages form npm, which I've decided to extract here as a text file.  
 npm does not support global `package.json`, so you will have to execute manual command:  
 ```
-npm install -g $(cat npmFile | tr '\n' ' ')
+npm install -g $(cat npmFile | tr '\n' ' ' | xargs)
 ```
 
 You can use this command to get your global list:
