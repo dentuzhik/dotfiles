@@ -20,3 +20,4 @@ knex
 knex-migrate
 react-devtools
 ios-simulator-app-exporter
+ios-sim

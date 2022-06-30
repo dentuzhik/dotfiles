@@ -40,7 +40,7 @@ link() {
 
 : ${dotfiles_dir:=~/dotfiles}
 : ${base_dir:=~/dotfiles}
-: ${entries:='.bash_profile .1p-session .bashrc .bash_aliases .vimrc .ssh/config .config/karabiner .tmux.conf .gitconfig .gitignore .editorconfig .mongorc.js'}
+: ${entries:='.bash_profile .1p-session .bashrc .bash_aliases .vimrc .ssh/config .config/karabiner .tmux.conf .gitconfig .gitignore .editorconfig .mongorc.js .finicky.js'}
 
 echo 'This script may overwrite some files in your $HOME'
 read -p 'Do you want to continue (y/n)? ' yn

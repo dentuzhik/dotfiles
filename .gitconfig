@@ -39,7 +39,6 @@
 
 [diff]
 	tool = vimdiff
-	noprefix = true
 	compactionHeuristic = true
 
 [merge]
@@ -96,6 +95,7 @@
 	# Add all, then rebase continue
 	arc = !git add -A && git rebase --continue
 	team = shortlog --summary --numbered
+    sha = show --pretty=format:%h --no-patch
 	show-merge = "!f() { git show $(git rev-list $1...HEAD --merges --topo-order | tail -1); }; f"
 
 # URL shorthands
@@ -132,3 +132,7 @@
 	user = dentuzhik
 [ghi]
 	token = !security find-internet-password -a dentuzhik -s github.com -l 'ghi token' -w
+[pull]
+	rebase = true
+[fetch]
+	prune = true

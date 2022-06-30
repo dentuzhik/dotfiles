@@ -4,6 +4,9 @@
 # OSX directories meta files
 .DS_Store
 
+# Vscode specific extension
+.history
+
 # Tern specific metadata
 .tern-port
 

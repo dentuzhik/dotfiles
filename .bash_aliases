@@ -204,6 +204,21 @@ fad() {
     [[ -n "$files" ]] && git add "${files[@]}"
 }
 
+frm() {
+    is_in_git_repo || return
+    local files target
+
+    IFS=$'\n' files=(
+        $(
+            git -c color.status=always status -s --short |
+                fzf-tmux -m --ansi --nth 2..,.. \
+                --preview "bat --theme=OneHalfDark --style=numbers,changes --color=always {-1}" |
+                cut -c4- | sed 's/.* -> //'
+        )
+    )
+    [[ -n "$files" ]] && git rm "${files[@]}"
+}
+
 fci() {
     is_in_git_repo || return
     local files target

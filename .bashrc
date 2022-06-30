@@ -218,3 +218,6 @@ source "$fasd_cache"
 unset fasd_cache
 
 export PATH="$HOME/dotfiles/fzf-fs:$PATH"
+
+export PNPM_HOME="/Users/dentuzhik/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
