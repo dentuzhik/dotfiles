@@ -27,6 +27,7 @@ function setup_nvm() {
 }
 
 function upgrade_nvm() {
+    # On MacOS gdate requires coreutils pacakge to be installed, thus Homebrew should be available in path before this script executes
     local date_difference=$(( ($(gdate --date="$(get_current_date)" +%s) - $(gdate --date="$(cat $HOME/.nvmupdate &> /dev/null)" +%s) )/(60*60*24) ))
 
     # Update treshold could be easily extracted into environment variable

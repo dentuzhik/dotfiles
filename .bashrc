@@ -1,3 +1,6 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/bashrc.pre.bash" ]] && builtin source "$HOME/.fig/shell/bashrc.pre.bash"
+
 # shellcheck source=/dev/null
 
 # If not running interactively, don't do anything
@@ -21,6 +24,7 @@ BASH_COMPLETION_FILE=/etc/bash_completion
 # If default script is not found, try to replace it with Brew version
 if [[ -n $(type brew 2> /dev/null) ]] && [[ -f $(brew --prefix)/share/bash-completion/bash_completion ]]; then
     BASH_COMPLETION_FILE=$(brew --prefix)/share/bash-completion/bash_completion
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 # Add path for Homebrew cask
@@ -133,7 +137,7 @@ z() {
 }
 
 # Set up scm_breeze
-source $DOTFILES_HOME/scripts/scm_breeze.sh
+# source $DOTFILES_HOME/scripts/scm_breeze.sh
 
 # Set up thefuck
 eval "$(thefuck --alias)"
@@ -221,3 +225,25 @@ export PATH="$HOME/dotfiles/fzf-fs:$PATH"
 
 export PNPM_HOME="/Users/dentuzhik/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
+
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init --path)"
+fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/dentuzhik/opt/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/dentuzhik/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/dentuzhik/opt/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/dentuzhik/opt/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/bashrc.post.bash" ]] && builtin source "$HOME/.fig/shell/bashrc.post.bash"

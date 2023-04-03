@@ -23,7 +23,7 @@ function ssh_generate_add() {
     fi
 
     # Generate new private/public pair of keys
-    ssh-keygen -b 4096 -t rsa -C $key_title -N $key_pass -f $key_file
+    ssh-keygen -t ed25519 -C $key_title -N $key_pass -f $key_file
 
     # Create temp file with password to use ssh-add silently
     echo "echo $key_pass" > $temp_pass_file

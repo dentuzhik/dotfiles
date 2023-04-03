@@ -1,3 +1,6 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/bash_profile.pre.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.pre.bash"
+
 export PATH=/usr/local/bin:$PATH
 
 # Load the default .profile
@@ -15,3 +18,6 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH="$HOME/.fastlane/bin:$PATH"
 export PATH="$HOME/.rbenv/shims:$PATH"
 # eval "$(rbenv init -)"
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.post.bash"
