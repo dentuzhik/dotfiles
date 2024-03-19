@@ -21,6 +21,7 @@ source $DOTFILES_HOME/scripts/helpers.sh
 # Default bash-completion script
 BASH_COMPLETION_FILE=/etc/bash_completion
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
 # If default script is not found, try to replace it with Brew version
 if [[ -n $(type brew 2> /dev/null) ]] && [[ -f $(brew --prefix)/share/bash-completion/bash_completion ]]; then
     BASH_COMPLETION_FILE=$(brew --prefix)/share/bash-completion/bash_completion
@@ -149,9 +150,12 @@ if [[ ! -d $HOME/.vim/undodir ]]; then
 fi
 
 # Completion for tmuxp, if available
-if [[ -n $(which tmuxp) ]]; then
-    eval "$(_TMUXP_COMPLETE=source tmuxp)"
-fi
+#
+# FIXME: This is broken and outputs a bunch of gibberish into the terminal, requires fixing and docs
+#
+# if [[ -n $(which tmuxp) ]]; then
+#     eval "$(_TMUXP_COMPLETE=source tmuxp)"
+# fi
 
 # https://robinwinslow.co.uk/2012/07/20/tmux-and-ssh-auto-login-with-ssh-agent-finally
 # We're not in a tmux session
@@ -177,9 +181,19 @@ if [[ -n $(which yarn) ]]; then
     export PATH=$PATH:$YARN_PATH
 fi
 
-export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# CTRL-/ to toggle small preview window to see the full command
+# CTRL-Y to copy the command into clipboard using pbcopy
+export FZF_CTRL_R_OPTS="
+  --preview 'echo {}' --preview-window up:3:hidden:wrap
+  --bind 'ctrl-/:toggle-preview'
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --color header:italic
+  --header 'Press CTRL-Y to copy command into clipboard'"
+
+eval "$(fzf --bash)"
 
 # This loads nvm bash_completion
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
@@ -213,13 +227,15 @@ _yargs_completions()
 complete -F _yargs_completions graphql
 ###-end-graphql-completions-###
 
+# FIXME: fasd is not working anymore, since brew fails to install it
+#
 # Initilaise fasd
-fasd_cache="$HOME/.fasd-init-bash"
-if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-  fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >| "$fasd_cache"
-fi
-source "$fasd_cache"
-unset fasd_cache
+# fasd_cache="$HOME/.fasd-init-bash"
+# if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+#   fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >| "$fasd_cache"
+# fi
+# source "$fasd_cache"
+# unset fasd_cache
 
 export PATH="$HOME/dotfiles/fzf-fs:$PATH"
 
@@ -244,6 +260,9 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+# Added by n-install (see http://git.io/n-install-repo).
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/bashrc.post.bash" ]] && builtin source "$HOME/.fig/shell/bashrc.post.bash"

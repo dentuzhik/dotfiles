@@ -10,18 +10,24 @@ function get_current_date() {
 function get_latest_nvm_release() {
     echo $(
         curl -s -L "https://api.github.com/repositories/612230/releases/latest" |
+        # FIXME: Python is no longer installed by default on MacOS!!
+        # This is silently failing and everything else is broken afterwards
         python -c "import sys; from json import loads; print(loads(sys.stdin.read())['tag_name'])"
     )
 }
 
 function setup_nvm() {
     if [ ! -d "$NVM_DIR" ]; then
+        mkdir ~/.nvm
+
         echo 'Installing latest version of nvm'
         install_nvm $latest_nvm_release
         echo $(get_current_date) > "$HOME/.nvmupdate"
         return
     fi
 
+    # FIXME: This is failing in case if script execution fails once above, since directory is created and file is not found
+    # -bash: /Users/dentuzhik/.nvm/nvm.sh: No such file or directory
     source "$NVM_DIR/nvm.sh"
     upgrade_nvm
 }
@@ -57,7 +63,6 @@ function upgrade_nvm() {
 function install_nvm() {
     local release=${1-$(get_latest_nvm_release)}
 
-    mkdir ~/.nvm
     curl -o- "https://raw.githubusercontent.com/creationix/nvm/$release/install.sh" | bash
     source "$NVM_DIR/nvm.sh"
 

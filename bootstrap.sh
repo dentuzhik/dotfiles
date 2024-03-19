@@ -1,3 +1,5 @@
+source $DOTFILES_HOME/scripts/nvm.sh
+
 download_tmux_plugin_manager() {
     if [ ! -d ~/.tmux/plugins/tpm ]; then
         git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -47,11 +49,13 @@ read -p 'Do you want to continue (y/n)? ' yn
 case $yn in
     'y')
         touch ~/.hushlogin
-        chsh -s /usr/local/bin/bash
+        chsh -s /opt/homebrew/bin/bash
         echo $BASH_VERSION
 
         curl_git_scripts ~
         download_tmux_plugin_manager
+        setup_nvm
+
         link $base_dir "$entries"
 
         # Set up Neovim

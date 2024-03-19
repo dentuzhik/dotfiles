@@ -17,7 +17,9 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 export PATH="$HOME/.fastlane/bin:$PATH"
 export PATH="$HOME/.rbenv/shims:$PATH"
-# eval "$(rbenv init -)"
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.post.bash"
+
+# https://github.com/Versent/saml2aws?tab=readme-ov-file#bash
+eval "$(saml2aws --completion-script-bash)"
