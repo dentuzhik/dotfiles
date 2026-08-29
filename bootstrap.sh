@@ -6,24 +6,6 @@ download_tmux_plugin_manager() {
     fi
 }
 
-curl_git_scripts() {
-    local target_dir=$1
-    local git_completion_url='https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash'
-    local git_prompt_url='https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh'
-    local git_prompt_file=$target_dir/.git-prompt.sh
-    local git_completion_file=$target_dir/.git-completion.bash
-
-    if [ ! -f "$git_prompt_file" ]; then
-        echo "Loading $git_prompt_file"
-        curl -so "$git_prompt_file" $git_prompt_url
-    fi
-
-    if [ ! -f "$git_completion_file" ]; then
-        echo "Loading $git_completion_file"
-        curl -so "$git_completion_file" $git_completion_url
-    fi
-}
-
 # Basic symlinking
 link() {
     local base_dir=$1
@@ -52,7 +34,6 @@ case $yn in
         chsh -s /opt/homebrew/bin/bash
         echo $BASH_VERSION
 
-        curl_git_scripts ~
         download_tmux_plugin_manager
         setup_nvm
 

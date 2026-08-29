@@ -36,21 +36,22 @@ if [ -f "$BASH_COMPLETION_FILE" ]; then
     source $BASH_COMPLETION_FILE
 fi
 
-# These files are curl'ed when bootstrapping
-GIT_COMPLETION_FILE=~/.git-completion.bash
-GIT_PROMPT_FILE=~/.git-prompt.sh
+# Use the completion and prompt scripts shipped with the installed Git version.
+GIT_INSTALL_PREFIX=$(brew --prefix git 2> /dev/null)
+GIT_COMPLETION_FILE="$GIT_INSTALL_PREFIX/etc/bash_completion.d/git-completion.bash"
+GIT_PROMPT_FILE="$GIT_INSTALL_PREFIX/etc/bash_completion.d/git-prompt.sh"
 
 # Load git-completion script
-if [ -f $GIT_COMPLETION_FILE ]; then
-    source $GIT_COMPLETION_FILE
+if [[ -r "$GIT_COMPLETION_FILE" ]]; then
+    source "$GIT_COMPLETION_FILE"
 fi
 
 # A bit fancier PS1
 BASE_PS1='['$(prompt_blue '\t')']'
 PS1=$BASE_PS1' \W '$(prompt_red $'\xe2\x86\x92')' '
 
-if [ -f $GIT_PROMPT_FILE ]; then
-    source $GIT_PROMPT_FILE
+if [[ -r "$GIT_PROMPT_FILE" ]]; then
+    source "$GIT_PROMPT_FILE"
 
     export GIT_PS1_SHOWDIRTYSTATE=1
     export GIT_PS1_SHOWCOLORHINTS=1
@@ -58,6 +59,8 @@ if [ -f $GIT_PROMPT_FILE ]; then
     export GIT_PS1_SHOWUPSTREAM='verbose'
     PROMPT_COMMAND='__git_ps1 "'$BASE_PS1' \W" " '$(prompt_red $'\xe2\x86\x92')' "'
 fi
+
+unset GIT_INSTALL_PREFIX GIT_COMPLETION_FILE GIT_PROMPT_FILE
 
 if [[ -n $(type brew 2> /dev/null) ]]; then
     PATH=$PATH:$(brew --prefix git)/share/git-core/contrib/diff-highlight
