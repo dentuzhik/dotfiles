@@ -16,7 +16,6 @@ readonly ENTRIES=(
     .gitconfig
     .gitignore
     .editorconfig
-    .mongorc.js
     .finicky.js
 )
 
