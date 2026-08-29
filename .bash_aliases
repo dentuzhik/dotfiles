@@ -237,34 +237,12 @@ fll() {
     [[ -n "$FILES" ]] && ${EDITOR:-vim} -p "${FILES[@]}"
 }
 
-fcf() {
-    is_in_git_repo || return
-    local files target
-
-    IFS=$'\n' files=(
-        $(
-            { echo "$(git ls-files --modified --others --exclude-standard)" ; } |
-            awk NF | sort -u |
-            fzf-tmux --multi --exit-0 --preview "git diff --color HEAD {}"
-        )
-    )
-    [[ -n "$files" ]] && git checkout -- "${files[@]}"
-}
-
 frs() {
     is_in_git_repo || return
     local files target
 
     IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; } | fzf-tmux --multi --query="$1" --select-1 --exit-0))
     [[ -n "$files" ]] && git reset HEAD "${files[@]}"
-}
-
-frshd() {
-    is_in_git_repo || return
-    local files target
-
-    IFS=$'\n' files=($({ echo "$(git diff --cached --name-only)" ; } | fzf-tmux --multi --query="$1" --select-1 --exit-0))
-    [[ -n "$files" ]] && git reset --hard HEAD "${files[@]}"
 }
 
 fbr() {
@@ -361,14 +339,6 @@ frbi() {
 
     HASH="$(echo ${REBASESTRING} | awk '{ print $2 }')"
     [[ ! -z "$HASH" ]] && git rebase -i "$(echo ${HASH} | awk '{ print $1 }')^"
-}
-
-fref() {
-    is_in_git_repo || return
-    HASH=$(git reflog --color=always | head -n 100 | fzf-tmux --ansi --reverse --query="$1" --exit-0) || return
-    HASHZ=$(echo ${HASH} | awk '{ print $1 }') || return
-
-    [[ ! -z "$HASH" ]] && git reset --hard $HASHZ
 }
 
 fmci() {

@@ -63,10 +63,10 @@
 	aa = add -A
 	rs = reset
 	rss = reset --soft
-	rsh = reset --hard
-	cln = clean -fdx
+	# Preview ignored and untracked files; delete explicitly after review.
+	cln = clean -ndx
 	pu = push
-	puf = push -f
+	puf = push --force-with-lease --force-if-includes
 	pus = !sh -c 'git push origin -u ${1-"$(git rev-parse --abbrev-ref HEAD)"}'
 	# Short format with branch info
 	s = status -sb
