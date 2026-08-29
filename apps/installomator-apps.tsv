@@ -1,0 +1,10 @@
+# label	resolved name	expected Apple Team ID	notes
+arcbrowser	Arc	S6N382Y83G	Browser
+docker	Docker	9BNSXJN65R	Accepts Docker's license; macOS permissions remain interactive
+figma	Figma	T8RA8NE3B7	Design client
+iterm2	iTerm	H7V7XYVQ7D	Terminal
+karabinerelements	Karabiner-Elements	G43BCU2T37	System extension and Input Monitoring approval remain interactive
+rectangle	Rectangle	XSYZ3E4B7D	Window manager
+slack	Slack	BQR82RBBHL	App Store installations are deliberately left untouched
+spotify	Spotify	2FNC3A47ZF	Music client
+visualstudiocode	Visual Studio Code	UBF8T346G9	Editor
