@@ -160,23 +160,8 @@ fi
 #     eval "$(_TMUXP_COMPLETE=source tmuxp)"
 # fi
 
-# https://robinwinslow.co.uk/2012/07/20/tmux-and-ssh-auto-login-with-ssh-agent-finally
-# We're not in a tmux session
-if [ -z "$TMUX" ]; then
-    # We logged in via SSH
-    if [ ! -z "$SSH_TTY" ]; then
-
-        if [ ! -z "$SSH_AUTH_SOCK" ] && [ "$SSH_AUTH_SOCK" != "$HOME/.ssh/agent_sock" ] ; then
-            unlink "$HOME/.ssh/agent_sock" 2>/dev/null
-            ln -s "$SSH_AUTH_SOCK" "$HOME/.ssh/agent_sock"
-            export SSH_AUTH_SOCK="$HOME/.ssh/agent_sock"
-        fi
-
-        # Start tmux, if available
-        if [[ -n $(type tmux) ]]; then
-            tmux attach || tmux new
-        fi
-    fi
+if [[ -z "$TMUX" && -n "$SSH_TTY" ]] && command -v tmux > /dev/null 2>&1; then
+    tmux attach || tmux new
 fi
 
 if [[ -n $(which yarn) ]]; then
