@@ -58,32 +58,11 @@ through Homebrew. The shell automatically selects the version pinned in
 fnm install
 ```
 
-## npm
-I use some of the globally installed packages form npm, which I've decided to extract here as a text file.  
-npm does not support global `package.json`, so you will have to execute manual command:  
-```
-npm install -g $(cat npmFile | tr '\n' ' ' | xargs)
-```
-
-You can use this command to get your global list:
-```
-# Use optional --json flag to get a nice, but useless, JSON output
-npm ls --global --depth 0
-```
-
-## Python
-Install `pip`:
-```
-python -m pip install -U pip
-```
-
-Install necessary packages:
-```
-pip install -r pip-requirements.txt
-
-# If you plan to use my vim configuration, also:
-pip3 install --upgrade neovim
-```
+## Language tooling
+Install application and language dependencies per project instead of globally.
+This keeps versions reviewable in each project's lockfile and avoids exposing
+every shell to an unpinned global package set. Python command-line applications
+can be installed in isolated environments with `uv tool install`.
 
 ## Vim/Neovim
 The Neovim configuration targets the current stable Neovim release and uses
@@ -100,6 +79,7 @@ an update and refresh the committed lockfile.
 ## Tmux & Tmuxp
 You can find my snowflake `.tmux.conf` in your home folder. When you will run tmux for the first time.
 For even further productivity boost, I highly recommend you to have a look at [tmuxp](https://github.com/tony/tmuxp).
+Install it in an isolated environment with `uv tool install tmuxp` if needed.
 
 ## Github
 SSH authentication is handled by the 1Password SSH agent configured in
