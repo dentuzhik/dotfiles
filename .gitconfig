@@ -27,7 +27,7 @@
 	singlekey = true
 
 [help]
-	autocorrect = 1
+	autocorrect = prompt
 
 [apply]
 	whitespace = fix
