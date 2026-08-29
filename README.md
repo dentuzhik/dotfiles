@@ -86,14 +86,16 @@ pip3 install --upgrade neovim
 ```
 
 ## Vim/Neovim
-Repository includes `.vimrc` which should work with both Vim@8 and [Neovim](https://neovim.io/)
-After running Vim for the first time, you will need to install plugins, execute the following commands:
-```
-:PlugInstall
+The Neovim configuration targets the current stable Neovim release and uses
+the built-in `vim.pack` plugin manager. On first launch, Neovim installs the
+plugins recorded in `nvim-pack-lock.json`. Check the installation with:
 
-# https://github.com/Shougo/deoplete.nvim/issues/414
-:UpdateRemotePlugins
 ```
+:checkhealth
+```
+
+Review and update plugins with `:packupdate`; write the review buffer to accept
+an update and refresh the committed lockfile.
 
 ## Tmux & Tmuxp
 You can find my snowflake `.tmux.conf` in your home folder. When you will run tmux for the first time.
