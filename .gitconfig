@@ -13,7 +13,7 @@
 	commentChar = %
 
 [credential]
-	helper = cache --timeout=28800
+	helper = osxkeychain
 
 [color]
 	ui = true
