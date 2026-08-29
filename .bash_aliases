@@ -65,13 +65,6 @@ mwb-cat() {
     unzip -p $1 document.mwb.xml | sed -E 's/_ptr_="[x0-9a-fA-F]{8,18}"/_ptr_=""/'
 }
 
-if [ -f ~/.airlane_dev_oauth_token ]; then
-    AAT=$(cat ~/.airlane_dev_oauth_token)
-    function req() {
-        http "$@" "Authorization: $AAT"
-    }
-fi
-
 alias tpl='tmuxp load .'
 
 # Always use fzf-tmux executable
