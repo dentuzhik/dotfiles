@@ -1,43 +1,93 @@
-download_tmux_plugin_manager() {
-    if [ ! -d ~/.tmux/plugins/tpm ]; then
-        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+DOTFILES_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+readonly DOTFILES_DIR
+readonly TPM_REVISION="e261deb1b47614eed3400089ce7197dc68acc4eb"
+readonly ENTRIES=(
+    .bash_profile
+    .bashrc
+    .bash_aliases
+    .ssh/config
+    .config/karabiner
+    .config/nvim
+    .tmux.conf
+    .gitconfig
+    .gitignore
+    .editorconfig
+    .mongorc.js
+    .finicky.js
+)
+
+install_tmux_plugin_manager() {
+    local target="$HOME/.tmux/plugins/tpm"
+
+    if [[ -d "$target/.git" ]]; then
+        local current_revision
+        current_revision="$(git -C "$target" rev-parse HEAD)"
+        if [[ "$current_revision" != "$TPM_REVISION" ]]; then
+            printf 'TPM exists at %s; expected pinned revision %s.\n' \
+                "$current_revision" "$TPM_REVISION" >&2
+            return 1
+        fi
+        return
     fi
+
+    mkdir -p "$(dirname -- "$target")"
+    git clone --filter=blob:none --no-checkout https://github.com/tmux-plugins/tpm.git "$target"
+    git -C "$target" checkout --detach "$TPM_REVISION"
 }
 
-# Basic symlinking
-link() {
-    local base_dir=$1
-    local entries=$2
-    local is_overwritten=$3
+link_dotfiles() {
+    local backup_dir backup_parent source target entry
+    backup_dir="$HOME/.dotfiles-backups/$(date +%Y%m%d-%H%M%S)"
+    install -d -m 700 "$HOME/.dotfiles-backups" "$backup_dir"
 
-    for entry_name in $entries; do
-        ln -fFns "$base_dir/$entry_name" ~/"$entry_name"
-        if [ ! "$is_overwritten" ]; then
-            echo "Linked $entry_name."
-        else
-            echo "Linked ovewritten $entry_name."
+    for entry in "${ENTRIES[@]}"; do
+        source="$DOTFILES_DIR/$entry"
+        target="$HOME/$entry"
+
+        if [[ ! -e "$source" ]]; then
+            printf 'Missing source: %s\n' "$source" >&2
+            return 1
         fi
+
+        if [[ -L "$target" && "$(readlink "$target")" == "$source" ]]; then
+            printf 'Already linked: %s\n' "$entry"
+            continue
+        fi
+
+        if [[ -e "$target" || -L "$target" ]]; then
+            backup_parent="$backup_dir/$(dirname -- "$entry")"
+            mkdir -p "$backup_parent"
+            chmod 700 "$backup_parent"
+            mv "$target" "$backup_dir/$entry"
+            printf 'Backed up: %s\n' "$entry"
+        fi
+
+        mkdir -p "$(dirname -- "$target")"
+        ln -s "$source" "$target"
+        printf 'Linked: %s\n' "$entry"
     done
 }
 
-: ${dotfiles_dir:=~/dotfiles}
-: ${base_dir:=~/dotfiles}
-: ${entries:='.bash_profile .bashrc .bash_aliases .ssh/config .config/karabiner .config/nvim .tmux.conf .gitconfig .gitignore .editorconfig .mongorc.js .finicky.js'}
+main() {
+    local answer
 
-echo 'This script may overwrite some files in your $HOME'
-read -p 'Do you want to continue (y/n)? ' yn
-case $yn in
-    'y')
-        touch ~/.hushlogin
-        chsh -s /opt/homebrew/bin/bash
-        echo $BASH_VERSION
+    printf 'Existing dotfiles will be backed up under ~/.dotfiles-backups.\n'
+    read -r -p 'Continue? [y/N] ' answer
+    [[ "$answer" =~ ^[Yy]$ ]] || {
+        printf 'Aborted.\n'
+        return
+    }
 
-        download_tmux_plugin_manager
-        link $base_dir "$entries"
+    touch "$HOME/.hushlogin"
+    git -C "$DOTFILES_DIR" submodule update --init --recursive
+    install_tmux_plugin_manager
+    link_dotfiles
 
-        echo 'Done!'
-    ;;
-    'n')
-        echo 'Aborted.'
-    ;;
-esac
+    printf 'Done. Restart the terminal to load the updated configuration.\n'
+}
+
+main "$@"
