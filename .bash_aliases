@@ -69,7 +69,6 @@ alias tpl='tmuxp load .'
 
 # Always use fzf-tmux executable
 alias fzf='fzf-tmux -d 40 --bind ctrl-f:preview-page-down,ctrl-b:preview-page-up,ctrl-r:toggle-all'
-alias ff='FZF_FS_OPENER=vim . fzf-fs'
 
 # GIT heart FZF
 # -------------
