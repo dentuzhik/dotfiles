@@ -57,8 +57,8 @@ alias l="ls -AlhFG"
 alias dc=docker
 alias dcp=docker-compose
 alias ghcl=github_clone_organization
-alias dclcnt="docker ps --no-trunc -aq | xargs docker rm"
-alias dclimg="docker images -q --filter dangling=true | xargs docker rmi"
+alias dclcnt="docker container prune"
+alias dclimg="docker image prune"
 alias cask="brew cask"
 
 mwb-cat() {
