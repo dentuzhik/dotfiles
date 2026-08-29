@@ -10,9 +10,8 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias -- -="cd -"
 
-alias dots="cd $DOTFILES_HOME"
-alias dotvim="vim $DOTFILES_HOME/.vimrc"
-alias dotnvim="vim $DOTFILES_HOME/.nvim/init.vim"
+alias dots='cd "$DOTFILES_HOME"'
+alias dotnvim='nvim "$DOTFILES_HOME/.config/nvim"'
 
 # Detect which `ls` flavor is in use
 # GNU `ls`
@@ -55,20 +54,15 @@ alias lo="stat ${statoptions}"
 alias l="ls -AlhFG"
 
 alias dc=docker
-alias dcp=docker-compose
-alias ghcl=github_clone_organization
+alias dcp='docker compose'
 alias dclcnt="docker container prune"
 alias dclimg="docker image prune"
-alias cask="brew cask"
 
 mwb-cat() {
     unzip -p $1 document.mwb.xml | sed -E 's/_ptr_="[x0-9a-fA-F]{8,18}"/_ptr_=""/'
 }
 
 alias tpl='tmuxp load .'
-
-# Always use fzf-tmux executable
-alias fzf='fzf-tmux -d 40 --bind ctrl-f:preview-page-down,ctrl-b:preview-page-up,ctrl-r:toggle-all'
 
 # GIT heart FZF
 # -------------
