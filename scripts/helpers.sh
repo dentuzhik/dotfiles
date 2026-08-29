@@ -38,5 +38,3 @@ function github_clone_organization() {
         ;;
     esac
 }
-
-export -f ls_completion
