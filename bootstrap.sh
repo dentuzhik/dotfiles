@@ -62,7 +62,6 @@ main() {
     }
 
     touch "$HOME/.hushlogin"
-    git -C "$DOTFILES_DIR" submodule update --init --recursive
     link_dotfiles
 
     printf 'Done. Restart the terminal to load the updated configuration.\n'
