@@ -8,9 +8,12 @@ readonly ENTRIES=(
     .bash_profile
     .bashrc
     .bash_aliases
+    .zprofile
+    .zshrc
     .ssh/config
     .config/karabiner
     .config/nvim
+    .config/shell
     .tmux.conf
     .gitconfig
     .gitignore
