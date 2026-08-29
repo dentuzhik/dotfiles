@@ -132,9 +132,6 @@ z() {
     cd "$(_z -l 2>&1 | fzf-tmux +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
 }
 
-# Set up scm_breeze
-# source $DOTFILES_HOME/scripts/scm_breeze.sh
-
 # Set up thefuck
 eval "$(thefuck --alias)"
 
