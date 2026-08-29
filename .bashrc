@@ -66,16 +66,6 @@ if [[ -n $(type brew 2> /dev/null) ]]; then
     PATH=$PATH:$(brew --prefix git)/share/git-core/contrib/diff-highlight
 fi
 
-# Loading chpwd hook implementation
-source $DOTFILES_HOME/scripts/chpwd.sh
-
-# Redefining cd to export chpwd hook
-# function cd()
-#{
-#    builtin cd "$@"
-#    chpwd
-#}
-
 # Loading aliases
 if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
@@ -120,8 +110,10 @@ export EDITOR='nvim'
 # Heroku Toolbelt
 PATH=$PATH:/usr/local/heroku/bin
 
-# Set up NVM
-# source $DOTFILES_HOME/scripts/nvm.sh
+# Select the Node.js version from .node-version when entering a project.
+if command -v fnm > /dev/null 2>&1; then
+    eval "$(fnm env --use-on-cd --version-file-strategy=recursive --shell bash)"
+fi
 
 # Set up npm completion
 source $DOTFILES_HOME/scripts/npm_completion.sh
@@ -182,9 +174,6 @@ export FZF_CTRL_R_OPTS="
   --header 'Press CTRL-Y to copy command into clipboard'"
 
 eval "$(fzf --bash)"
-
-# This loads nvm bash_completion
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 ###-begin-graphql-completions-###
 #
@@ -248,9 +237,6 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
-# Added by n-install (see http://git.io/n-install-repo).
-export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/bashrc.post.bash" ]] && builtin source "$HOME/.fig/shell/bashrc.post.bash"

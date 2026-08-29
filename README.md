@@ -50,9 +50,13 @@ defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 ```
 
 ## Node.js
-Bootstrap script in the previous set should have installed [nvm](https://github.com/creationix/nvm) into your environment. If everything works properly it should occasionally auto-update, once new versions are published.
+Node.js versions are managed by [fnm](https://github.com/Schniz/fnm), installed
+through Homebrew. The shell automatically selects the version pinned in
+`.node-version` when entering this repository. Install it after bootstrapping:
 
-Now you don't have to install node globally, and can just use whatever version you want through *nvm*. Keep in mind that when upgrading node you will have to reinstall global npm packages, as specified in the next step.
+```
+fnm install
+```
 
 ## npm
 I use some of the globally installed packages form npm, which I've decided to extract here as a text file.  

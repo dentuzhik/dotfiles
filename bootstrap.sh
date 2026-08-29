@@ -1,5 +1,3 @@
-source $DOTFILES_HOME/scripts/nvm.sh
-
 download_tmux_plugin_manager() {
     if [ ! -d ~/.tmux/plugins/tpm ]; then
         git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -35,8 +33,6 @@ case $yn in
         echo $BASH_VERSION
 
         download_tmux_plugin_manager
-        setup_nvm
-
         link $base_dir "$entries"
 
         # Set up Neovim
