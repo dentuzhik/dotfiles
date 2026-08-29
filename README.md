@@ -17,13 +17,40 @@ brew bundle install
 ```
 
 The bootstrap asks before making changes. Existing targets are moved to a
-timestamped directory under `~/.dotfiles-backups`, repository submodules are
-initialized, and the requested files are linked. It does not change the login
-shell.
+timestamped directory under `~/.dotfiles-backups` before the requested files
+are linked. It does not change the login shell or install desktop applications.
 
 The Homebrew Bash binary can be selected as the login shell separately after
 confirming its path with `brew --prefix bash`. Restart the terminal after
 changing shell or dotfile links.
+
+## Desktop applications
+
+Homebrew is deliberately limited to command-line tools. Desktop applications
+with stable labels are managed separately with a pinned [Installomator
+10.9](https://github.com/Installomator/Installomator/releases/tag/v10.9)
+package:
+
+```sh
+./scripts/install-apps.sh --audit
+./scripts/install-apps.sh --install
+```
+
+Audit mode downloads the package without installing it. It verifies the
+package checksum, Apple notarization and installer identity, extracted script
+checksum, label URL resolution, and each application's expected Apple Team ID.
+Install mode repeats that audit, requires an interactive terminal and `sudo`,
+then installs or updates the applications in
+[`apps/installomator-apps.tsv`](apps/installomator-apps.tsv).
+
+Running applications offer **Quit and Update** or **Not Now** and are never
+force-killed. Mac App Store copies are left untouched. Docker's label accepts
+Docker's license during installation; Docker and Karabiner-Elements can still
+require interactive macOS permission approval afterward.
+
+1Password, 1Password CLI, Finicky, and Monaspace remain outside the automated
+batch. See the [manual-install list](apps/manual-apps.md) for official sources
+and the reason for each exclusion.
 
 ## Runtime tools
 
