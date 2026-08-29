@@ -102,12 +102,10 @@
 [url "git@github.com:"]
 	insteadOf = "gh:"
 	insteadOf = "github:"
-	pushInsteadOf = "https://github.com/"
 
 [url "git@gitlab.com:"]
 	insteadOf = "gl:"
 	insteadOf = "gitlab:"
-	pushInsteadOf = "https://gitlab.com/"
 
 [filter "lfs"]
 	required = true
@@ -118,12 +116,6 @@
 [lfs]
 	batch = true
 	concurrenttransfers = 15
-[hub]
-	protocol = ssh
-[github]
-	user = dentuzhik
-[ghi]
-	token = !security find-internet-password -a dentuzhik -s github.com -l 'ghi token' -w
 [pull]
 	rebase = true
 [fetch]
