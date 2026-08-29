@@ -107,15 +107,6 @@ module.exports = {
             browser: "Spotify",
         },
         {
-            // Open Zoom links in Zoom app
-            match: [
-                "zoom.us/*",
-                finicky.matchDomains(/.*\zoom.us/),
-                /zoom.us\/j\//,
-            ],
-            browser: "us.zoom.xos",
-        },
-        {
             match: "https://www.figma.com/file/*",
             browser: "Figma",
         },
@@ -131,14 +122,14 @@ module.exports = {
                 "docs.google.com",
                 "app2.greenhouse.io",
             ]),
-            browser: "Brave Browser",
+            browser: "Arc",
         },
         {
             // Open any link clicked in Slack in Safari
             match: ({ sourceBundleIdentifier }) =>
                 sourceBundleIdentifier === "com.tinyspeck.slackmacgap" ||
                 sourceBundleIdentifier === "com.googlecode.iterm2",
-            browser: "Brave Browser",
+            browser: "Arc",
         },
     ],
 };

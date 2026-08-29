@@ -21,5 +21,23 @@ export PATH="$HOME/.rbenv/shims:$PATH"
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.post.bash"
 
+export PKG_CONFIG_PATH="/opt/homebrew/opt/pixman/lib/pkgconfig"
+
 # https://github.com/Versent/saml2aws?tab=readme-ov-file#bash
-eval "$(saml2aws --completion-script-bash)"
+eval "$(saml2aws --completion-script-bash)"source "/Users/dentuzhik/.rover/env"
+
+# Added by Windsurf
+export PATH="/Users/dentuzhik/.codeium/windsurf/bin:$PATH"
+
+# Needed for Aider
+export PATH="/Users/dentuzhik/.local/bin:$PATH"
+
+# AlphaSense frontend changed variables
+# source "$HOME/as/frontend/.husky/_/post-merge-env.sh"
+# source "$HOME/as/frontend/.husky/_/post-rebase-env.sh"
+
+. "$HOME/.local/bin/env"
+
+# eval "$(direnv hook bash)"
+#
+# export NODE_EXTRA_CA_CERTS="/Library/Application Support/Cloudflare/certificate.pem"

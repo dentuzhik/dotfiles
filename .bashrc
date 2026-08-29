@@ -67,11 +67,11 @@ fi
 source $DOTFILES_HOME/scripts/chpwd.sh
 
 # Redefining cd to export chpwd hook
-function cd()
-{
-    builtin cd "$@"
-    chpwd
-}
+# function cd()
+#{
+#    builtin cd "$@"
+#    chpwd
+#}
 
 # Loading aliases
 if [ -f ~/.bash_aliases ]; then
@@ -118,7 +118,7 @@ export EDITOR='nvim'
 PATH=$PATH:/usr/local/heroku/bin
 
 # Set up NVM
-source $DOTFILES_HOME/scripts/nvm.sh
+# source $DOTFILES_HOME/scripts/nvm.sh
 
 # Set up npm completion
 source $DOTFILES_HOME/scripts/npm_completion.sh
@@ -196,7 +196,7 @@ export FZF_CTRL_R_OPTS="
 eval "$(fzf --bash)"
 
 # This loads nvm bash_completion
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 ###-begin-graphql-completions-###
 #
@@ -266,3 +266,12 @@ export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PR
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/bashrc.post.bash" ]] && builtin source "$HOME/.fig/shell/bashrc.post.bash"
+source "/Users/dentuzhik/.rover/env"
+
+. "$HOME/.local/bin/env"
+source /Users/dentuzhik/.config/op/plugins.sh
+
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
