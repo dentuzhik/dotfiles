@@ -4,7 +4,6 @@ set -Eeuo pipefail
 
 DOTFILES_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 readonly DOTFILES_DIR
-readonly TPM_REVISION="e261deb1b47614eed3400089ce7197dc68acc4eb"
 readonly ENTRIES=(
     .bash_profile
     .bashrc
@@ -18,25 +17,6 @@ readonly ENTRIES=(
     .editorconfig
     .finicky.js
 )
-
-install_tmux_plugin_manager() {
-    local target="$HOME/.tmux/plugins/tpm"
-
-    if [[ -d "$target/.git" ]]; then
-        local current_revision
-        current_revision="$(git -C "$target" rev-parse HEAD)"
-        if [[ "$current_revision" != "$TPM_REVISION" ]]; then
-            printf 'TPM exists at %s; expected pinned revision %s.\n' \
-                "$current_revision" "$TPM_REVISION" >&2
-            return 1
-        fi
-        return
-    fi
-
-    mkdir -p "$(dirname -- "$target")"
-    git clone --filter=blob:none --no-checkout https://github.com/tmux-plugins/tpm.git "$target"
-    git -C "$target" checkout --detach "$TPM_REVISION"
-}
 
 link_dotfiles() {
     local backup_dir backup_parent source target entry
@@ -83,7 +63,6 @@ main() {
 
     touch "$HOME/.hushlogin"
     git -C "$DOTFILES_DIR" submodule update --init --recursive
-    install_tmux_plugin_manager
     link_dotfiles
 
     printf 'Done. Restart the terminal to load the updated configuration.\n'

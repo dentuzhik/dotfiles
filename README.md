@@ -18,8 +18,8 @@ brew bundle install
 
 The bootstrap asks before making changes. Existing targets are moved to a
 timestamped directory under `~/.dotfiles-backups`, repository submodules are
-initialized, and tmux plugin manager is checked out at a pinned revision. It
-does not change the login shell.
+initialized, and the requested files are linked. It does not change the login
+shell.
 
 The Homebrew Bash binary can be selected as the login shell separately after
 confirming its path with `brew --prefix bash`. Restart the terminal after
@@ -51,15 +51,10 @@ than downloaded automatically by the editor.
 
 ## tmux
 
-The bootstrap installs the pinned tmux plugin manager checkout. Install the
-plugins declared in `.tmux.conf` with prefix + <kbd>I</kbd>, or run:
-
-```sh
-"$HOME/.tmux/plugins/tpm/bin/install_plugins"
-```
-
-SSH sessions attach to tmux when it is installed. SSH agent, X11, and arbitrary
-forwarding are disabled globally in `.ssh/config`.
+The tmux configuration uses native features only; it does not download or
+execute plugin repositories. SSH sessions attach to tmux when it is installed.
+SSH agent, X11, and arbitrary forwarding are disabled globally in
+`.ssh/config`.
 
 ## iTerm2
 
