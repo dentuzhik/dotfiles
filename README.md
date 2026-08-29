@@ -99,7 +99,12 @@ You can find my snowflake `.tmux.conf` in your home folder. When you will run tm
 For even further productivity boost, I highly recommend you to have a look at [tmuxp](https://github.com/tony/tmuxp).
 
 ## Github
-Since the computer is new, you might want to add a fresh Github SSH key for your machine - to do that the script below and follow the instructions. This script will generate you a new key using Github API and store it in the local ssh agent.
+SSH authentication is handled by the 1Password SSH agent configured in
+`.ssh/config`. Create or import a GitHub SSH key in 1Password, enable the SSH
+agent, and add the public key to your GitHub account. Then authenticate the
+GitHub CLI and verify SSH access:
+
 ```
-./scripts/github_add_ssh_key.sh
+gh auth login --hostname github.com --git-protocol ssh --web
+ssh -T git@github.com
 ```
