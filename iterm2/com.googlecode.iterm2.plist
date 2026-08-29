@@ -43077,7 +43077,7 @@
 	<key>PromptOnQuit</key>
 	<false/>
 	<key>SavePasteHistory</key>
-	<true/>
+	<false/>
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
