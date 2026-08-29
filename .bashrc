@@ -266,10 +266,9 @@ export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PR
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/bashrc.post.bash" ]] && builtin source "$HOME/.fig/shell/bashrc.post.bash"
-source "/Users/dentuzhik/.rover/env"
-
-. "$HOME/.local/bin/env"
-source /Users/dentuzhik/.config/op/plugins.sh
+[[ -r "$HOME/.rover/env" ]] && source "$HOME/.rover/env"
+[[ -r "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
+[[ -r "$HOME/.config/op/plugins.sh" ]] && source "$HOME/.config/op/plugins.sh"
 
 
 # bun

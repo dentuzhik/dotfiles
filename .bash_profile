@@ -24,19 +24,15 @@ export PATH="$HOME/.rbenv/shims:$PATH"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/pixman/lib/pkgconfig"
 
 # https://github.com/Versent/saml2aws?tab=readme-ov-file#bash
-eval "$(saml2aws --completion-script-bash)"source "/Users/dentuzhik/.rover/env"
+if command -v saml2aws > /dev/null 2>&1; then
+    eval "$(saml2aws --completion-script-bash)"
+fi
 
 # Added by Windsurf
 export PATH="/Users/dentuzhik/.codeium/windsurf/bin:$PATH"
 
 # Needed for Aider
 export PATH="/Users/dentuzhik/.local/bin:$PATH"
-
-# AlphaSense frontend changed variables
-# source "$HOME/as/frontend/.husky/_/post-merge-env.sh"
-# source "$HOME/as/frontend/.husky/_/post-rebase-env.sh"
-
-. "$HOME/.local/bin/env"
 
 # eval "$(direnv hook bash)"
 #
