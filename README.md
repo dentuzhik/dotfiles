@@ -24,6 +24,46 @@ The Homebrew Bash binary can be selected as the login shell separately after
 confirming its path with `brew --prefix bash`. Restart the terminal after
 changing shell or dotfile links.
 
+## Bash and Zsh
+
+The shared environment and aliases live under `.config/shell`. Bash and Zsh
+keep separate completion, history, prompt, and tool-integration code in their
+own startup files. Installing these dotfiles does not change the account's
+default login shell.
+
+Run either shell temporarily from an existing terminal:
+
+```sh
+zsh -l
+bash -l
+```
+
+This starts a nested login shell; run `exit` to return to the previous one. To
+replace the current shell process instead, use `exec zsh -l` or `exec bash -l`.
+Check the shell that is actually running with `ps -p $$ -o command=`. The
+`$SHELL` variable identifies the account's default login shell and does not
+necessarily identify the current process.
+
+For permanent side-by-side iTerm2 profiles:
+
+1. Open **iTerm2 Settings → Profiles** and duplicate the current profile twice.
+2. Name the copies **Zsh** and **Bash**.
+3. Under **General → Command**, select **Custom Shell** rather than **Login
+   Shell**.
+4. Set the Zsh shell path to `/bin/zsh`.
+5. Find the Bash path with `command -v bash` and set the Bash shell path to that
+   absolute path; on Apple Silicon Homebrew this is normally
+   `/opt/homebrew/bin/bash`.
+6. Optionally assign each profile a keyboard shortcut under **Keys**.
+
+iTerm2 runs a Custom Shell as a login shell, as described in its [profile
+documentation](https://iterm2.com/documentation-preferences-profiles-general.html).
+New windows opened with either profile therefore load the corresponding
+configuration. Explicit profile shells leave the account login shell unchanged
+and make switching reversible. If a single system-wide default is preferred
+later, use `chsh -s /bin/zsh` for Zsh; switch Homebrew Bash only after ensuring
+its absolute path is present in `/etc/shells`.
+
 ## Desktop applications
 
 Homebrew is deliberately limited to command-line tools. Desktop applications
